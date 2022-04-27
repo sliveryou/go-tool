@@ -44,7 +44,7 @@ func NewWithSource(length int, source string) string {
 	}
 	sl := len(source)
 	if sl < 1 || sl > 256 {
-		panic("rand: wrong source length")
+		panic("randx: wrong source length")
 	}
 	rbMax := 255 - (256 % sl)
 	b := make([]byte, length)
