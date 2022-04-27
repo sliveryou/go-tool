@@ -1,8 +1,11 @@
-.PHONY: proxy fmt lint
+.PHONY: proxy tidy fmt lint pre-commit
 
 proxy:
 	@go env -w GO111MODULE="on"
 	@go env -w GOPROXY="https://goproxy.cn,direct"
+
+tidy:
+	@go mod tidy -e -v
 
 fmt:
 	@find . -name '*.go' -not -path "./vendor/*" -not -name "*.pb.go" | xargs gofumpt -w -s -extra
@@ -11,3 +14,5 @@ fmt:
 
 lint:
 	@golangci-lint run ./...
+
+pre-commit: tidy fmt lint
