@@ -89,10 +89,10 @@ func TestNewWithSource(t *testing.T) {
 
 	wg.Wait()
 
-	assert.PanicsWithValue(t, "rand: wrong source length", func() {
+	assert.PanicsWithValue(t, "randx: wrong source length", func() {
 		NewWithSource(10, NewString(257))
 	})
-	assert.PanicsWithValue(t, "rand: wrong source length", func() {
+	assert.PanicsWithValue(t, "randx: wrong source length", func() {
 		NewWithSource(10, "")
 	})
 }
