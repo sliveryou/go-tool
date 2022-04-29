@@ -146,15 +146,30 @@ func init() {
 
 // Verify checks the data validity of the exportable field of the structure according to the validate tag.
 func Verify(obj interface{}) error {
-	var ves validateErrors
-	err := vi.Struct(obj)
+	return convertErr(vi.Struct(obj))
+}
+
+// VerifyVar checks the data validity of the field according to the validate tag.
+func VerifyVar(field interface{}, tag string) error {
+	return convertErr(vi.Var(field, tag))
+}
+
+// VerifyVarWithValue checks the data validity of the field against another field according to the validate tag.
+func VerifyVarWithValue(field, other interface{}, tag string) error {
+	return convertErr(vi.VarWithValue(field, other, tag))
+}
+
+// convertErr converts err to validation error.
+func convertErr(err error) error {
 	if err != nil {
+		var ves validateErrors
 		if _, ok := err.(*validator.InvalidValidationError); ok {
 			return ves
 		}
 		for _, err := range err.(validator.ValidationErrors) {
 			ves = append(ves, err.Translate(ti))
 		}
+
 		return ves
 	}
 

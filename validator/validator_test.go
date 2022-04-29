@@ -52,4 +52,14 @@ func TestVerify(t *testing.T) {
 	if assert.Error(t, err) {
 		t.Log(err, ParseErr(err))
 	}
+
+	err = VerifyVar("sliveryouqq.com", "email")
+	if assert.Error(t, err) {
+		t.Log(err, ParseErr(err))
+	}
+
+	err = VerifyVarWithValue("abcd", "abce", "eqcsfield")
+	if assert.Error(t, err) {
+		t.Log(err, ParseErr(err))
+	}
 }
