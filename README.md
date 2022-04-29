@@ -453,6 +453,8 @@ import (
 
 func ParseErr(err error) string
 func Verify(obj interface{}) error
+func VerifyVar(field interface{}, tag string) error
+func VerifyVarWithValue(field, other interface{}, tag string) error
 type BankCard
     func NewBankCard(bankcard string) BankCard
     func (bc BankCard) IsValid() bool
