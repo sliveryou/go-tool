@@ -47,6 +47,19 @@ func ContainString(slice []string, value string) (index int) {
 	return
 }
 
+// ContainRune returns the index of the first instance of rune value in rune slice,
+// or -1 if value is not present in rune slice.
+func ContainRune(slice []rune, value rune) (index int) {
+	index = ValueIsNotContained
+	for i := 0; i < len(slice); i++ {
+		if slice[i] == value {
+			index = i
+			return
+		}
+	}
+	return
+}
+
 // ContainBool returns the index of the first instance of bool value in bool slice,
 // or -1 if value is not present in bool slice.
 func ContainBool(slice []bool, value bool) (index int) {

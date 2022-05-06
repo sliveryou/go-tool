@@ -272,6 +272,7 @@ func ContainInt(slice []int, value int) (index int)
 func ContainInt32(slice []int32, value int32) (index int)
 func ContainInt64(slice []int64, value int64) (index int)
 func ContainString(slice []string, value string) (index int)
+func ContainRune(slice []rune, value rune) (index int)
 func Count(slice interface{}) map[interface{}]int
 func CountBool(slice []bool) map[bool]int
 func CountFloat(slice []float64) map[float64]int

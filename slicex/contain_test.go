@@ -34,6 +34,17 @@ func TestContainString(t *testing.T) {
 	assertion.Equal(-1, ContainString(nil, "nil"))
 }
 
+func TestContainRune(t *testing.T) {
+	assertion := assert.New(t)
+	arr := []rune{'a', 'b', '你', '好'}
+
+	assertion.Equal(1, ContainRune(arr, 'b'))
+	assertion.Equal(2, ContainRune(arr, '你'))
+	assertion.Equal(-1, ContainRune(arr, '啦'))
+	assertion.Equal(-1, ContainRune([]rune{}, 's'))
+	assertion.Equal(-1, ContainRune(nil, 'i'))
+}
+
 func TestContainBool(t *testing.T) {
 	assertion := assert.New(t)
 	arr := []bool{false, false, true}
