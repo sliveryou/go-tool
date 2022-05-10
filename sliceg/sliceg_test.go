@@ -59,6 +59,21 @@ func TestIndex(t *testing.T) {
 	}
 }
 
+func TestIndexFunc(t *testing.T) {
+	for _, c := range indexIntCases {
+		get := IndexFunc(c.s, func(v int) bool { return c.v == v })
+		assert.Equal(t, c.want, get)
+	}
+	for _, c := range indexFloatCases {
+		get := IndexFunc(c.s, func(v float64) bool { return c.v == v })
+		assert.Equal(t, c.want, get)
+	}
+	for _, c := range indexStringCases {
+		get := IndexFunc(c.s, func(v string) bool { return c.v == v })
+		assert.Equal(t, c.want, get)
+	}
+}
+
 var (
 	containIntCases = []struct {
 		s    []int
@@ -227,6 +242,24 @@ func TestDelete(t *testing.T) {
 	}
 }
 
+func TestDeleteFunc(t *testing.T) {
+	for _, c := range deleteIntCases {
+		getDs, getDn := DeleteFunc(c.s, func(v int) bool { return c.v == v }, c.n)
+		assert.Equal(t, c.wantDs, getDs)
+		assert.Equal(t, c.wantDn, getDn)
+	}
+	for _, c := range deleteFloatCases {
+		getDs, getDn := DeleteFunc(c.s, func(v float64) bool { return c.v == v }, c.n)
+		assert.Equal(t, c.wantDs, getDs)
+		assert.Equal(t, c.wantDn, getDn)
+	}
+	for _, c := range deleteStringCases {
+		getDs, getDn := DeleteFunc(c.s, func(v string) bool { return c.v == v }, c.n)
+		assert.Equal(t, c.wantDs, getDs)
+		assert.Equal(t, c.wantDn, getDn)
+	}
+}
+
 var (
 	equalIntCases = []struct {
 		s1   []int
@@ -279,6 +312,21 @@ func TestEqual(t *testing.T) {
 	}
 	for _, c := range equalStringCases {
 		get := Equal(c.s1, c.s2)
+		assert.Equal(t, c.want, get)
+	}
+}
+
+func TestEqualFunc(t *testing.T) {
+	for _, c := range equalIntCases {
+		get := EqualFunc(c.s1, c.s2, func(v1, v2 int) bool { return v1 == v2 })
+		assert.Equal(t, c.want, get)
+	}
+	for _, c := range equalFloatCases {
+		get := EqualFunc(c.s1, c.s2, func(v1, v2 float64) bool { return v1 == v2 })
+		assert.Equal(t, c.want, get)
+	}
+	for _, c := range equalStringCases {
+		get := EqualFunc(c.s1, c.s2, func(v1, v2 string) bool { return v1 == v2 })
 		assert.Equal(t, c.want, get)
 	}
 }

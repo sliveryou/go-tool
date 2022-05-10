@@ -21,6 +21,18 @@ func Index[T comparable](s []T, v T) int {
 	return -1
 }
 
+// IndexFunc returns the index of the first index i satisfying f(s[i]),
+// or -1 if v not present in s.
+func IndexFunc[T any](s []T, f func(T) bool) int {
+	for i := 0; i < len(s); i++ {
+		if f(s[i]) {
+			return i
+		}
+	}
+
+	return -1
+}
+
 // Contain reports whether v is present in s.
 func Contain[T comparable](s []T, v T) bool {
 	return Index(s, v) >= 0
@@ -60,6 +72,30 @@ func Delete[T comparable](s []T, v T, n int) ([]T, int) {
 	return ds, c
 }
 
+// DeleteFunc returns the slice that deletes n satisfying f(s[i]) and the number of actual deletions.
+// If n < 0, it will delete all satisfying f(s[i]).
+func DeleteFunc[T any](s []T, f func(T) bool, n int) ([]T, int) {
+	var ds []T
+	var c int
+	for i := range s {
+		if !f(s[i]) {
+			ds = append(ds, s[i])
+		} else {
+			if n < 0 {
+				c++
+				continue
+			}
+			if c >= n {
+				ds = append(ds, s[i])
+			} else {
+				c++
+			}
+		}
+	}
+
+	return ds, c
+}
+
 // Equal reports whether s1 equals s2.
 func Equal[T comparable](s1, s2 []T) bool {
 	if len(s1) != len(s2) {
@@ -70,6 +106,24 @@ func Equal[T comparable](s1, s2 []T) bool {
 	}
 	for i := range s1 {
 		if s1[i] != s2[i] {
+			return false
+		}
+	}
+
+	return true
+}
+
+// EqualFunc reports whether s1 equals s2 which using a comparison
+// function on each pair of elements.
+func EqualFunc[T1, T2 any](s1 []T1, s2 []T2, eq func(T1, T2) bool) bool {
+	if len(s1) != len(s2) {
+		return false
+	}
+	if (s1 == nil) != (s2 == nil) {
+		return false
+	}
+	for i := range s1 {
+		if !eq(s1[i], s2[i]) {
 			return false
 		}
 	}
