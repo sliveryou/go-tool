@@ -17,8 +17,10 @@ go 常用工具函数集合
 - `filex` 文件哈希、文件增删读写、路径判断和文件元数据获取等
 - `id-generator` 雪花算法 id 生成、uuid 生成、int64 类型的 base58 和 base62 编解码等
 - `mathx` 浮点数计算比较、奇偶判断、序列生成、最值和平均值计算等
+- `mathg` mathx 的泛型版实现
 - `randx` 并发安全真随机 A-Za-z0-9 字符串生成（可指定字符串生成源）
 - `slicex` 切片相关操作，如值包含判断、切片转换、切片打乱和切片去重等
+- `sliceg` slicex 的泛型版实现
 - `timex` 时间相关操作，如时区加载、时间戳计算和时间格式化等
 - `validator` 通用中文语义结构体参数校验器，并包含银行卡号、身份证号、企业对公账户和统一社会信用代码校验器
 
@@ -242,6 +244,29 @@ func SumInt(nums ...int) int
 func SumInt64(nums ...int64) int64
 ```
 
+### mathg
+
+```go
+import (
+    "github.com/sliveryou/go-tool/mathg"
+)
+
+func Abs[T constraints.Signed | constraints.Float](n T) T
+func Average[T constraints.Signed | constraints.Float](nums ...T) float64
+func IsEven[T constraints.Signed](n T) bool
+func IsNegative[T constraints.Signed | constraints.Float](n T) bool
+func IsNonNegative[T constraints.Signed | constraints.Float](n T) bool
+func IsNonPositive[T constraints.Signed | constraints.Float](n T) bool
+func IsOdd[T constraints.Signed](n T) bool
+func IsPositive[T constraints.Signed | constraints.Float](n T) bool
+func IsZero[T constraints.Signed | constraints.Float](n T) bool
+func Max[T constraints.Ordered](nums ...T) T
+func Min[T constraints.Ordered](nums ...T) T
+func Range[T constraints.Signed | constraints.Float](start, stop T, step ...T) []T
+func Sign[T constraints.Signed | constraints.Float](n T) int
+func Sum[T constraints.Ordered](nums ...T) T
+```
+
 ### randx
 
 ```go
@@ -389,6 +414,29 @@ func UniqueInt32s(slice []int32) []int32
 func UniqueInt64s(slice []int64) []int64
 func UniqueInts(slice []int) []int
 func UniqueStrings(slice []string) []string
+```
+
+### sliceg
+
+```go
+import (
+    "github.com/sliveryou/go-tool/sliceg"
+)
+
+func Contain[T comparable](s []T, v T) bool
+func Count[T comparable](s []T) map[T]int
+func Delete[T comparable](s []T, v T, n int) ([]T, int)
+func DeleteFunc[T any](s []T, f func(T) bool, n int) ([]T, int)
+func Equal[T comparable](s1, s2 []T) bool
+func EqualFunc[T1, T2 any](s1 []T1, s2 []T2, eq func(T1, T2) bool) bool
+func Extract[T any](s []T, n int) []T
+func Fill[T any](v T, n int) []T
+func Index[T comparable](s []T, v T) int
+func IndexFunc[T any](s []T, f func(T) bool) int
+func Reverse[T any](s []T) []T
+func Shuffle[T any](s []T) []T
+func Take[T any](s []T) T
+func Unique[T comparable](s []T) []T
 ```
 
 ### timex
