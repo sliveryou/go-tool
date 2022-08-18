@@ -47,12 +47,8 @@ var (
 		"httpmethod":  httpmethod,
 	}
 	defaultTags = []string{
-		"required_if",
-		"required_unless",
-		"required_with",
-		"required_with_all",
-		"required_without",
-		"required_without_all",
+		"excluded_if",
+		"excluded_unless",
 		"excluded_with",
 		"excluded_with_all",
 		"excluded_without",
@@ -74,6 +70,16 @@ var (
 		"uuid3_rfc4122",
 		"uuid4_rfc4122",
 		"uuid5_rfc4122",
+		"md4",
+		"md5",
+		"sha256",
+		"sha384",
+		"sha512",
+		"ripemd128",
+		"ripemd160",
+		"tiger128",
+		"tiger160",
+		"tiger192",
 		"hostname",
 		"hostname_rfc1123",
 		"fqdn",
@@ -95,6 +101,9 @@ var (
 		"postcode_iso3166_alpha2",
 		"postcode_iso3166_alpha2_field",
 		"bic",
+		"semver",
+		"dns_rfc1035_label",
+		"credit_card",
 	}
 )
 
