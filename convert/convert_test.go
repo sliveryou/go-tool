@@ -1,8 +1,10 @@
 package convert
 
 import (
+	"encoding/json"
 	"math"
 	"strconv"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -577,4 +579,32 @@ func TestBaseConversion(t *testing.T) {
 		f16t10 := ToBase(f2t16, 16, 10)
 		assert.Equal(t, f16t10, srcString)
 	}
+}
+
+func TestJsonUnmarshal(t *testing.T) {
+	s := `{"a":{"b":{"ids":764197655051251712}}}`
+	m1 := make(map[string]interface{})
+
+	d := json.NewDecoder(strings.NewReader(s))
+	d.UseNumber()
+	err := d.Decode(&m1)
+	assert.NoError(t, err)
+
+	a := m1["a"].(map[string]interface{})
+	b := a["b"].(map[string]interface{})
+
+	assert.Equal(t, "764197655051251712", ToString(b["ids"]))
+	assert.Equal(t, int64(764197655051251712), ToInt64(b["ids"]))
+	assert.Equal(t, float64(764197655051251700), ToFloat64(b["ids"]))
+
+	m2 := make(map[string]interface{})
+	err = json.Unmarshal([]byte(s), &m2)
+	assert.NoError(t, err)
+
+	a = m2["a"].(map[string]interface{})
+	b = a["b"].(map[string]interface{})
+
+	assert.Equal(t, "764197655051251700", ToString(b["ids"]))
+	assert.Equal(t, int64(764197655051251712), ToInt64(b["ids"]))
+	assert.Equal(t, float64(764197655051251700), ToFloat64(b["ids"]))
 }
