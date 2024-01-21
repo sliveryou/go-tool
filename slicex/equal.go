@@ -17,9 +17,8 @@ func Equal(arr1, arr2 interface{}) bool {
 		return reflect.DeepEqual(arr1, arr2)
 	} else if kind1 == reflect.Array && kind2 == reflect.Array {
 		return arr1 == arr2
-	} else {
-		panic("slicex: invalid arr1 or arr2 type")
 	}
+	panic("slicex: invalid arr1 or arr2 type")
 }
 
 // EqualStrings reports whether string arr1 equals string arr2.

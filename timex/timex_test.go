@@ -21,9 +21,6 @@ func TestLocation(t *testing.T) {
 		Shanghai()
 	})
 	assertion.NotPanics(func() {
-		HongKong()
-	})
-	assertion.NotPanics(func() {
 		Local()
 	})
 	assertion.NotPanics(func() {

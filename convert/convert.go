@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"math"
+	"math/big"
 	"strconv"
 	"strings"
 	"unicode/utf8"
@@ -13,6 +14,8 @@ import (
 // ToString returns the string result converted by src.
 func ToString(src interface{}) string {
 	switch v := src.(type) {
+	case nil:
+		return ""
 	case int, int8, int16, int32, int64:
 		return strconv.FormatInt(ToInt64(v), 10)
 	case uint, uint8, uint16, uint32, uint64, uintptr:
@@ -27,8 +30,8 @@ func ToString(src interface{}) string {
 		return string(v)
 	case bool:
 		return strconv.FormatBool(v)
-	case nil:
-		return ""
+	case fmt.Stringer:
+		return v.String()
 	default:
 		return fmt.Sprint(v)
 	}
@@ -48,6 +51,16 @@ func ToBool(src interface{}) bool {
 	case string, []byte, []rune:
 		result, _ := strconv.ParseBool(ToString(v))
 		return result
+	case interface{ Int64() int64 }:
+		return v.Int64() > 0
+	case interface {
+		Float64() (float64, big.Accuracy)
+	}:
+		result, _ := v.Float64()
+		return result > 0
+	case interface{ Int64() (int64, error) }:
+		result, _ := v.Int64()
+		return result > 0
 	default:
 		return false
 	}
@@ -111,6 +124,14 @@ func ToInt64(src interface{}) int64 {
 		return result
 	case []byte:
 		return BytesToInt64(v)
+	case interface{ Int64() int64 }:
+		return v.Int64()
+	case interface{ Int64() (int64, big.Accuracy) }:
+		result, _ := v.Int64()
+		return result
+	case interface{ Int64() (int64, error) }:
+		result, _ := v.Int64()
+		return result
 	default:
 		return 0
 	}
@@ -174,6 +195,14 @@ func ToUint64(src interface{}) uint64 {
 		return result
 	case []byte:
 		return BytesToUint64(v)
+	case interface{ Uint64() uint64 }:
+		return v.Uint64()
+	case interface{ Uint64() (uint64, big.Accuracy) }:
+		result, _ := v.Uint64()
+		return result
+	case interface{ Int64() (int64, error) }:
+		result, _ := v.Int64()
+		return uint64(result)
 	default:
 		return 0
 	}
@@ -215,6 +244,16 @@ func ToFloat64(src interface{}) float64 {
 		return result
 	case []byte:
 		return BytesToFloat64(v)
+	case interface{ Int64() int64 }:
+		return float64(v.Int64())
+	case interface {
+		Float64() (float64, big.Accuracy)
+	}:
+		result, _ := v.Float64()
+		return result
+	case interface{ Float64() (float64, error) }:
+		result, _ := v.Float64()
+		return result
 	default:
 		return 0
 	}

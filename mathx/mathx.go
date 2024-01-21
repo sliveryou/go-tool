@@ -54,9 +54,10 @@ func RoundBankToString(f float64, places int) string {
 }
 
 // Sign returns:
-//     -1 if f <  0
-//      0 if f == 0
-//     +1 if f >  0
+//
+//	-1 if f <  0
+//	 0 if f == 0
+//	+1 if f >  0
 func Sign(f float64) int {
 	if math.Float64bits(f) != 0 {
 		if f > 0 {
@@ -68,49 +69,55 @@ func Sign(f float64) int {
 }
 
 // IsPositive returns:
-//      true if d >  0
-//     false if d == 0
-//     false if d <  0
+//
+//	 true if d >  0
+//	false if d == 0
+//	false if d <  0
 func IsPositive(f float64) bool {
 	return Sign(f) == 1
 }
 
 // IsNonPositive returns:
-//      true if d <  0
-//      true if d == 0
-//     false if d >  0
+//
+//	 true if d <  0
+//	 true if d == 0
+//	false if d >  0
 func IsNonPositive(f float64) bool {
 	return Sign(f) == -1 || Sign(f) == 0
 }
 
 // IsNegative returns:
-//      true if d <  0
-//     false if d == 0
-//     false if d >  0
+//
+//	 true if d <  0
+//	false if d == 0
+//	false if d >  0
 func IsNegative(f float64) bool {
 	return Sign(f) == -1
 }
 
 // IsNonNegative returns:
-//      true if d >  0
-//      true if d == 0
-//     false if d <  0
+//
+//	 true if d >  0
+//	 true if d == 0
+//	false if d <  0
 func IsNonNegative(f float64) bool {
 	return Sign(f) == 1 || Sign(f) == 0
 }
 
 // IsZero returns:
-//      true if d == 0
-//     false if d >  0
-//     false if d <  0
+//
+//	 true if d == 0
+//	false if d >  0
+//	false if d <  0
 func IsZero(f float64) bool {
 	return Sign(f) == 0
 }
 
 // Compare compares f1 and f2 and returns:
-//     -1 if   f1 < f2
-//      0 if | f1 - f2 | <= 10 ^ -places, default places is 9
-//     +1 if   f1 > f2
+//
+//	-1 if   f1 < f2
+//	 0 if | f1 - f2 | <= 10 ^ -places, default places is 9
+//	+1 if   f1 > f2
 func Compare(f1, f2 float64, places ...int) int {
 	pla := floatPlaces
 	if len(places) != 0 && places[0] >= 1 {

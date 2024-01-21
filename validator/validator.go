@@ -8,7 +8,7 @@ import (
 
 	"github.com/go-playground/locales/zh"
 	ut "github.com/go-playground/universal-translator"
-	"github.com/go-playground/validator/v10"
+	validator "github.com/go-playground/validator/v10"
 	zht "github.com/go-playground/validator/v10/translations/zh"
 )
 
@@ -47,33 +47,39 @@ var (
 		"httpmethod":  httpmethod,
 	}
 	defaultTags = []string{
-		"required_if",
-		"required_unless",
-		"required_with",
-		"required_with_all",
-		"required_without",
-		"required_without_all",
-		"excluded_with",
-		"excluded_with_all",
-		"excluded_without",
-		"excluded_without_all",
-		"isdefault",
+		"skip_unless",
+		"eq_ignore_case",
+		"ne_ignore_case",
 		"fieldcontains",
 		"fieldexcludes",
 		"boolean",
 		"e164",
+		"http_url",
 		"urn_rfc2141",
 		"file",
+		"filepath",
 		"base64url",
+		"base64rawurl",
 		"startsnotwith",
 		"endsnotwith",
 		"eth_addr",
+		"eth_addr_checksum",
 		"btc_addr",
 		"btc_addr_bech32",
 		"uuid_rfc4122",
 		"uuid3_rfc4122",
 		"uuid4_rfc4122",
 		"uuid5_rfc4122",
+		"md4",
+		"md5",
+		"sha256",
+		"sha384",
+		"sha512",
+		"ripemd128",
+		"ripemd160",
+		"tiger128",
+		"tiger160",
+		"tiger192",
 		"hostname",
 		"hostname_rfc1123",
 		"fqdn",
@@ -82,6 +88,7 @@ var (
 		"html_encoded",
 		"url_encoded",
 		"dir",
+		"dirpath",
 		"jwt",
 		"hostname_port",
 		"timezone",
@@ -95,6 +102,14 @@ var (
 		"postcode_iso3166_alpha2",
 		"postcode_iso3166_alpha2_field",
 		"bic",
+		"semver",
+		"dns_rfc1035_label",
+		"credit_card",
+		"cve",
+		"luhn_checksum",
+		"mongodb",
+		"cron",
+		"spicedb",
 	}
 )
 
@@ -112,7 +127,8 @@ func (ves validateErrors) Error() string {
 
 // ParseErr parses the content of validation error.
 func ParseErr(err error) string {
-	ves, ok := err.(validateErrors)
+	var ves validateErrors
+	ok := errors.As(err, &ves)
 	if ok && len(ves) > 0 {
 		return strings.Join(ves, ",")
 	}
@@ -163,7 +179,8 @@ func VerifyVarWithValue(field, other interface{}, tag string) error {
 func convertErr(err error) error {
 	if err != nil {
 		var ves validateErrors
-		if _, ok := err.(*validator.InvalidValidationError); ok {
+		var e *validator.InvalidValidationError
+		if errors.As(err, &e) {
 			return ves
 		}
 		for _, err := range err.(validator.ValidationErrors) {

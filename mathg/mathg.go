@@ -5,9 +5,10 @@ import (
 )
 
 // Sign returns:
-//     -1 if n <  0
-//      0 if n == 0
-//     +1 if n >  0
+//
+//	-1 if n <  0
+//	 0 if n == 0
+//	+1 if n >  0
 func Sign[T constraints.Signed | constraints.Float](n T) int {
 	if n > 0 {
 		return 1
@@ -18,41 +19,46 @@ func Sign[T constraints.Signed | constraints.Float](n T) int {
 }
 
 // IsPositive returns:
-//      true if n >  0
-//     false if n == 0
-//     false if n <  0
+//
+//	 true if n >  0
+//	false if n == 0
+//	false if n <  0
 func IsPositive[T constraints.Signed | constraints.Float](n T) bool {
 	return Sign(n) == 1
 }
 
 // IsNonPositive returns:
-//      true if n <  0
-//      true if n == 0
-//     false if n >  0
+//
+//	 true if n <  0
+//	 true if n == 0
+//	false if n >  0
 func IsNonPositive[T constraints.Signed | constraints.Float](n T) bool {
 	return Sign(n) != 1
 }
 
 // IsNegative returns:
-//      true if n <  0
-//     false if n == 0
-//     false if n >  0
+//
+//	 true if n <  0
+//	false if n == 0
+//	false if n >  0
 func IsNegative[T constraints.Signed | constraints.Float](n T) bool {
 	return Sign(n) == -1
 }
 
 // IsNonNegative returns:
-//      true if n >  0
-//      true if n == 0
-//     false if n <  0
+//
+//	 true if n >  0
+//	 true if n == 0
+//	false if n <  0
 func IsNonNegative[T constraints.Signed | constraints.Float](n T) bool {
 	return Sign(n) != -1
 }
 
 // IsZero returns:
-//      true if n == 0
-//     false if n >  0
-//     false if n <  0
+//
+//	 true if n == 0
+//	false if n >  0
+//	false if n <  0
 func IsZero[T constraints.Signed | constraints.Float](n T) bool {
 	return Sign(n) == 0
 }

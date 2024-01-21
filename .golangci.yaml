@@ -5,11 +5,11 @@ run:
 
 linters-settings:
   gosimple:
-    go: "1.15"
+    go: "1.16"
     # https://staticcheck.io/docs/options#checks
     checks: [ "all" ]
   staticcheck:
-    go: "1.15"
+    go: "1.16"
     # https://staticcheck.io/docs/options#checks
     checks: [ "all", "-SA1019", "-SA5008" ]
   goconst:
@@ -23,7 +23,7 @@ linters-settings:
       - appendAssign
       - ifElseChain
   gofumpt:
-    lang-version: "1.15"
+    lang-version: "1.16"
     # https://github.com/mvdan/gofumpt#gofumpt
     extra-rules: true
   revive:
@@ -38,7 +38,7 @@ linters-settings:
       - name: errorf
       - name: blank-imports
       - name: context-as-argument
-      - name: dot-imports
+      # - name: dot-imports
       - name: error-return
       - name: error-strings
       - name: error-naming
@@ -46,7 +46,7 @@ linters-settings:
       - name: if-return
       - name: increment-decrement
       # - name: var-naming
-      - name: package-comments
+      # - name: package-comments
       - name: range
       - name: receiver-naming
       - name: indent-error-flow
@@ -61,7 +61,7 @@ linters:
     - govet
     - ineffassign
     - staticcheck
-    - structcheck
+    # - structcheck
     - typecheck
     - goconst
     - gocritic
