@@ -7,8 +7,8 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/sliveryou/go-tool/id-generator/encoding/base58"
-	"github.com/sliveryou/go-tool/id-generator/encoding/base62"
+	"github.com/sliveryou/go-tool/v2/id-generator/encoding/base58"
+	"github.com/sliveryou/go-tool/v2/id-generator/encoding/base62"
 )
 
 func TestNewSnowflake(t *testing.T) {

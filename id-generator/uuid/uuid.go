@@ -4,7 +4,7 @@ import (
 	"log"
 	"strings"
 
-	uuid "github.com/sliveryou/go-tool/id-generator/uuid/satori"
+	uuid "github.com/sliveryou/go-tool/v2/id-generator/uuid/satori"
 )
 
 // NextV1 generates v1 uuid.

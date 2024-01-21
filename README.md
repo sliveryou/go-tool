@@ -1,8 +1,8 @@
-# go-tool
+# go-tool v2
 
 [![Github License](https://img.shields.io/github/license/sliveryou/go-tool.svg?style=flat)](https://github.com/sliveryou/go-tool/blob/master/LICENSE)
-[![Go Doc](https://godoc.org/github.com/sliveryou/go-tool?status.svg)](https://pkg.go.dev/github.com/sliveryou/go-tool)
-[![Go Report](https://goreportcard.com/badge/github.com/sliveryou/go-tool)](https://goreportcard.com/report/github.com/sliveryou/go-tool)
+[![Go Doc](https://godoc.org/github.com/sliveryou/go-tool/v2?status.svg)](https://pkg.go.dev/github.com/sliveryou/go-tool/v2)
+[![Go Report](https://goreportcard.com/badge/github.com/sliveryou/go-tool/v2)](https://goreportcard.com/report/github.com/sliveryou/go-tool/v2)
 [![Github Latest Release](https://img.shields.io/github/release/sliveryou/go-tool.svg?style=flat)](https://github.com/sliveryou/go-tool/releases/latest)
 [![Github Latest Tag](https://img.shields.io/github/tag/sliveryou/go-tool.svg?style=flat)](https://github.com/sliveryou/go-tool/tags)
 [![Github Stars](https://img.shields.io/github/stars/sliveryou/go-tool.svg?style=flat)](https://github.com/sliveryou/go-tool/stargazers)
@@ -29,7 +29,7 @@ go 常用工具函数集合
 
 ```go
 import (
-    "github.com/sliveryou/go-tool/cipher"
+    "github.com/sliveryou/go-tool/v2/cipher"
 )
 
 type Cipher
@@ -38,7 +38,7 @@ type Cipher
 
 // aes
 import (
-	"github.com/sliveryou/go-tool/cipher/aes"
+	"github.com/sliveryou/go-tool/v2/cipher/aes"
 )
 
 func AesCbcDecrypt(key, iv, src []byte) ([]byte, error)
@@ -54,7 +54,7 @@ type AesCbc
 
 // pkcs
 import (
-    "github.com/sliveryou/go-tool/cipher/pkcs"
+    "github.com/sliveryou/go-tool/v2/cipher/pkcs"
 )
 
 func PKCS5Padding(cipherText []byte) []byte
@@ -67,7 +67,7 @@ func PKCS7Trimming(encrypt []byte) ([]byte, error)
 
 ```go
 import (
-    "github.com/sliveryou/go-tool/convert"
+    "github.com/sliveryou/go-tool/v2/convert"
 )
 
 func BinToDec(bin string) int64
@@ -106,7 +106,7 @@ func Uint64ToBytes(i uint64) []byte
 
 ```go
 import (
-    "github.com/sliveryou/go-tool/filex"
+    "github.com/sliveryou/go-tool/v2/filex"
 )
 
 func AbsPath(filePath string) (string, error)
@@ -138,7 +138,7 @@ func Write(fileName string, data []byte, perm ...os.FileMode) error
 ```go
 // encoding/base58
 import (
-    "github.com/sliveryou/go-tool/id-generator/encoding/base58"
+    "github.com/sliveryou/go-tool/v2/id-generator/encoding/base58"
 )
 
 func StdSource() string
@@ -150,7 +150,7 @@ type Encoder
 
 // encoding/base62
 import (
-    "github.com/sliveryou/go-tool/id-generator/encoding/base62"
+    "github.com/sliveryou/go-tool/v2/id-generator/encoding/base62"
 )
 
 func StdSource() string
@@ -162,7 +162,7 @@ type Encoder
 
 // snowflake
 import (
-    "github.com/sliveryou/go-tool/id-generator/snowflake"
+    "github.com/sliveryou/go-tool/v2/id-generator/snowflake"
 )
 
 func NodeId(nodeId int64) func() (int64, error)
@@ -174,7 +174,7 @@ type Snowflake
 
 // uuid
 import (
-    "github.com/sliveryou/go-tool/id-generator/uuid"
+    "github.com/sliveryou/go-tool/v2/id-generator/uuid"
 )
 func NextV1() string
 func NextV4() string
@@ -185,7 +185,7 @@ func Parse(input string) (uuid.UUID, error)
 
 ```go
 import (
-    "github.com/sliveryou/go-tool/mathx"
+    "github.com/sliveryou/go-tool/v2/mathx"
 )
 
 func AbsFloat(num float64) float64
@@ -247,7 +247,7 @@ func SumInt64(nums ...int64) int64
 
 ```go
 import (
-    "github.com/sliveryou/go-tool/mathg"
+    "github.com/sliveryou/go-tool/v2/mathg"
 )
 
 func Abs[T constraints.Signed | constraints.Float](n T) T
@@ -270,7 +270,7 @@ func Sum[T constraints.Ordered](nums ...T) T
 
 ```go
 import (
-    "github.com/sliveryou/go-tool/randx"
+    "github.com/sliveryou/go-tool/v2/randx"
 )
 
 func NewNumber(length int) string
@@ -284,7 +284,7 @@ func StdSource() string
 
 ```go
 import (
-    "github.com/sliveryou/go-tool/slicex"
+    "github.com/sliveryou/go-tool/v2/slicex"
 )
 
 func Contain(slice, value interface{}) (index int)
@@ -419,7 +419,7 @@ func UniqueStrings(slice []string) []string
 
 ```go
 import (
-    "github.com/sliveryou/go-tool/sliceg"
+    "github.com/sliveryou/go-tool/v2/sliceg"
 )
 
 func Contain[T comparable](s []T, v T) bool
@@ -442,7 +442,7 @@ func Unique[T comparable](s []T) []T
 
 ```go
 import (
-    "github.com/sliveryou/go-tool/timex"
+    "github.com/sliveryou/go-tool/v2/timex"
 )
 
 func Date(t time.Time, location ...*time.Location) string
@@ -495,7 +495,7 @@ func UnixTodayRange(location ...*time.Location) (int64, int64)
 
 ```go
 import (
-    "github.com/sliveryou/go-tool/validator"
+    "github.com/sliveryou/go-tool/v2/validator"
 )
 
 func ParseErr(err error) string

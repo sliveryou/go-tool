@@ -9,7 +9,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/sliveryou/go-tool/mathx"
+	"github.com/sliveryou/go-tool/v2/mathx"
 )
 
 func TestMain(m *testing.M) {

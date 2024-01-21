@@ -1,4 +1,4 @@
-module github.com/sliveryou/go-tool
+module github.com/sliveryou/go-tool/v2
 
 go 1.18
 

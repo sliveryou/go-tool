@@ -7,7 +7,7 @@ import (
 	"encoding/hex"
 	"fmt"
 
-	"github.com/sliveryou/go-tool/cipher/pkcs"
+	"github.com/sliveryou/go-tool/v2/cipher/pkcs"
 )
 
 // There aescbc add pkcs7Padding to be same as php's aescbc

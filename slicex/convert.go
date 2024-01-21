@@ -3,7 +3,7 @@ package slicex
 import (
 	"strconv"
 
-	"github.com/sliveryou/go-tool/convert"
+	"github.com/sliveryou/go-tool/v2/convert"
 )
 
 // StringsToInts returns converted int slice by string slice.

@@ -3,7 +3,7 @@ package slicex
 import (
 	"reflect"
 
-	"github.com/sliveryou/go-tool/mathx"
+	"github.com/sliveryou/go-tool/v2/mathx"
 )
 
 // Equal reports whether arr1 equals arr2.

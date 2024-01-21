@@ -4,7 +4,7 @@ package cipher
 // Now it support aescbc
 // Plan to support aesecb rsa
 import (
-	"github.com/sliveryou/go-tool/cipher/aes"
+	"github.com/sliveryou/go-tool/v2/cipher/aes"
 )
 
 // If you want convert encrypted content to appoint format

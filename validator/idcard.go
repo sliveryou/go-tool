@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/sliveryou/go-tool/timex"
+	"github.com/sliveryou/go-tool/v2/timex"
 )
 
 // citizen identification number, GB 11643-1999

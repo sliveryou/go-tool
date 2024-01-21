@@ -3,7 +3,7 @@ package slicex
 import (
 	"strings"
 
-	"github.com/sliveryou/go-tool/convert"
+	"github.com/sliveryou/go-tool/v2/convert"
 )
 
 const (

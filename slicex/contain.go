@@ -3,7 +3,7 @@ package slicex
 import (
 	"reflect"
 
-	"github.com/sliveryou/go-tool/mathx"
+	"github.com/sliveryou/go-tool/v2/mathx"
 )
 
 const (

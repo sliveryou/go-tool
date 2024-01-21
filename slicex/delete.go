@@ -3,7 +3,7 @@ package slicex
 import (
 	"reflect"
 
-	"github.com/sliveryou/go-tool/mathx"
+	"github.com/sliveryou/go-tool/v2/mathx"
 )
 
 // Delete returns the slice that deletes n specified value and the number of actual deletions.
