@@ -12,11 +12,11 @@ else
   download="go install"
 fi
 
-${download} github.com/golangci/golangci-lint/cmd/golangci-lint@v1.43.0
-${download} golang.org/x/tools/cmd/goimports@v0.1.5
-${download} github.com/incu6us/goimports-reviser/v2@v2.4.4
-${download} mvdan.cc/gofumpt@v0.1.1
-${download} mvdan.cc/sh/v3/cmd/shfmt@v3.3.1
-${download} mvdan.cc/sh/v3/cmd/gosh@v3.3.1
+${download} github.com/golangci/golangci-lint/cmd/golangci-lint@v1.55.2
+${download} golang.org/x/tools/cmd/goimports@v0.16.1
+${download} github.com/incu6us/goimports-reviser/v3@v3.6.2
+${download} mvdan.cc/gofumpt@v0.5.0
+${download} mvdan.cc/sh/v3/cmd/shfmt@v3.7.0
+${download} mvdan.cc/sh/v3/cmd/gosh@v3.7.0
 
 echo "done"

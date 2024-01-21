@@ -9,17 +9,16 @@ import (
 
 // time package variables.
 var (
-	shanghai = Location("Asia/Shanghai")  // Shanghai *time.Location
-	hongkong = Location("Asia/Hong_Kong") // Hong Kong *time.Location
-	local    = Location("Local")          // Local *time.Location
-	utc      = Location("UTC")            // UTC *time.Location
+	local    = time.Local                // Local *time.Location
+	utc      = time.UTC                  // UTC *time.Location
+	shanghai = Location("Asia/Shanghai") // Shanghai *time.Location
 )
 
 // Location returns *time.Location by location name.
 func Location(name string) *time.Location {
 	loc, err := time.LoadLocation(name)
 	if err != nil {
-		panic(err)
+		loc = time.Local
 	}
 	return loc
 }
@@ -27,11 +26,6 @@ func Location(name string) *time.Location {
 // Shanghai returns Shanghai *time.Location.
 func Shanghai() *time.Location {
 	return shanghai
-}
-
-// HongKong returns Hong Kong *time.Location.
-func HongKong() *time.Location {
-	return hongkong
 }
 
 // Local returns Local *time.Location.
@@ -249,9 +243,10 @@ func SleepMicrosecond(n int64) {
 
 // StringToTime returns time.Time representation of str value parsed according to layout.
 // layout example:
-//     20060102150405
-//     2006-01-02 15:04:05
-//     2006/01/02 15/04/05
+//
+//	20060102150405
+//	2006-01-02 15:04:05
+//	2006/01/02 15/04/05
 func StringToTime(str, layout string, location ...*time.Location) (time.Time, error) {
 	loc := getLocation(location...)
 	if len(str) != len(layout) {
@@ -264,9 +259,10 @@ func StringToTime(str, layout string, location ...*time.Location) (time.Time, er
 // StringToUnix returns unix second timestamp representation of str value parsed according to layout.
 // If str parsed err, it returns now unix second timestamp.
 // layout example:
-//     20060102150405
-//     2006-01-02 15:04:05
-//     2006/01/02 15/04/05
+//
+//	20060102150405
+//	2006-01-02 15:04:05
+//	2006/01/02 15/04/05
 func StringToUnix(str, layout string, location ...*time.Location) int64 {
 	t, err := StringToTime(str, layout, location...)
 	if err != nil {

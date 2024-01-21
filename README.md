@@ -7,7 +7,6 @@
 [![Github Latest Tag](https://img.shields.io/github/tag/sliveryou/go-tool.svg?style=flat)](https://github.com/sliveryou/go-tool/tags)
 [![Github Stars](https://img.shields.io/github/stars/sliveryou/go-tool.svg?style=flat)](https://github.com/sliveryou/go-tool/stargazers)
 
-
 go 常用工具函数集合
 
 ## 简介
@@ -402,7 +401,6 @@ func Date(t time.Time, location ...*time.Location) string
 func DateTime(t time.Time, location ...*time.Location) string
 func DoCycleTask(ctx context.Context, f func(), d time.Duration)
 func Format(t time.Time, layout string, location ...*time.Location) string
-func HongKong() *time.Location
 func Local() *time.Location
 func Location(name string) *time.Location
 func Now(location ...*time.Location) time.Time
