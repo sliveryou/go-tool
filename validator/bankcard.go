@@ -35,7 +35,7 @@ func NewBankCard(bankcard string) BankCard {
 // IsValid checks the bank card is valid.
 func (bc BankCard) IsValid() bool {
 	bcStr := strings.ToUpper(string(bc))
-	if !bankcardRegex.Match([]byte(bcStr)) {
+	if !bankcardRegex.MatchString(bcStr) {
 		return false
 	}
 
@@ -43,14 +43,14 @@ func (bc BankCard) IsValid() bool {
 	length := len(bcStr)
 
 	for index := length - 1; index >= 0; index-- {
-		if value, err := strconv.Atoi(string(bcStr[index])); err == nil {
-			if (length-index)%2 == 0 {
-				sum += valueDoubleSumMap[value]
-			} else {
-				sum += value
-			}
-		} else {
+		value, err := strconv.Atoi(string(bcStr[index]))
+		if err != nil {
 			return false
+		}
+		if (length-index)%2 == 0 {
+			sum += valueDoubleSumMap[value]
+		} else {
+			sum += value
 		}
 	}
 

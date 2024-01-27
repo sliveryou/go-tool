@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"github.com/sliveryou/go-tool/mathx"
 )
@@ -76,86 +77,86 @@ func TestDirSize(t *testing.T) {
 
 func TestHash(t *testing.T) {
 	hashStr, err := Hash("./testdata/test.txt", md5.New())
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	t.Log(hashStr)
 
 	md5Str, err := MD5("./testdata/test.txt")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	t.Log(md5Str)
 
 	sha1Str, err := SHA1("./testdata/test.txt")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	t.Log(sha1Str)
 
 	sha256, err := SHA256("./testdata/test.txt")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	t.Log(sha256)
 
 	sha512, err := SHA512("./testdata/test.txt")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	t.Log(sha512)
 }
 
 func TestRead(t *testing.T) {
 	content, err := Read("./testdata/test.txt")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	t.Log("\n" + string(content))
 
 	content, err = Read("./testdata/test.md")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	t.Log("\n" + string(content))
 }
 
 func TestReadToSlice(t *testing.T) {
 	slice, err := ReadToSlice("./testdata/test.txt")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	t.Log(slice)
 }
 
 func TestWrite(t *testing.T) {
 	data := []byte("Hello, world!")
 	err := Write("./testdata/testdir/testfile.txt", data)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 }
 
 func TestAppend(t *testing.T) {
 	data := []byte("\nHello, world!")
 	err := Append("./testdata/testdir/testfile.txt", data)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 }
 
 func TestCopy(t *testing.T) {
 	err := Copy("./testdata/test.md", "./testdata/testdir/test.md")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 }
 
 func TestRename(t *testing.T) {
 	err := Rename("./testdata/testdir/testfile.txt", "./testdata/testdir/file.txt")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 }
 
 func TestRemove(t *testing.T) {
 	err := Remove("./testdata/testdir/file.txt")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 }
 
 func TestMkdir(t *testing.T) {
 	err := Mkdir("./testdata/testdir")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 }
 
 func TestDeldir(t *testing.T) {
 	err := Deldir("./testdata/testdir")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 }
 
 func TestAbsPath(t *testing.T) {
 	absPath, err := AbsPath("./testdata/test.png")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	t.Log(absPath)
 
 	absPath, err = AbsPath("./testdata/test.txt")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	t.Log(absPath)
 }
 

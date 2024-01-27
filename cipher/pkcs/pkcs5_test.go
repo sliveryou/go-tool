@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-var encrypt_8 = []byte{97, 115, 100, 102, 4, 4, 4, 4}
+var encrypt8 = []byte{97, 115, 100, 102, 4, 4, 4, 4}
 
 func TestPKCS5Padding(t *testing.T) {
 	type args struct {
@@ -21,7 +21,7 @@ func TestPKCS5Padding(t *testing.T) {
 			args: args{
 				cipherText: cipherText,
 			},
-			want: encrypt_8,
+			want: encrypt8,
 		},
 	}
 	for _, tt := range tests {
@@ -46,7 +46,7 @@ func TestPKCS5Trimming(t *testing.T) {
 		{
 			name: "",
 			args: args{
-				encrypt: encrypt_8,
+				encrypt: encrypt8,
 			},
 			want:    cipherText,
 			wantErr: false,

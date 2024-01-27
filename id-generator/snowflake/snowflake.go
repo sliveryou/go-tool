@@ -124,11 +124,10 @@ func (s *Snowflake) NextId() (int64, error) {
 	} else {
 		s.sequenceId = (s.sequenceId + 1) & sequenceMax
 		if s.sequenceId == 0 {
-			if s.elapsedTime-current <= s.tolerateMillis {
-				s.elapsedTime = s.waitNextElapsedTime(current)
-			} else {
+			if s.elapsedTime-current > s.tolerateMillis {
 				return 0, ErrClockBackward
 			}
+			s.elapsedTime = s.waitNextElapsedTime(current)
 		}
 	}
 

@@ -99,6 +99,7 @@ func TestNewWithSource(t *testing.T) {
 
 func BenchmarkNewString(b *testing.B) {
 	benchFunc := func(b *testing.B, length int) {
+		b.Helper()
 		for i := 0; i < b.N; i++ {
 			NewString(length)
 		}
@@ -114,6 +115,7 @@ func BenchmarkNewString(b *testing.B) {
 
 func BenchmarkNewNumber(b *testing.B) {
 	benchFunc := func(b *testing.B, length int) {
+		b.Helper()
 		for i := 0; i < b.N; i++ {
 			NewNumber(length)
 		}
@@ -129,6 +131,7 @@ func BenchmarkNewNumber(b *testing.B) {
 
 func BenchmarkNewWithSource(b *testing.B) {
 	benchFunc := func(b *testing.B, length int, source string) {
+		b.Helper()
 		for i := 0; i < b.N; i++ {
 			NewWithSource(length, source)
 		}

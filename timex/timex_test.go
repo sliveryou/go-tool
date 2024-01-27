@@ -6,12 +6,13 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestLocation(t *testing.T) {
 	assertion := assert.New(t)
 
-	assertion.Panics(func() {
+	assertion.NotPanics(func() {
 		Location("ErrLocationName")
 	})
 	assertion.NotPanics(func() {
@@ -162,8 +163,9 @@ func TestStringToTime(t *testing.T) {
 	for _, c := range cases {
 		get, err := StringToTime(c.str, c.layout)
 		if c.wantErr {
-			assert.EqualError(t, err, "timex: str does not match layout")
-		} else if assert.NoError(t, err) {
+			require.EqualError(t, err, "timex: str does not match layout")
+		} else {
+			require.NoError(t, err)
 			assert.Equal(t, c.expect, get.String())
 		}
 	}

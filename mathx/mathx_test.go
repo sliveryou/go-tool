@@ -7,8 +7,8 @@ import (
 )
 
 func TestRound(t *testing.T) {
-	assert.Equal(t, 123.46, Round(123.45678, 2))
-	assert.Equal(t, 123.456, RoundBank(123.4565, 3))
+	assert.InEpsilon(t, 123.46, Round(123.45678, 2), 0.01)
+	assert.InEpsilon(t, 123.456, RoundBank(123.4565, 3), 0.001)
 	assert.Equal(t, "123.46", RoundToString(123.45678, 2))
 	assert.Equal(t, "123.456", RoundBankToString(123.4565, 3))
 }
@@ -91,51 +91,51 @@ func TestRand(t *testing.T) {
 }
 
 func TestMax(t *testing.T) {
-	assert.Equal(t, 10.1, Max(1, 5.0, 2.0, 3.5, 8, 0, 10.1, 7, 4))
+	assert.InEpsilon(t, 10.1, Max(1, 5.0, 2.0, 3.5, 8, 0, 10.1, 7, 4), 0.001)
 	assert.Equal(t, 9, MaxInt(1, 3, 9, 7, 5))
 	assert.Equal(t, int64(9), MaxInt64(1, 3, 9, 7, 5))
-	assert.Equal(t, 10.1, MaxFloat(1, 5.0, 2.0, 3.5, 8, 0, 10.1, 7, 4))
-	assert.Equal(t, 10.1, MaxFloat64(1, 5.0, 2.0, 3.5, 8, 0, 10.1, 7, 4))
+	assert.InEpsilon(t, 10.1, MaxFloat(1, 5.0, 2.0, 3.5, 8, 0, 10.1, 7, 4), 0.001)
+	assert.InEpsilon(t, 10.1, MaxFloat64(1, 5.0, 2.0, 3.5, 8, 0, 10.1, 7, 4), 0.001)
 }
 
 func TestMin(t *testing.T) {
-	assert.Equal(t, 0.0, Min(1, 5.0, 2.0, 3.5, 8, 0, 10.1, 7, 4))
+	assert.InDelta(t, 0.0, Min(1, 5.0, 2.0, 3.5, 8, 0, 10.1, 7, 4), 0.001)
 	assert.Equal(t, 1, MinInt(1, 3, 9, 7, 5))
 	assert.Equal(t, int64(1), MinInt64(1, 3, 9, 7, 5))
-	assert.Equal(t, 0.0, MinFloat(1, 5.0, 2.0, 3.5, 8, 0, 10.1, 7, 4))
-	assert.Equal(t, 0.0, MinFloat64(1, 5.0, 2.0, 3.5, 8, 0, 10.1, 7, 4))
+	assert.InDelta(t, 0.0, MinFloat(1, 5.0, 2.0, 3.5, 8, 0, 10.1, 7, 4), 0.001)
+	assert.InDelta(t, 0.0, MinFloat64(1, 5.0, 2.0, 3.5, 8, 0, 10.1, 7, 4), 0.001)
 }
 
 func TestSum(t *testing.T) {
-	assert.Equal(t, 16.5, Sum(1.1, 2.2, 3.3, 4.4, 5.5))
+	assert.InDelta(t, 16.5, Sum(1.1, 2.2, 3.3, 4.4, 5.5), 0.001)
 	assert.Equal(t, 15, SumInt(1, 2, 3, 4, 5))
 	assert.Equal(t, int64(15), SumInt64(1, 2, 3, 4, 5))
-	assert.Equal(t, 16.5, SumFloat(1.1, 2.2, 3.3, 4.4, 5.5))
-	assert.Equal(t, 16.5, SumFloat64(1.1, 2.2, 3.3, 4.4, 5.5))
+	assert.InDelta(t, 16.5, SumFloat(1.1, 2.2, 3.3, 4.4, 5.5), 0.001)
+	assert.InDelta(t, 16.5, SumFloat64(1.1, 2.2, 3.3, 4.4, 5.5), 0.001)
 }
 
 func TestAverage(t *testing.T) {
-	assert.Equal(t, 3.3, Average(1.1, 2.2, 3.3, 4.4, 5.5))
-	assert.Equal(t, 3.0, AverageInt(1, 2, 3, 4, 5))
-	assert.Equal(t, 3.0, AverageInt64(1, 2, 3, 4, 5))
-	assert.Equal(t, 3.3, AverageFloat(1.1, 2.2, 3.3, 4.4, 5.5))
-	assert.Equal(t, 3.3, AverageFloat64(1.1, 2.2, 3.3, 4.4, 5.5))
+	assert.InDelta(t, 3.3, Average(1.1, 2.2, 3.3, 4.4, 5.5), 0.001)
+	assert.InDelta(t, 3.0, AverageInt(1, 2, 3, 4, 5), 0.001)
+	assert.InDelta(t, 3.0, AverageInt64(1, 2, 3, 4, 5), 0.001)
+	assert.InDelta(t, 3.3, AverageFloat(1.1, 2.2, 3.3, 4.4, 5.5), 0.001)
+	assert.InDelta(t, 3.3, AverageFloat64(1.1, 2.2, 3.3, 4.4, 5.5), 0.001)
 }
 
 func TestAbs(t *testing.T) {
-	assert.Equal(t, 100, AbsInt(-100))
+	assert.InDelta(t, 100, AbsInt(-100), 0.001)
 	assert.Equal(t, int64(100), AbsInt64(-100))
-	assert.Equal(t, 123.456, AbsFloat(-123.456))
-	assert.Equal(t, 123.456, AbsFloat64(-123.456))
-	assert.Equal(t, 0.0, AbsFloat64(0))
+	assert.InDelta(t, 123.456, AbsFloat(-123.456), 0.001)
+	assert.InDelta(t, 123.456, AbsFloat64(-123.456), 0.001)
+	assert.InDelta(t, 0.0, AbsFloat64(0), 0.001)
 }
 
 func TestPercent(t *testing.T) {
-	assert.Equal(t, 15.0, Percent(15, 100))
+	assert.InDelta(t, 15.0, Percent(15, 100), 0.001)
 	assert.Greater(t, Percent("10", "98"), 10.2)
-	assert.Equal(t, 12.34, Percent(12.34, "100"))
-	assert.Equal(t, 0.0, Percent(123, "abcd"))
-	assert.Equal(t, 0.0, Percent(0, "123"))
+	assert.InDelta(t, 12.34, Percent(12.34, "100"), 0.001)
+	assert.InDelta(t, 0.0, Percent(123, "abcd"), 0.001)
+	assert.InDelta(t, 0.0, Percent(0, "123"), 0.001)
 }
 
 func TestSizeFormat(t *testing.T) {

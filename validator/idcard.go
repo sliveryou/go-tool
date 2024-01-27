@@ -63,7 +63,7 @@ func NewIdCard(idcard string) IdCard {
 // IsValid checks the id card is valid.
 func (ic IdCard) IsValid() bool {
 	icStr := strings.ToUpper(string(ic))
-	if !idcardRegex.Match([]byte(icStr)) {
+	if !idcardRegex.MatchString(icStr) {
 		return false
 	}
 
@@ -71,14 +71,14 @@ func (ic IdCard) IsValid() bool {
 	checkCode := icStr[17]
 
 	for index := range icStr[:17] {
-		if a, err := strconv.Atoi(string(icStr[index])); err == nil {
-			// 计算加权因子
-			w := idCardIndexWeightMap[index]
-			// 计算加权和
-			sum += a * w
-		} else {
+		a, err := strconv.Atoi(string(icStr[index]))
+		if err != nil {
 			return false
 		}
+		// 计算加权因子
+		w := idCardIndexWeightMap[index]
+		// 计算加权和
+		sum += a * w
 	}
 
 	// fmt.Println(string(modCheckCodeMap[sum%11]), string(checkCode))

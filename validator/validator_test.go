@@ -3,7 +3,7 @@ package validator
 import (
 	"testing"
 
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestVerify(t *testing.T) {
@@ -44,22 +44,18 @@ func TestVerify(t *testing.T) {
 	}
 
 	err := Verify(&user)
-	if assert.Error(t, err) {
-		t.Log(err, ParseErr(err))
-	}
+	require.Error(t, err)
+	t.Log(err, ParseErr(err))
 
 	err = Verify([]*User{&user})
-	if assert.Error(t, err) {
-		t.Log(err, ParseErr(err))
-	}
+	require.Error(t, err)
+	t.Log(err, ParseErr(err))
 
 	err = VerifyVar("sliveryouqq.com", "email")
-	if assert.Error(t, err) {
-		t.Log(err, ParseErr(err))
-	}
+	require.Error(t, err)
+	t.Log(err, ParseErr(err))
 
 	err = VerifyVarWithValue("abcd", "abce", "eqcsfield")
-	if assert.Error(t, err) {
-		t.Log(err, ParseErr(err))
-	}
+	require.Error(t, err)
+	t.Log(err, ParseErr(err))
 }

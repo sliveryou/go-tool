@@ -31,11 +31,10 @@ func Extract(slice interface{}, num int) []interface{} {
 		}
 		result := make([]interface{}, num)
 		for i, v := range rand.Perm(length) {
-			if i < num {
-				result[i] = value.Index(v).Interface()
-			} else {
+			if i >= num {
 				break
 			}
+			result[i] = value.Index(v).Interface()
 		}
 		return result
 	default:
@@ -58,11 +57,10 @@ func ExtractStrings(slice []string, num int) []string {
 	}
 	result := make([]string, num)
 	for i, v := range rand.Perm(length) {
-		if i < num {
-			result[i] = slice[v]
-		} else {
+		if i >= num {
 			break
 		}
+		result[i] = slice[v]
 	}
 	return result
 }
@@ -82,11 +80,10 @@ func ExtractBools(slice []bool, num int) []bool {
 	}
 	result := make([]bool, num)
 	for i, v := range rand.Perm(length) {
-		if i < num {
-			result[i] = slice[v]
-		} else {
+		if i >= num {
 			break
 		}
+		result[i] = slice[v]
 	}
 	return result
 }
@@ -106,11 +103,10 @@ func ExtractInts(slice []int, num int) []int {
 	}
 	result := make([]int, num)
 	for i, v := range rand.Perm(length) {
-		if i < num {
-			result[i] = slice[v]
-		} else {
+		if i >= num {
 			break
 		}
+		result[i] = slice[v]
 	}
 	return result
 }
@@ -130,11 +126,10 @@ func ExtractInt64s(slice []int64, num int) []int64 {
 	}
 	result := make([]int64, num)
 	for i, v := range rand.Perm(length) {
-		if i < num {
-			result[i] = slice[v]
-		} else {
+		if i >= num {
 			break
 		}
+		result[i] = slice[v]
 	}
 	return result
 }
@@ -154,11 +149,10 @@ func ExtractInt32s(slice []int32, num int) []int32 {
 	}
 	result := make([]int32, num)
 	for i, v := range rand.Perm(length) {
-		if i < num {
-			result[i] = slice[v]
-		} else {
+		if i >= num {
 			break
 		}
+		result[i] = slice[v]
 	}
 	return result
 }
@@ -184,11 +178,10 @@ func ExtractFloat64s(slice []float64, num int) []float64 {
 	}
 	result := make([]float64, num)
 	for i, v := range rand.Perm(length) {
-		if i < num {
-			result[i] = slice[v]
-		} else {
+		if i >= num {
 			break
 		}
+		result[i] = slice[v]
 	}
 	return result
 }
@@ -208,11 +201,10 @@ func ExtractFloat32s(slice []float32, num int) []float32 {
 	}
 	result := make([]float32, num)
 	for i, v := range rand.Perm(length) {
-		if i < num {
-			result[i] = slice[v]
-		} else {
+		if i >= num {
 			break
 		}
+		result[i] = slice[v]
 	}
 	return result
 }

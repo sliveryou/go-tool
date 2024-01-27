@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestNextV1(t *testing.T) {
@@ -57,15 +58,15 @@ func TestDecompose(t *testing.T) {
 	expect := "936dbe97-ec4e-4ded-b459-ef676b566485"
 
 	u1, err := Parse("936dbe97-ec4e-4ded-b459-ef676b566485")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, expect, u1.String())
 
 	u2, err := Parse("936dbe97ec4e4dedb459ef676b566485")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, expect, u2.String())
 
 	_, err = Parse("err uuid")
-	assert.Error(t, err)
+	require.Error(t, err)
 }
 
 func BenchmarkNextV1(b *testing.B) {
