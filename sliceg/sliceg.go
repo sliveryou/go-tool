@@ -146,11 +146,10 @@ func Extract[T any](s []T, n int) []T {
 	}
 	es := make([]T, n)
 	for i, v := range rand.Perm(l) {
-		if i < n {
-			es[i] = s[v]
-		} else {
+		if i >= n {
 			break
 		}
+		es[i] = s[v]
 	}
 
 	return es

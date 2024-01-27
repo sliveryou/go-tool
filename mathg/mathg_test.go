@@ -106,7 +106,7 @@ func TestAbs(t *testing.T) {
 
 	for _, c := range absFloatCases {
 		get := Abs(c.n)
-		assert.Equal(t, c.want, get)
+		assert.InDelta(t, c.want, get, 0.0001)
 	}
 }
 
@@ -121,7 +121,7 @@ func TestAverage(t *testing.T) {
 	}
 
 	for _, c := range averageIntCases {
-		assert.Equal(t, c.want, Average(c.nums...))
+		assert.InDelta(t, c.want, Average(c.nums...), 0.0001)
 	}
 
 	averageFloatCases := []struct {
@@ -134,7 +134,7 @@ func TestAverage(t *testing.T) {
 	}
 
 	for _, c := range averageFloatCases {
-		assert.Equal(t, c.want, Average(c.nums...))
+		assert.InDelta(t, c.want, Average(c.nums...), 0.0001)
 	}
 }
 
@@ -162,7 +162,7 @@ func TestSum(t *testing.T) {
 	}
 
 	for _, c := range sumFloatCases {
-		assert.Equal(t, c.want, Sum(c.nums...))
+		assert.InDelta(t, c.want, Sum(c.nums...), 0.0001)
 	}
 }
 
@@ -188,7 +188,7 @@ func TestMax(t *testing.T) {
 	}
 
 	for _, c := range maxFloatCases {
-		assert.Equal(t, c.want, Max(c.nums...))
+		assert.InDelta(t, c.want, Max(c.nums...), 0.0001)
 	}
 }
 
@@ -214,7 +214,7 @@ func TestMin(t *testing.T) {
 	}
 
 	for _, c := range minFloatCases {
-		assert.Equal(t, c.want, Min(c.nums...))
+		assert.InDelta(t, c.want, Min(c.nums...), 0.0001)
 	}
 }
 

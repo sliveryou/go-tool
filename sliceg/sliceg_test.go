@@ -402,7 +402,7 @@ func TestExtract(t *testing.T) {
 			assert.Zero(t, get)
 		} else {
 			t.Log(c.s, get)
-			assert.True(t, c.n >= len(get))
+			assert.GreaterOrEqual(t, c.n, len(get))
 			assert.Subset(t, c.s, get)
 		}
 	}
@@ -412,7 +412,7 @@ func TestExtract(t *testing.T) {
 			assert.Zero(t, get)
 		} else {
 			t.Log(c.s, get)
-			assert.True(t, c.n >= len(get))
+			assert.GreaterOrEqual(t, c.n, len(get))
 			assert.Subset(t, c.s, get)
 		}
 	}
@@ -422,7 +422,7 @@ func TestExtract(t *testing.T) {
 			assert.Zero(t, get)
 		} else {
 			t.Log(c.s, get)
-			assert.True(t, c.n >= len(get))
+			assert.GreaterOrEqual(t, c.n, len(get))
 			assert.Subset(t, c.s, get)
 		}
 	}
