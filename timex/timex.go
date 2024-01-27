@@ -14,7 +14,8 @@ var (
 	shanghai = Location("Asia/Shanghai") // Shanghai *time.Location
 )
 
-// Location returns *time.Location by location name.
+// Location returns *time.Location by location name,
+// if an err occurred, the location will be time.Local.
 func Location(name string) *time.Location {
 	loc, err := time.LoadLocation(name)
 	if err != nil {
@@ -273,11 +274,11 @@ func StringToUnix(str, layout string, location ...*time.Location) int64 {
 }
 
 // UnixTodayRange returns today start unix second timestamp and today end unix second timestamp.
-func UnixTodayRange(location ...*time.Location) (int64, int64) {
+func UnixTodayRange(location ...*time.Location) (start, end int64) {
 	loc := getLocation(location...)
 	year, month, day := time.Now().In(loc).Date()
-	start := time.Date(year, month, day, 0, 0, 0, 0, loc).Unix()
-	end := time.Date(year, month, day, 23, 59, 59, 0, loc).Unix()
+	start = time.Date(year, month, day, 0, 0, 0, 0, loc).Unix()
+	end = time.Date(year, month, day, 23, 59, 59, 0, loc).Unix()
 
 	return start, end
 }

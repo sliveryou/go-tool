@@ -369,8 +369,8 @@ func BinToDec(bin string) int64 {
 }
 
 // HexToBin returns the binary string result converted by hexadecimal string hex.
-func HexToBin(hex string) string {
-	i, _ := strconv.ParseInt(strings.TrimPrefix(hex, "0x"), 16, 64)
+func HexToBin(h string) string {
+	i, _ := strconv.ParseInt(strings.TrimPrefix(h, "0x"), 16, 64)
 	return strconv.FormatInt(i, 2)
 }
 
@@ -386,7 +386,7 @@ func DecToHex(dec int64) string {
 }
 
 // HexToDec returns the decimal int64 result converted by hexadecimal string hex.
-func HexToDec(hex string) int64 {
-	dec, _ := strconv.ParseInt(strings.TrimPrefix(hex, "0x"), 16, 64)
+func HexToDec(h string) int64 {
+	dec, _ := strconv.ParseInt(strings.TrimPrefix(h, "0x"), 16, 64)
 	return dec
 }

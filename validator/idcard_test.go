@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestIdCard_IsValid(t *testing.T) {
@@ -37,9 +38,9 @@ func TestIdCard_GetBirthday(t *testing.T) {
 		get := NewIdCard(c.idcard)
 		birthday, err := get.GetBirthday()
 		if c.expectErr {
-			assert.EqualError(t, err, "validator: invalid idcard")
+			require.EqualError(t, err, "validator: invalid idcard")
 		} else {
-			assert.NoError(t, err)
+			require.NoError(t, err)
 			assert.Equal(t, c.expectBirthday, birthday.Format("2006-01-02"))
 		}
 	}
@@ -60,9 +61,9 @@ func TestIdCard_GetGender(t *testing.T) {
 		get := NewIdCard(c.idcard)
 		gender, err := get.GetGender()
 		if c.expectErr {
-			assert.EqualError(t, err, "validator: invalid idcard")
+			require.EqualError(t, err, "validator: invalid idcard")
 		} else {
-			assert.NoError(t, err)
+			require.NoError(t, err)
 			assert.Equal(t, c.expectGender, gender)
 		}
 	}
@@ -83,9 +84,9 @@ func TestIdCard_IsMale(t *testing.T) {
 		get := NewIdCard(c.idcard)
 		isMale, err := get.IsMale()
 		if c.expectErr {
-			assert.EqualError(t, err, "validator: invalid idcard")
+			require.EqualError(t, err, "validator: invalid idcard")
 		} else {
-			assert.NoError(t, err)
+			require.NoError(t, err)
 			assert.Equal(t, c.expectMale, isMale)
 		}
 	}
@@ -106,9 +107,9 @@ func TestIdCard_IsFemale(t *testing.T) {
 		get := NewIdCard(c.idcard)
 		isFemale, err := get.IsFemale()
 		if c.expectErr {
-			assert.EqualError(t, err, "validator: invalid idcard")
+			require.EqualError(t, err, "validator: invalid idcard")
 		} else {
-			assert.NoError(t, err)
+			require.NoError(t, err)
 			assert.Equal(t, c.expectFemale, isFemale)
 		}
 	}

@@ -7,7 +7,7 @@ import (
 
 var (
 	cipherText = []byte("asdf")
-	encrypt_16 = []byte{
+	encrypt16  = []byte{
 		97, 115, 100, 102, 12, 12,
 		12, 12, 12, 12, 12, 12, 12, 12, 12, 12,
 	}
@@ -29,7 +29,7 @@ func TestPKCS7Padding(t *testing.T) {
 				cipherText: cipherText,
 				blockSize:  16,
 			},
-			want: encrypt_16,
+			want: encrypt16,
 		},
 	}
 	for _, tt := range tests {
@@ -54,7 +54,7 @@ func TestPKCS7Trimming(t *testing.T) {
 		{
 			name: "",
 			args: args{
-				encrypt: encrypt_16,
+				encrypt: encrypt16,
 			},
 			want:    cipherText,
 			wantErr: false,

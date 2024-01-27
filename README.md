@@ -32,25 +32,30 @@ import (
     "github.com/sliveryou/go-tool/v2/cipher"
 )
 
-type Cipher
-    func MustNewAesCbc(key, iv string) Cipher
-    func NewAesCbc(key, iv string) (Cipher, error)
+var _ Cipher = (*aes.Cbc)(nil)
+
+func MustNewAesCbc(key, iv string) *aes.Cbc
+func NewAesCbc(key, iv string) (*aes.Cbc, error)
+type Cipher interface {
+    Encrypt(src []byte) ([]byte, error)
+    Decrypt(src []byte) ([]byte, error)
+}
 
 // aes
 import (
 	"github.com/sliveryou/go-tool/v2/cipher/aes"
 )
 
-func AesCbcDecrypt(key, iv, src []byte) ([]byte, error)
-func AesCbcDecryptBase64(key, iv []byte, msg string) ([]byte, error)
-func AesCbcDecryptHex(key, iv []byte, msg string) ([]byte, error)
-func AesCbcEncrypt(key, iv, src []byte) ([]byte, error)
-func AesCbcEncryptBase64(key, iv, src []byte) (string, error)
-func AesCbcEncryptHex(key, iv, src []byte) (string, error)
-type AesCbc
-    func NewAesCbc(key, iv []byte) (*AesCbc, error)
-    func (a *AesCbc) Decrypt(src []byte) ([]byte, error)
-    func (a *AesCbc) Encrypt(src []byte) ([]byte, error)
+func CbcDecrypt(key, iv, src []byte) ([]byte, error)
+func CbcDecryptBase64(key, iv []byte, msg string) ([]byte, error)
+func CbcDecryptHex(key, iv []byte, msg string) ([]byte, error)
+func CbcEncrypt(key, iv, src []byte) ([]byte, error)
+func CbcEncryptBase64(key, iv, src []byte) (string, error)
+func CbcEncryptHex(key, iv, src []byte) (string, error)
+type Cbc
+    func NewCbc(key, iv []byte) (*Cbc, error)
+    func (c *Cbc) Decrypt(src []byte) ([]byte, error)
+    func (c *Cbc) Encrypt(src []byte) ([]byte, error)
 
 // pkcs
 import (
@@ -82,8 +87,8 @@ func DecToBin(dec int64) string
 func DecToHex(dec int64) string
 func Float64ToBytes(f float64) []byte
 func HexDecodeBytes(h string) []byte
-func HexToBin(hex string) string
-func HexToDec(hex string) int64
+func HexToBin(h string) string
+func HexToDec(h string) int64
 func HexsDecodeBytes(hs []byte) []byte
 func Int64ToBytes(i int64) []byte
 func RunesToBytes(runes []rune) []byte
@@ -295,8 +300,8 @@ func ContainFloat64(slice []float64, value float64, places ...int) (index int)
 func ContainInt(slice []int, value int) (index int)
 func ContainInt32(slice []int32, value int32) (index int)
 func ContainInt64(slice []int64, value int64) (index int)
-func ContainString(slice []string, value string) (index int)
 func ContainRune(slice []rune, value rune) (index int)
+func ContainString(slice []string, value string) (index int)
 func Count(slice interface{}) map[interface{}]int
 func CountBool(slice []bool) map[bool]int
 func CountFloat(slice []float64) map[float64]int
@@ -488,7 +493,7 @@ func UnixMillisecond(t time.Time, location ...*time.Location) int64
 func UnixNanosecond(t time.Time, location ...*time.Location) int64
 func UnixSecond(t time.Time, location ...*time.Location) int64
 func UnixToTime(timestamp int64, location ...*time.Location) time.Time
-func UnixTodayRange(location ...*time.Location) (int64, int64)
+func UnixTodayRange(location ...*time.Location) (start, end int64)
 ```
 
 ### validator

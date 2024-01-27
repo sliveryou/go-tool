@@ -15,5 +15,5 @@ func NewCorpAccount(corpaccount string) CorpAccount {
 // IsValid checks the corp account is valid.
 func (ca CorpAccount) IsValid() bool {
 	caStr := strings.ToUpper(string(ca))
-	return corpaccountRegex.Match([]byte(caStr))
+	return corpaccountRegex.MatchString(caStr)
 }

@@ -48,14 +48,14 @@ var (
 )
 
 var (
-	aescbc128, _ = NewAesCbc([]byte(commonKey128), []byte(commonIV))
-	aescbc192, _ = NewAesCbc([]byte(commonKey192), []byte(commonIV))
-	aescbc256, _ = NewAesCbc([]byte(commonKey256), []byte(commonIV))
+	aescbc128, _ = NewCbc([]byte(commonKey128), []byte(commonIV))
+	aescbc192, _ = NewCbc([]byte(commonKey192), []byte(commonIV))
+	aescbc256, _ = NewCbc([]byte(commonKey256), []byte(commonIV))
 )
 
-func TestAesCbc_Decrypt(t *testing.T) {
+func TestCbc_Decrypt(t *testing.T) {
 	type fields struct {
-		a *AesCbc
+		a *Cbc
 	}
 	type args struct {
 		in []byte
@@ -109,9 +109,9 @@ func TestAesCbc_Decrypt(t *testing.T) {
 	}
 }
 
-func TestAesCbc_Encrypt(t *testing.T) {
+func TestCbc_Encrypt(t *testing.T) {
 	type fields struct {
-		a *AesCbc
+		a *Cbc
 	}
 	type args struct {
 		in []byte
@@ -165,83 +165,7 @@ func TestAesCbc_Encrypt(t *testing.T) {
 	}
 }
 
-func TestAesCbc_decrypt(t *testing.T) {
-	type fields struct {
-		a *AesCbc
-	}
-	type args struct {
-		in []byte
-	}
-	tests := []struct {
-		name    string
-		fields  fields
-		args    args
-		want    []byte
-		wantErr bool
-	}{
-		{
-			name:   "TestAesCbc_decrypt-256",
-			fields: fields{a: aescbc256},
-			args: args{
-				in: commonEncrypted256,
-			},
-			want:    []byte(commonSrc),
-			wantErr: false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got, err := tt.fields.a.decrypt(tt.args.in)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("decrypt() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("decrypt() got = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func TestAesCbc_encrypt(t *testing.T) {
-	type fields struct {
-		a *AesCbc
-	}
-	type args struct {
-		in []byte
-	}
-	tests := []struct {
-		name    string
-		fields  fields
-		args    args
-		want    []byte
-		wantErr bool
-	}{
-		{
-			name:   "TestAesCbc_encrypt-256",
-			fields: fields{a: aescbc256},
-			args: args{
-				in: []byte(commonSrc),
-			},
-			want:    commonEncrypted256,
-			wantErr: false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got, err := tt.fields.a.encrypt(tt.args.in)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("encrypt() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("encrypt() got = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func TestNewAesCbc(t *testing.T) {
+func TestNewCbc(t *testing.T) {
 	type args struct {
 		key []byte
 		iv  []byte
@@ -249,7 +173,7 @@ func TestNewAesCbc(t *testing.T) {
 	tests := []struct {
 		name    string
 		args    args
-		want    *AesCbc
+		want    *Cbc
 		wantErr bool
 	}{
 		{
@@ -282,16 +206,16 @@ func TestNewAesCbc(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := NewAesCbc(tt.args.key, tt.args.iv)
+			_, err := NewCbc(tt.args.key, tt.args.iv)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("NewAesCbc() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("NewCbc() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 		})
 	}
 }
 
-func TestAesCbcDecrypt(t *testing.T) {
+func TestCbcDecrypt(t *testing.T) {
 	type args struct {
 		key []byte
 		iv  []byte
@@ -336,19 +260,19 @@ func TestAesCbcDecrypt(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := AesCbcDecrypt(tt.args.key, tt.args.iv, tt.args.src)
+			got, err := CbcDecrypt(tt.args.key, tt.args.iv, tt.args.src)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("AesCbcDecrypt() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("CbcDecrypt() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("AesCbcDecrypt() got = %v, want %v", got, tt.want)
+				t.Errorf("CbcDecrypt() got = %v, want %v", got, tt.want)
 			}
 		})
 	}
 }
 
-func TestAesCbcDecryptBase64(t *testing.T) {
+func TestCbcDecryptBase64(t *testing.T) {
 	type args struct {
 		key []byte
 		iv  []byte
@@ -393,19 +317,19 @@ func TestAesCbcDecryptBase64(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := AesCbcDecryptBase64(tt.args.key, tt.args.iv, tt.args.msg)
+			got, err := CbcDecryptBase64(tt.args.key, tt.args.iv, tt.args.msg)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("AesCbcDecryptBase64() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("CbcDecryptBase64() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("AesCbcDecryptBase64() got = %v, want %v", got, tt.want)
+				t.Errorf("CbcDecryptBase64() got = %v, want %v", got, tt.want)
 			}
 		})
 	}
 }
 
-func TestAesCbcDecryptHex(t *testing.T) {
+func TestCbcDecryptHex(t *testing.T) {
 	type args struct {
 		key []byte
 		iv  []byte
@@ -450,19 +374,19 @@ func TestAesCbcDecryptHex(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := AesCbcDecryptHex(tt.args.key, tt.args.iv, tt.args.msg)
+			got, err := CbcDecryptHex(tt.args.key, tt.args.iv, tt.args.msg)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("AesCbcDecryptHex() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("CbcDecryptHex() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("AesCbcDecryptHex() got = %v, want %v", got, tt.want)
+				t.Errorf("CbcDecryptHex() got = %v, want %v", got, tt.want)
 			}
 		})
 	}
 }
 
-func TestAesCbcEncrypt(t *testing.T) {
+func TestCbcEncrypt(t *testing.T) {
 	type args struct {
 		key []byte
 		iv  []byte
@@ -507,19 +431,19 @@ func TestAesCbcEncrypt(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := AesCbcEncrypt(tt.args.key, tt.args.iv, tt.args.src)
+			got, err := CbcEncrypt(tt.args.key, tt.args.iv, tt.args.src)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("AesCbcEncrypt() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("CbcEncrypt() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("AesCbcEncrypt() got = %v, want %v", got, tt.want)
+				t.Errorf("CbcEncrypt() got = %v, want %v", got, tt.want)
 			}
 		})
 	}
 }
 
-func TestAesCbcEncryptBase64(t *testing.T) {
+func TestCbcEncryptBase64(t *testing.T) {
 	type args struct {
 		key []byte
 		iv  []byte
@@ -564,19 +488,19 @@ func TestAesCbcEncryptBase64(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := AesCbcEncryptBase64(tt.args.key, tt.args.iv, tt.args.src)
+			got, err := CbcEncryptBase64(tt.args.key, tt.args.iv, tt.args.src)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("AesCbcEncryptBase64() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("CbcEncryptBase64() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if got != tt.want {
-				t.Errorf("AesCbcEncryptBase64() got = %v, want %v", got, tt.want)
+				t.Errorf("CbcEncryptBase64() got = %v, want %v", got, tt.want)
 			}
 		})
 	}
 }
 
-func TestAesCbcEncryptHex(t *testing.T) {
+func TestCbcEncryptHex(t *testing.T) {
 	type args struct {
 		key []byte
 		iv  []byte
@@ -621,13 +545,13 @@ func TestAesCbcEncryptHex(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := AesCbcEncryptHex(tt.args.key, tt.args.iv, tt.args.src)
+			got, err := CbcEncryptHex(tt.args.key, tt.args.iv, tt.args.src)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("AesCbcEncryptHex() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("CbcEncryptHex() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if got != tt.want {
-				t.Errorf("AesCbcEncryptHex() got = %v, want %v", got, tt.want)
+				t.Errorf("CbcEncryptHex() got = %v, want %v", got, tt.want)
 			}
 		})
 	}
@@ -644,7 +568,7 @@ func TestConcurrentAccess(t *testing.T) {
 				t.Error(err)
 			}
 			if !reflect.DeepEqual(en1, commonEncrypted256) {
-				t.Errorf("AesCbcDecrypt() got = %v, want %v", en1, commonEncrypted256)
+				t.Errorf("CbcDecrypt() got = %v, want %v", en1, commonEncrypted256)
 			}
 		}
 		w.Done()
@@ -658,7 +582,7 @@ func TestConcurrentAccess(t *testing.T) {
 				t.Error(err)
 			}
 			if !reflect.DeepEqual(en1, commonEncrypted256) {
-				t.Errorf("AesCbcDecrypt() got = %v, want %v", en1, commonEncrypted256)
+				t.Errorf("CbcDecrypt() got = %v, want %v", en1, commonEncrypted256)
 			}
 		}
 		w.Done()
@@ -672,7 +596,7 @@ func TestConcurrentAccess(t *testing.T) {
 				t.Error(err)
 			}
 			if !reflect.DeepEqual(en1, commonEncrypted256_2) {
-				t.Errorf("AesCbcDecrypt() got = %v, want %v", en1, commonEncrypted256_2)
+				t.Errorf("CbcDecrypt() got = %v, want %v", en1, commonEncrypted256_2)
 			}
 		}
 		w.Done()
@@ -686,7 +610,7 @@ func TestConcurrentAccess(t *testing.T) {
 				t.Error(err)
 			}
 			if !reflect.DeepEqual(en1, []byte(commonSrc)) {
-				t.Errorf("AesCbcDecrypt() got = %v, want %v", en1, commonSrc)
+				t.Errorf("CbcDecrypt() got = %v, want %v", en1, commonSrc)
 			}
 		}
 		w.Done()
@@ -700,7 +624,7 @@ func TestConcurrentAccess(t *testing.T) {
 				t.Error(err)
 			}
 			if !reflect.DeepEqual(en1, []byte(commonSrc)) {
-				t.Errorf("AesCbcDecrypt() got = %v, want %v", en1, commonSrc)
+				t.Errorf("CbcDecrypt() got = %v, want %v", en1, commonSrc)
 			}
 		}
 		w.Done()
@@ -714,7 +638,7 @@ func TestConcurrentAccess(t *testing.T) {
 				t.Error(err)
 			}
 			if !reflect.DeepEqual(en1, []byte(commonSrc2)) {
-				t.Errorf("AesCbcDecrypt() got = %v, want %v", en1, commonSrc2)
+				t.Errorf("CbcDecrypt() got = %v, want %v", en1, commonSrc2)
 			}
 		}
 		w.Done()

@@ -78,7 +78,7 @@ func NewUSCC(uscc string) USCC {
 // IsValid checks the uscc is valid.
 func (uscc USCC) IsValid() bool {
 	usccStr := strings.ToUpper(string(uscc))
-	if !usccRegex.Match([]byte(usccStr)) {
+	if !usccRegex.MatchString(usccStr) {
 		return false
 	}
 

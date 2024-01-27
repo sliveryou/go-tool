@@ -178,13 +178,18 @@ func VerifyVarWithValue(field, other interface{}, tag string) error {
 // convertErr converts err to validation error.
 func convertErr(err error) error {
 	if err != nil {
-		var ves validateErrors
-		var e *validator.InvalidValidationError
-		if errors.As(err, &e) {
+		var (
+			ves validateErrors
+			ive *validator.InvalidValidationError
+			ve  validator.ValidationErrors
+		)
+		if errors.As(err, &ive) {
 			return ves
 		}
-		for _, err := range err.(validator.ValidationErrors) {
-			ves = append(ves, err.Translate(ti))
+		if errors.As(err, &ve) {
+			for _, err := range ve {
+				ves = append(ves, err.Translate(ti))
+			}
 		}
 
 		return ves
@@ -225,27 +230,27 @@ func translationFunc(key string) validator.TranslationFunc {
 	}
 }
 
-// idcard id card validator.
+// idcard represents the id card validator.
 func idcard(fl validator.FieldLevel) bool {
 	return NewIdCard(fl.Field().String()).IsValid()
 }
 
-// bankcard bank card validator.
+// bankcard represents the bank card validator.
 func bankcard(fl validator.FieldLevel) bool {
 	return NewBankCard(fl.Field().String()).IsValid()
 }
 
-// uscc uscc validator.
+// uscc represents the uscc validator.
 func uscc(fl validator.FieldLevel) bool {
 	return NewUSCC(fl.Field().String()).IsValid()
 }
 
-// corpaccount corp account validator.
+// corpaccount represents the corp account validator.
 func corpaccount(fl validator.FieldLevel) bool {
 	return NewCorpAccount(fl.Field().String()).IsValid()
 }
 
-// httpmethod http method validator.
+// httpmethod represents the http method validator.
 func httpmethod(fl validator.FieldLevel) bool {
 	_, ok := httpMethodMap[strings.ToUpper(fl.Field().String())]
 	return ok

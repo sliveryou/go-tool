@@ -4,10 +4,12 @@ import (
 	"fmt"
 	"math"
 	"math/rand"
+	"strconv"
 	"testing"
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestStdSource(t *testing.T) {
@@ -29,11 +31,11 @@ func TestMustNewEncoder(t *testing.T) {
 
 func TestNewEncoder(t *testing.T) {
 	enc, err := NewEncoder("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.NotNil(t, enc)
 
 	_, err = NewEncoder("test")
-	assert.EqualError(t, err, "base62: encoding source is not 62-bytes long")
+	require.EqualError(t, err, "base62: encoding source is not 62-bytes long")
 }
 
 func TestStdEncoding_Encode(t *testing.T) {
@@ -64,9 +66,8 @@ func TestStdEncoding_Decode(t *testing.T) {
 
 	for k, v := range cases {
 		d, err := StdEncoding.Decode(v)
-		if assert.Nil(t, err) {
-			assert.Equal(t, k, d)
-		}
+		require.NoError(t, err)
+		assert.Equal(t, k, d)
 	}
 }
 
@@ -104,9 +105,8 @@ func TestEncoder_Decode(t *testing.T) {
 
 	for k, v := range cases {
 		d, err := enc.Decode(v)
-		if assert.Nil(t, err) {
-			assert.Equal(t, k, d)
-		}
+		require.NoError(t, err)
+		assert.Equal(t, k, d)
 	}
 }
 
@@ -114,6 +114,7 @@ func BenchmarkEncoder_Encode(b *testing.B) {
 	s := rand.New(rand.NewSource(time.Now().UnixNano()))
 	enc := MustNewEncoder(StdSource())
 	benchFunc := func(b *testing.B, id int64) {
+		b.Helper()
 		for i := 0; i < b.N; i++ {
 			enc.Encode(id)
 		}
@@ -121,7 +122,7 @@ func BenchmarkEncoder_Encode(b *testing.B) {
 
 	for i := 0; i < 5; i++ {
 		id := s.Int63()
-		b.Run(fmt.Sprintf("%d", id), func(b *testing.B) {
+		b.Run(strconv.FormatInt(id, 10), func(b *testing.B) {
 			benchFunc(b, id)
 		})
 	}
@@ -131,6 +132,7 @@ func BenchmarkEncoder_Decode(b *testing.B) {
 	s := rand.New(rand.NewSource(time.Now().UnixNano()))
 	enc := MustNewEncoder(StdSource())
 	benchFunc := func(b *testing.B, id int64, idStr string) {
+		b.Helper()
 		for i := 0; i < b.N; i++ {
 			_, _ = enc.Decode(idStr)
 		}

@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestToString(t *testing.T) {
@@ -341,7 +342,7 @@ func TestToFloat(t *testing.T) {
 
 	for _, c := range cases {
 		get := ToFloat(c.src)
-		assert.Equal(t, c.expect, get)
+		assert.InDelta(t, c.expect, get, 0.001)
 	}
 }
 
@@ -379,7 +380,7 @@ func TestToFloat32(t *testing.T) {
 
 	for _, c := range cases {
 		get := ToFloat32(c.src)
-		assert.Equal(t, c.expect, get)
+		assert.InDelta(t, c.expect, get, 0.001)
 	}
 }
 
@@ -417,7 +418,7 @@ func TestToFloat64(t *testing.T) {
 
 	for _, c := range cases {
 		get := ToFloat64(c.src)
-		assert.Equal(t, c.expect, get)
+		assert.InDelta(t, c.expect, get, 0.001)
 	}
 }
 
@@ -474,7 +475,7 @@ func TestFloat64BytesConversion(t *testing.T) {
 
 	for _, c := range cases {
 		get := Float64ToBytes(c.src)
-		assert.Equal(t, c.src, BytesToFloat64(get))
+		assert.InDelta(t, c.src, BytesToFloat64(get), 0.001)
 		t.Log(get)
 	}
 }
@@ -588,23 +589,27 @@ func TestJsonUnmarshal(t *testing.T) {
 	d := json.NewDecoder(strings.NewReader(s))
 	d.UseNumber()
 	err := d.Decode(&m1)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
-	a := m1["a"].(map[string]interface{})
-	b := a["b"].(map[string]interface{})
+	a, ok := m1["a"].(map[string]interface{})
+	assert.True(t, ok)
+	b, ok := a["b"].(map[string]interface{})
+	assert.True(t, ok)
 
 	assert.Equal(t, "764197655051251712", ToString(b["ids"]))
 	assert.Equal(t, int64(764197655051251712), ToInt64(b["ids"]))
-	assert.Equal(t, float64(764197655051251700), ToFloat64(b["ids"]))
+	assert.InDelta(t, float64(764197655051251700), ToFloat64(b["ids"]), 0.001)
 
 	m2 := make(map[string]interface{})
 	err = json.Unmarshal([]byte(s), &m2)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
-	a = m2["a"].(map[string]interface{})
-	b = a["b"].(map[string]interface{})
+	a, ok = m2["a"].(map[string]interface{})
+	assert.True(t, ok)
+	b, ok = a["b"].(map[string]interface{})
+	assert.True(t, ok)
 
 	assert.Equal(t, "764197655051251700", ToString(b["ids"]))
 	assert.Equal(t, int64(764197655051251712), ToInt64(b["ids"]))
-	assert.Equal(t, float64(764197655051251700), ToFloat64(b["ids"]))
+	assert.InDelta(t, float64(764197655051251700), ToFloat64(b["ids"]), 0.001)
 }

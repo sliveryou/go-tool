@@ -560,12 +560,11 @@ func SizeFormat(size float64, places int, separator ...string) string {
 	}
 	index := 0
 	for {
-		if size >= 1024 {
-			size /= 1024
-			index++
-		} else {
+		if size < 1024 {
 			break
 		}
+		size /= 1024
+		index++
 	}
 	if index >= len(sizeUnits) {
 		index = len(sizeUnits) - 1
@@ -581,7 +580,7 @@ func NumberFormat(num float64, places int, separator ...string) string {
 		isNegative = true
 	}
 	roundStr := RoundToString(num, places)
-	prefix, suffix := "", ""
+	var prefix, suffix string
 	if places > 0 {
 		splits := strings.Split(roundStr, ".")
 		prefix = splits[0]
