@@ -58,4 +58,27 @@ func TestVerify(t *testing.T) {
 	err = VerifyVarWithValue("abcd", "abce", "eqcsfield")
 	require.Error(t, err)
 	t.Log(err, ParseErr(err))
+
+	type CreateTrainReq struct {
+		Name          string `json:"name" validate:"required" label:"培训名称"` // 培训名称
+		Company       string `json:"company,optional"`                      // 培训单位
+		ResponsesUser string `json:"responses_user,optional"`               // 负责人
+		Time          int64  `json:"time" validate:"required" label:"培训日期"` // 培训日期
+		Description   string `json:"description,optional"`                  // 培训备注
+	}
+	type CreateTrainsReq struct {
+		Objects []*CreateTrainReq `json:"objects" validate:"gt=0,dive" label:"培训列表"` // 培训列表
+	}
+	r := CreateTrainsReq{Objects: []*CreateTrainReq{
+		{
+			Name:          "123",
+			Company:       "",
+			ResponsesUser: "",
+			Time:          0,
+			Description:   "",
+		},
+	}}
+	err = Verify(r)
+	require.Error(t, err)
+	t.Log(err, ParseErr(err))
 }

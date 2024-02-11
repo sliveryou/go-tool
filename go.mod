@@ -5,7 +5,7 @@ go 1.16
 require (
 	github.com/go-playground/locales v0.14.1
 	github.com/go-playground/universal-translator v0.18.1
-	github.com/go-playground/validator/v10 v10.17.0
+	github.com/go-playground/validator/v10 v10.18.0
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/shopspring/decimal v1.3.1
 	github.com/stretchr/testify v1.8.4

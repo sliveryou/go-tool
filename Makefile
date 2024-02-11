@@ -1,4 +1,4 @@
-.PHONY: proxy tidy fmt lint pre-commit
+.PHONY: proxy tidy fmt lint test pre-commit
 
 proxy:
 	@go env -w GO111MODULE="on"
@@ -15,4 +15,7 @@ fmt:
 lint:
 	@golangci-lint run ./...
 
-pre-commit: tidy fmt lint
+test:
+	@go test ./...
+
+pre-commit: tidy fmt lint test
