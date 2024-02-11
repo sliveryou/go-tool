@@ -32,6 +32,8 @@ func ToString(src interface{}) string {
 		return strconv.FormatBool(v)
 	case fmt.Stringer:
 		return v.String()
+	case error:
+		return v.Error()
 	default:
 		return fmt.Sprint(v)
 	}

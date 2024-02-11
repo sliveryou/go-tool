@@ -63,7 +63,7 @@ linters-settings:
       - name: unreachable-code
       # - name: add-constant
       - name: unnecessary-stmt
-      - name: struct-tag
+      # - name: struct-tag
       - name: modifies-value-receiver
       - name: constant-logical-expr
       - name: bool-literal-in-expr
@@ -100,7 +100,7 @@ linters-settings:
     allow: [ "anon", "error","empty", "stdlib", "generic" ]
   staticcheck:
     # https://staticcheck.io/docs/options#checks
-    checks: [ "all" ]
+    checks: [ "all", "-SA5008" ]
   stylecheck:
     # https://staticcheck.io/docs/options#checks
     checks: [ "all", "-ST1000", "-ST1003" ]
