@@ -1,4 +1,4 @@
-# go-tool v2
+# go-tool
 
 [![Github License](https://img.shields.io/github/license/sliveryou/go-tool.svg?style=flat)](https://github.com/sliveryou/go-tool/blob/master/LICENSE)
 [![Go Doc](https://godoc.org/github.com/sliveryou/go-tool/v2?status.svg)](https://pkg.go.dev/github.com/sliveryou/go-tool/v2)
@@ -8,6 +8,20 @@
 [![Github Stars](https://img.shields.io/github/stars/sliveryou/go-tool.svg?style=flat)](https://github.com/sliveryou/go-tool/stargazers)
 
 go 常用工具函数集合
+
+## 安装
+
+1. 使用 go 1.18 及以上版本的，建议安装 go-tool v2 版本
+
+```bash
+$ go get github.com/sliveryou/go-tool/v2
+```
+
+2. 使用 go 1.18 以下版本的，必须安装 go-tool v1 版本
+
+```bash
+$ go get github.com/sliveryou/go-tool
+```
 
 ## 简介
 
