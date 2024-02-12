@@ -1,6 +1,7 @@
 package sliceg
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -112,7 +113,7 @@ var (
 	}
 )
 
-func TestContains(t *testing.T) {
+func TestContain(t *testing.T) {
 	for _, c := range containIntCases {
 		get := Contain(c.s, c.v)
 		assert.Equal(t, c.want, get)
@@ -123,6 +124,27 @@ func TestContains(t *testing.T) {
 	}
 	for _, c := range containStringCases {
 		get := Contain(c.s, c.v)
+		assert.Equal(t, c.want, get)
+	}
+}
+
+func TestContainFunc(t *testing.T) {
+	for _, c := range containIntCases {
+		get := ContainFunc(c.s, func(v int) bool {
+			return v == c.v
+		})
+		assert.Equal(t, c.want, get)
+	}
+	for _, c := range containFloatCases {
+		get := ContainFunc(c.s, func(v float64) bool {
+			return v == c.v
+		})
+		assert.Equal(t, c.want, get)
+	}
+	for _, c := range containStringCases {
+		get := ContainFunc(c.s, func(v string) bool {
+			return v == c.v
+		})
 		assert.Equal(t, c.want, get)
 	}
 }
@@ -332,38 +354,6 @@ func TestEqualFunc(t *testing.T) {
 }
 
 var (
-	fillIntCases = []struct {
-		v    int
-		n    int
-		want []int
-	}{
-		{v: 1, n: 5, want: []int{1, 1, 1, 1, 1}},
-		{v: 1, n: 3, want: []int{1, 1, 1}},
-		{v: 1, n: 0, want: []int{}},
-	}
-
-	fillFloatCases = []struct {
-		v    float64
-		n    int
-		want []float64
-	}{
-		{v: 1.1, n: 5, want: []float64{1.1, 1.1, 1.1, 1.1, 1.1}},
-		{v: 1.1, n: 3, want: []float64{1.1, 1.1, 1.1}},
-		{v: 1.1, n: 0, want: []float64{}},
-	}
-
-	fillStringCases = []struct {
-		v    string
-		n    int
-		want []string
-	}{
-		{v: "1", n: 5, want: []string{"1", "1", "1", "1", "1"}},
-		{v: "1", n: 3, want: []string{"1", "1", "1"}},
-		{v: "1", n: 0, want: []string{}},
-	}
-)
-
-var (
 	extractIntCases = []struct {
 		s []int
 		n int
@@ -399,7 +389,7 @@ func TestExtract(t *testing.T) {
 	for _, c := range extractIntCases {
 		get := Extract(c.s, c.n)
 		if len(c.s) == 0 {
-			assert.Zero(t, get)
+			assert.Empty(t, get)
 		} else {
 			t.Log(c.s, get)
 			assert.GreaterOrEqual(t, c.n, len(get))
@@ -409,7 +399,7 @@ func TestExtract(t *testing.T) {
 	for _, c := range extractFloatCases {
 		get := Extract(c.s, c.n)
 		if len(c.s) == 0 {
-			assert.Zero(t, get)
+			assert.Empty(t, get)
 		} else {
 			t.Log(c.s, get)
 			assert.GreaterOrEqual(t, c.n, len(get))
@@ -419,7 +409,7 @@ func TestExtract(t *testing.T) {
 	for _, c := range extractStringCases {
 		get := Extract(c.s, c.n)
 		if len(c.s) == 0 {
-			assert.Zero(t, get)
+			assert.Empty(t, get)
 		} else {
 			t.Log(c.s, get)
 			assert.GreaterOrEqual(t, c.n, len(get))
@@ -427,6 +417,38 @@ func TestExtract(t *testing.T) {
 		}
 	}
 }
+
+var (
+	fillIntCases = []struct {
+		v    int
+		n    int
+		want []int
+	}{
+		{v: 1, n: 5, want: []int{1, 1, 1, 1, 1}},
+		{v: 1, n: 3, want: []int{1, 1, 1}},
+		{v: 1, n: 0, want: []int{}},
+	}
+
+	fillFloatCases = []struct {
+		v    float64
+		n    int
+		want []float64
+	}{
+		{v: 1.1, n: 5, want: []float64{1.1, 1.1, 1.1, 1.1, 1.1}},
+		{v: 1.1, n: 3, want: []float64{1.1, 1.1, 1.1}},
+		{v: 1.1, n: 0, want: []float64{}},
+	}
+
+	fillStringCases = []struct {
+		v    string
+		n    int
+		want []string
+	}{
+		{v: "1", n: 5, want: []string{"1", "1", "1", "1", "1"}},
+		{v: "1", n: 3, want: []string{"1", "1", "1"}},
+		{v: "1", n: 0, want: []string{}},
+	}
+)
 
 func TestFill(t *testing.T) {
 	for _, c := range fillIntCases {
@@ -496,6 +518,24 @@ func TestReverse(t *testing.T) {
 	}
 }
 
+func TestReverseSelf(t *testing.T) {
+	for _, c := range reverseIntCases {
+		clone := Clone(c.s, true)
+		ReverseSelf(clone)
+		assert.Equal(t, c.want, clone)
+	}
+	for _, c := range reverseFloatCases {
+		clone := Clone(c.s, true)
+		ReverseSelf(clone)
+		assert.Equal(t, c.want, clone)
+	}
+	for _, c := range reverseStringCases {
+		clone := Clone(c.s, true)
+		ReverseSelf(clone)
+		assert.Equal(t, c.want, clone)
+	}
+}
+
 var (
 	shuffleIntCases = []struct {
 		s []int
@@ -529,7 +569,7 @@ func TestShuffle(t *testing.T) {
 	for _, c := range shuffleIntCases {
 		get := Shuffle(c.s)
 		if len(c.s) == 0 {
-			assert.Nil(t, get)
+			assert.Empty(t, get)
 		} else {
 			t.Log(c.s, get)
 			assert.Subset(t, c.s, get)
@@ -538,7 +578,7 @@ func TestShuffle(t *testing.T) {
 	for _, c := range shuffleFloatCases {
 		get := Shuffle(c.s)
 		if len(c.s) == 0 {
-			assert.Nil(t, get)
+			assert.Empty(t, get)
 		} else {
 			t.Log(c.s, get)
 			assert.Subset(t, c.s, get)
@@ -547,7 +587,7 @@ func TestShuffle(t *testing.T) {
 	for _, c := range shuffleStringCases {
 		get := Shuffle(c.s)
 		if len(c.s) == 0 {
-			assert.Nil(t, get)
+			assert.Empty(t, get)
 		} else {
 			t.Log(c.s, get)
 			assert.Subset(t, c.s, get)
@@ -665,4 +705,147 @@ func TestUnique(t *testing.T) {
 		get := Unique(c.s)
 		assert.Equal(t, c.want, get)
 	}
+}
+
+func TestUniqueFunc(t *testing.T) {
+	for _, c := range uniqueIntCases {
+		get := UniqueFunc(c.s, func(v int) int {
+			return v
+		})
+		assert.Equal(t, c.want, get)
+	}
+	for _, c := range uniqueFloatCases {
+		get := UniqueFunc(c.s, func(v float64) float64 {
+			return v
+		})
+		assert.Equal(t, c.want, get)
+	}
+	for _, c := range uniqueStringCases {
+		get := UniqueFunc(c.s, func(v string) string {
+			return v
+		})
+		assert.Equal(t, c.want, get)
+	}
+}
+
+func TestSubset(t *testing.T) {
+	s1 := []int64{3, 8, 6, 12, 9, 10}
+	assert.True(t, Subset(s1, []int64{3, 6, 9}))
+	assert.False(t, Subset(s1, []int64{3, 20, 8}))
+
+	s2 := []string{"s", "i", "l", "v", "e", "r"}
+	assert.True(t, Subset(s2, []string{"s", "e", "r"}))
+	assert.False(t, Subset(s2, []string{"y", "o", "u"}))
+}
+
+func TestSubsetFunc(t *testing.T) {
+	s1 := []int64{3, 8, 6, 12, 9, 10}
+	assert.True(t, SubsetFunc(s1, []int64{3, 6, 9}, func(a, b int64) int {
+		return int(a - b)
+	}))
+	assert.False(t, SubsetFunc(s1, []int64{3, 20, 8}, func(a, b int64) int {
+		return int(a - b)
+	}))
+
+	s2 := []string{"s", "i", "l", "v", "e", "r"}
+	assert.True(t, SubsetFunc(s2, []string{"s", "e", "r"}, strings.Compare))
+	assert.False(t, SubsetFunc(s2, []string{"y", "o", "u"}, strings.Compare))
+}
+
+func TestClone(t *testing.T) {
+	s1 := []int{1, 2, 3}
+	s2 := Clone(s1)
+	assert.Equal(t, s1, s2)
+
+	s1[0] = 4
+	want := []int{1, 2, 3}
+	assert.Equal(t, want, s2)
+
+	assert.Nil(t, Clone([]int(nil)))
+	assert.NotNil(t, Clone([]int(nil), true))
+	assert.NotNil(t, Clone(s1[:0]))
+}
+
+func TestClip(t *testing.T) {
+	s1 := []int{1, 2, 3, 4, 5, 6}[:3]
+	assert.Len(t, s1, 3)
+	assert.Equal(t, 6, cap(s1))
+
+	s2 := Clip(s1)
+	assert.Equal(t, s1, s2)
+	assert.Equal(t, 3, cap(s2))
+}
+
+func TestSort(t *testing.T) {
+	s := []int{5, 8, 1, 3, 4, 1, 2, 6, 2, 7, 0, 10, 13, 16, 19, 50}
+	sClone := Clone(s)
+	Sort(sClone)
+	assert.False(t, IsSorted(s))
+	assert.True(t, IsSorted(sClone))
+
+	sClone = Clone(s)
+	SortFunc(sClone, func(a, b int) int {
+		return a - b
+	})
+	assert.False(t, IsSorted(s))
+	assert.True(t, IsSorted(sClone))
+
+	sClone = Clone(s)
+	SortStableFunc(sClone, func(a, b int) int {
+		return a - b
+	})
+	assert.False(t, IsSorted(s))
+	assert.True(t, IsSorted(sClone))
+
+	assert.False(t, IsSortedFunc(s, func(a, b int) int {
+		return a - b
+	}))
+	assert.True(t, IsSortedFunc(sClone, func(a, b int) int {
+		return a - b
+	}))
+}
+
+func TestMin(t *testing.T) {
+	s := []int{5, 8, 1, 3, 4, 1, 2, 6, 2, 7, 0, 10, 13, 16, 19, 50}
+	v := Min(s)
+	assert.Equal(t, 0, v)
+
+	v = MinFunc(s, func(a, b int) int {
+		return a - b
+	})
+	assert.Equal(t, 0, v)
+}
+
+func TestMax(t *testing.T) {
+	s := []int{5, 8, 1, 3, 4, 1, 2, 6, 2, 7, 0, 10, 13, 16, 19, 50}
+	v := Max(s)
+	assert.Equal(t, 50, v)
+
+	v = MaxFunc(s, func(a, b int) int {
+		return a - b
+	})
+	assert.Equal(t, 50, v)
+}
+
+func TestBinarySearch(t *testing.T) {
+	s := []int{0, 1, 1, 2, 2, 3, 4, 5, 6, 7, 8, 10, 13, 16, 19, 50}
+	i, ok := BinarySearch(s, 8)
+	assert.True(t, ok)
+	assert.Equal(t, 10, i)
+
+	i, ok = BinarySearchFunc(s, 8, func(a, b int) int {
+		return a - b
+	})
+	assert.True(t, ok)
+	assert.Equal(t, 10, i)
+
+	i, ok = BinarySearch(s, 100)
+	assert.False(t, ok)
+	assert.Len(t, s, i)
+
+	i, ok = BinarySearchFunc(s, 100, func(a, b int) int {
+		return a - b
+	})
+	assert.False(t, ok)
+	assert.Len(t, s, i)
 }

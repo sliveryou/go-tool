@@ -12,11 +12,13 @@ go 常用工具函数集合
 ## 简介
 
 - `cipher` 常用的加解密，目前支持 aescbc，计划支持 aesecb，rsa 等
+- `condition` 条件判断常见操作，如获取传入参数的 bool 类型值和三目运算等 
 - `convert` 基本类型转换，进制转换等
 - `filex` 文件哈希、文件增删读写、路径判断和文件元数据获取等
 - `id-generator` 雪花算法 id 生成、uuid 生成、int64 类型的 base58 和 base62 编解码等
 - `mathx` 浮点数计算比较、奇偶判断、序列生成、最值和平均值计算等
 - `mathg` mathx 的泛型版实现
+- `pointer` 指针常见操作，如获取传入参数的指针、获取传入指针指向的值和提取传入 interface 的底层值等
 - `randx` 并发安全真随机 A-Za-z0-9 字符串生成（可指定字符串生成源）
 - `slicex` 切片相关操作，如值包含判断、切片转换、切片打乱和切片去重等
 - `sliceg` slicex 的泛型版实现
@@ -66,6 +68,17 @@ func PKCS5Padding(cipherText []byte) []byte
 func PKCS5Trimming(encrypt []byte) ([]byte, error)
 func PKCS7Padding(cipherText []byte, blockSize int) []byte
 func PKCS7Trimming(encrypt []byte) ([]byte, error)
+```
+
+### condition
+
+```go
+import (
+    "github.com/sliveryou/go-tool/v2/condition"
+)
+
+func Bool[T any](value T) bool
+func TernaryOperator[T, U any](isTrue T, ifValue, elseValue U) U
 ```
 
 ### convert
@@ -255,20 +268,42 @@ import (
     "github.com/sliveryou/go-tool/v2/mathg"
 )
 
-func Abs[T constraints.Signed | constraints.Float](n T) T
-func Average[T constraints.Signed | constraints.Float](nums ...T) float64
-func IsEven[T constraints.Signed](n T) bool
-func IsNegative[T constraints.Signed | constraints.Float](n T) bool
-func IsNonNegative[T constraints.Signed | constraints.Float](n T) bool
-func IsNonPositive[T constraints.Signed | constraints.Float](n T) bool
-func IsOdd[T constraints.Signed](n T) bool
-func IsPositive[T constraints.Signed | constraints.Float](n T) bool
-func IsZero[T constraints.Signed | constraints.Float](n T) bool
+func Abs[T constraints.Integer | constraints.Float](n T) T
+func Average[T constraints.Integer | constraints.Float](nums ...T) float64
+func Dim[T constraints.Integer | constraints.Float](x, y T) T
+func DivCeil[T constraints.Integer | constraints.Float](x, y T) T
+func DivFloor[T constraints.Integer | constraints.Float](x, y T) T
+func DivRound[T constraints.Integer | constraints.Float](x, y T) T
+func IsEven[T constraints.Integer](n T) bool
+func IsNegative[T constraints.Integer | constraints.Float](n T) bool
+func IsNonNegative[T constraints.Integer | constraints.Float](n T) bool
+func IsNonPositive[T constraints.Integer | constraints.Float](n T) bool
+func IsOdd[T constraints.Integer](n T) bool
+func IsPositive[T constraints.Integer | constraints.Float](n T) bool
+func IsZero[T constraints.Integer | constraints.Float](n T) bool
 func Max[T constraints.Ordered](nums ...T) T
+func MaxBy[T any](slice []T, cmp func(a, b T) bool) T
 func Min[T constraints.Ordered](nums ...T) T
+func MinBy[T any](slice []T, cmp func(a, b T) bool) T
+func Mod[T constraints.Integer | constraints.Float](x, y T) T
+func Pow[T constraints.Integer | constraints.Float](x, y T) T
 func Range[T constraints.Signed | constraints.Float](start, stop T, step ...T) []T
-func Sign[T constraints.Signed | constraints.Float](n T) int
+func Sign[T constraints.Integer | constraints.Float](n T) int
 func Sum[T constraints.Ordered](nums ...T) T
+```
+
+### pointer
+
+```go
+import (
+    "github.com/sliveryou/go-tool/v2/pointer"
+)
+
+func ExtractPointer(v any) any
+func Of[T any](v T) *T
+func Unwrap[T any](p *T) T
+func UnwrapOr[T any](p *T, fallback T) T
+func UnwrapOrDefault[T any](p *T) T
 ```
 
 ### randx
@@ -427,20 +462,38 @@ import (
     "github.com/sliveryou/go-tool/v2/sliceg"
 )
 
+func BinarySearch[T constraints.Ordered](x []T, target T) (int, bool)
+func BinarySearchFunc[E, T any](x []E, target T, cmp func(a E, b T) int) (int, bool)
+func Clip[T any](s []T) []T
+func Clone[T any](s []T, needInit ...bool) []T
 func Contain[T comparable](s []T, v T) bool
+func ContainFunc[T any](s []T, f func(v T) bool) bool
 func Count[T comparable](s []T) map[T]int
 func Delete[T comparable](s []T, v T, n int) ([]T, int)
-func DeleteFunc[T any](s []T, f func(T) bool, n int) ([]T, int)
+func DeleteFunc[T any](s []T, f func(v T) bool, n int) ([]T, int)
 func Equal[T comparable](s1, s2 []T) bool
-func EqualFunc[T1, T2 any](s1 []T1, s2 []T2, eq func(T1, T2) bool) bool
+func EqualFunc[T1, T2 any](s1 []T1, s2 []T2, eq func(v1 T1, v2 T2) bool) bool
 func Extract[T any](s []T, n int) []T
 func Fill[T any](v T, n int) []T
 func Index[T comparable](s []T, v T) int
-func IndexFunc[T any](s []T, f func(T) bool) int
+func IndexFunc[T any](s []T, f func(v T) bool) int
+func IsSorted[T constraints.Ordered](x []T) bool
+func IsSortedFunc[T any](x []T, cmp func(a, b T) int) bool
+func Max[T constraints.Ordered](x []T) T
+func MaxFunc[T any](x []T, cmp func(a, b T) int) T
+func Min[T constraints.Ordered](x []T) T
+func MinFunc[T any](x []T, cmp func(a, b T) int) T
 func Reverse[T any](s []T) []T
+func ReverseSelf[T any](s []T)
 func Shuffle[T any](s []T) []T
+func Sort[T constraints.Ordered](x []T)
+func SortFunc[T any](x []T, cmp func(a, b T) int)
+func SortStableFunc[T any](x []T, cmp func(a, b T) int)
+func Subset[T comparable](slice, subset []T) bool
+func SubsetFunc[T any](slice, subset []T, cmp func(a, b T) int) bool
 func Take[T any](s []T) T
 func Unique[T comparable](s []T) []T
+func UniqueFunc[T any, U comparable](s []T, f func(v T) U) []T
 ```
 
 ### timex
