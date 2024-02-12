@@ -7,6 +7,8 @@ import (
 )
 
 func TestSign(t *testing.T) {
+	t.Parallel()
+
 	signIntCases := []struct {
 		n    int
 		want int
@@ -37,6 +39,8 @@ func TestSign(t *testing.T) {
 }
 
 func TestSignIs(t *testing.T) {
+	t.Parallel()
+
 	testSignIsIntCases := []struct {
 		n                 int
 		wantIsPositive    bool
@@ -81,6 +85,8 @@ func TestSignIs(t *testing.T) {
 }
 
 func TestAbs(t *testing.T) {
+	t.Parallel()
+
 	absIntCases := []struct {
 		n    int
 		want int
@@ -111,6 +117,8 @@ func TestAbs(t *testing.T) {
 }
 
 func TestAverage(t *testing.T) {
+	t.Parallel()
+
 	averageIntCases := []struct {
 		nums []int
 		want float64
@@ -139,6 +147,8 @@ func TestAverage(t *testing.T) {
 }
 
 func TestSum(t *testing.T) {
+	t.Parallel()
+
 	sumIntCases := []struct {
 		nums []int
 		want int
@@ -167,6 +177,8 @@ func TestSum(t *testing.T) {
 }
 
 func TestMax(t *testing.T) {
+	t.Parallel()
+
 	maxIntCases := []struct {
 		nums []int
 		want int
@@ -192,7 +204,41 @@ func TestMax(t *testing.T) {
 	}
 }
 
+func TestMaxBy(t *testing.T) {
+	t.Parallel()
+
+	maxIntCases := []struct {
+		nums []int
+		want int
+	}{
+		{nums: []int{1, 3, 5, 10, 2, 0}, want: 10},
+		{nums: []int{100}, want: 100},
+	}
+
+	for _, c := range maxIntCases {
+		assert.Equal(t, c.want, MaxBy(c.nums, func(a, b int) bool {
+			return a > b
+		}))
+	}
+
+	maxFloatCases := []struct {
+		nums []float64
+		want float64
+	}{
+		{nums: []float64{1, 3, 5, 10, 2, 0}, want: 10},
+		{nums: []float64{100}, want: 100},
+	}
+
+	for _, c := range maxFloatCases {
+		assert.InDelta(t, c.want, MaxBy(c.nums, func(a, b float64) bool {
+			return a > b
+		}), 0.0001)
+	}
+}
+
 func TestMin(t *testing.T) {
+	t.Parallel()
+
 	minIntCases := []struct {
 		nums []int
 		want int
@@ -218,7 +264,41 @@ func TestMin(t *testing.T) {
 	}
 }
 
+func TestMinBy(t *testing.T) {
+	t.Parallel()
+
+	minIntCases := []struct {
+		nums []int
+		want int
+	}{
+		{nums: []int{1, 3, 5, 10, 2, 0}, want: 0},
+		{nums: []int{100}, want: 100},
+	}
+
+	for _, c := range minIntCases {
+		assert.Equal(t, c.want, MinBy(c.nums, func(a, b int) bool {
+			return a < b
+		}))
+	}
+
+	minFloatCases := []struct {
+		nums []float64
+		want float64
+	}{
+		{nums: []float64{1, 3, 5, 10, 2, 0}, want: 0},
+		{nums: []float64{100}, want: 100},
+	}
+
+	for _, c := range minFloatCases {
+		assert.InDelta(t, c.want, MinBy(c.nums, func(a, b float64) bool {
+			return a < b
+		}), 0.0001)
+	}
+}
+
 func TestRange(t *testing.T) {
+	t.Parallel()
+
 	rangeIntCases := []struct {
 		start int
 		stop  int
@@ -253,6 +333,8 @@ func TestRange(t *testing.T) {
 }
 
 func TestSignedNumberIs(t *testing.T) {
+	t.Parallel()
+
 	signedNumberIsIntCases := []struct {
 		n          int
 		wantIsOdd  bool
@@ -281,5 +363,142 @@ func TestSignedNumberIs(t *testing.T) {
 	for _, c := range signedNumberIsInt64Cases {
 		assert.Equal(t, c.wantIsOdd, IsOdd(c.n))
 		assert.Equal(t, c.wantIsEven, IsEven(c.n))
+	}
+}
+
+func TestDivCeil(t *testing.T) {
+	t.Parallel()
+
+	int64Cases := []struct {
+		x      int64
+		y      int64
+		expect int64
+	}{
+		{x: 100, y: 24, expect: 5},
+		{x: 100, y: -24, expect: -4},
+		{x: 90, y: 23, expect: 4},
+		{x: 80, y: 22, expect: 4},
+		{x: 70, y: 0, expect: 0},
+		{x: 0, y: 70, expect: 0},
+	}
+
+	for _, c := range int64Cases {
+		out := DivCeil(c.x, c.y)
+		assert.Equal(t, c.expect, out)
+	}
+}
+
+func TestDivFloor(t *testing.T) {
+	t.Parallel()
+
+	int64Cases := []struct {
+		x      int64
+		y      int64
+		expect int64
+	}{
+		{x: 100, y: 24, expect: 4},
+		{x: 100, y: -24, expect: -5},
+		{x: 90, y: 23, expect: 3},
+		{x: 80, y: 22, expect: 3},
+		{x: 70, y: 0, expect: 0},
+		{x: 0, y: 70, expect: 0},
+	}
+
+	for _, c := range int64Cases {
+		out := DivFloor(c.x, c.y)
+		assert.Equal(t, c.expect, out)
+	}
+}
+
+func TestDivRound(t *testing.T) {
+	t.Parallel()
+
+	int64Cases := []struct {
+		x      int64
+		y      int64
+		expect int64
+	}{
+		{x: 100, y: 24, expect: 4},
+		{x: 100, y: -24, expect: -4},
+		{x: 90, y: 23, expect: 4},
+		{x: 80, y: 22, expect: 4},
+		{x: 70, y: 0, expect: 0},
+		{x: 0, y: 70, expect: 0},
+	}
+
+	for _, c := range int64Cases {
+		out := DivRound(c.x, c.y)
+		assert.Equal(t, c.expect, out)
+	}
+}
+
+func TestMod(t *testing.T) {
+	t.Parallel()
+
+	int64Cases := []struct {
+		x      int64
+		y      int64
+		expect int64
+	}{
+		{x: 100, y: 24, expect: 4},
+		{x: 100, y: -24, expect: 4},
+		{x: -100, y: 24, expect: -4},
+		{x: 90, y: 23, expect: 21},
+		{x: 80, y: 22, expect: 14},
+		{x: 70, y: 0, expect: 0},
+		{x: 0, y: 70, expect: 0},
+	}
+
+	for _, c := range int64Cases {
+		out := Mod(c.x, c.y)
+		assert.Equal(t, c.expect, out)
+	}
+}
+
+func TestPow(t *testing.T) {
+	t.Parallel()
+
+	int64Cases := []struct {
+		x      int64
+		y      int64
+		expect int64
+	}{
+		{x: 1, y: 0, expect: 1},
+		{x: 1, y: 3, expect: 1},
+		{x: 2, y: 0, expect: 1},
+		{x: 2, y: 1, expect: 2},
+		{x: 2, y: 3, expect: 8},
+		{x: 5, y: 0, expect: 1},
+		{x: 5, y: 1, expect: 5},
+		{x: 5, y: 3, expect: 125},
+	}
+
+	for _, c := range int64Cases {
+		out := Pow(c.x, c.y)
+		assert.Equal(t, c.expect, out)
+	}
+}
+
+func TestDim(t *testing.T) {
+	t.Parallel()
+
+	int64Cases := []struct {
+		x      int64
+		y      int64
+		expect int64
+	}{
+		{x: 1, y: 0, expect: 1},
+		{x: 1, y: 3, expect: 0},
+		{x: 2, y: 0, expect: 2},
+		{x: 2, y: 1, expect: 1},
+		{x: 2, y: 3, expect: 0},
+		{x: 5, y: 0, expect: 5},
+		{x: 5, y: 1, expect: 4},
+		{x: 5, y: 8, expect: 0},
+	}
+
+	for _, c := range int64Cases {
+		out := Dim(c.x, c.y)
+		assert.Equal(t, c.expect, out)
 	}
 }
