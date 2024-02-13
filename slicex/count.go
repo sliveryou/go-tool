@@ -1,8 +1,6 @@
 package slicex
 
-import (
-	"reflect"
-)
+import "reflect"
 
 // Count returns value count map by slice.
 func Count(slice interface{}) map[interface{}]int {

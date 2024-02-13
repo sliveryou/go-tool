@@ -1,8 +1,6 @@
 package slicex
 
-import (
-	"reflect"
-)
+import "reflect"
 
 // Reverse returns the reverse order for slice.
 // It panics if slice is invalid.

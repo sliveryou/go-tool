@@ -1,8 +1,6 @@
 package validator
 
-import (
-	"strings"
-)
+import "strings"
 
 // CorpAccount corp account validator.
 type CorpAccount string

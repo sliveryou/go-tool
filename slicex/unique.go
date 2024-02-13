@@ -1,8 +1,6 @@
 package slicex
 
-import (
-	"reflect"
-)
+import "reflect"
 
 // Unique returns the unique slice.
 // It panics if slice is invalid.

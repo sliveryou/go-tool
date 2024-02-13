@@ -1,8 +1,6 @@
 package pointer
 
-import (
-	"reflect"
-)
+import "reflect"
 
 // Of returns the pointer to the value v.
 func Of[T any](v T) *T {

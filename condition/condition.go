@@ -1,8 +1,6 @@
 package condition
 
-import (
-	"reflect"
-)
+import "reflect"
 
 // Bool returns the bool value of anything.
 func Bool[T any](value T) bool {

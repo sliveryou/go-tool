@@ -1,8 +1,6 @@
 package cipher
 
-import (
-	"testing"
-)
+import "testing"
 
 const (
 	aesCbcKey = "uy4ymckgirj3nverpa67vsqp7gbf1yg2"
