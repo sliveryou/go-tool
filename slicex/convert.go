@@ -12,6 +12,7 @@ func StringsToInts(slice []string) []int {
 	for _, s := range slice {
 		result = append(result, convert.ToInt(s))
 	}
+
 	return result
 }
 
@@ -21,6 +22,7 @@ func StringsToInt64s(slice []string) []int64 {
 	for _, s := range slice {
 		result = append(result, convert.ToInt64(s))
 	}
+
 	return result
 }
 
@@ -35,6 +37,7 @@ func StringsToFloat64s(slice []string) []float64 {
 	for _, s := range slice {
 		result = append(result, convert.ToFloat64(s))
 	}
+
 	return result
 }
 
@@ -44,6 +47,7 @@ func StringsToInterfaces(slice []string) []interface{} {
 	for _, s := range slice {
 		result = append(result, s)
 	}
+
 	return result
 }
 
@@ -53,6 +57,7 @@ func IntsToStrings(slice []int) []string {
 	for _, i := range slice {
 		result = append(result, strconv.Itoa(i))
 	}
+
 	return result
 }
 
@@ -62,6 +67,7 @@ func IntsToInterfaces(slice []int) []interface{} {
 	for _, i := range slice {
 		result = append(result, i)
 	}
+
 	return result
 }
 
@@ -71,6 +77,7 @@ func Int64sToStrings(slice []int64) []string {
 	for _, i := range slice {
 		result = append(result, strconv.FormatInt(i, 10))
 	}
+
 	return result
 }
 
@@ -80,6 +87,7 @@ func Int64sToInterfaces(slice []int64) []interface{} {
 	for _, i := range slice {
 		result = append(result, i)
 	}
+
 	return result
 }
 
@@ -99,6 +107,7 @@ func Float64sToStrings(slice []float64) []string {
 	for _, f := range slice {
 		result = append(result, strconv.FormatFloat(f, 'f', -1, 64))
 	}
+
 	return result
 }
 
@@ -108,6 +117,7 @@ func Float64sToInterfaces(slice []float64) []interface{} {
 	for _, f := range slice {
 		result = append(result, f)
 	}
+
 	return result
 }
 
@@ -117,6 +127,7 @@ func InterfacesToStrings(slice []interface{}) []string {
 	for _, i := range slice {
 		result = append(result, convert.ToString(i))
 	}
+
 	return result
 }
 
@@ -126,6 +137,7 @@ func InterfacesToInts(slice []interface{}) []int {
 	for _, i := range slice {
 		result = append(result, convert.ToInt(i))
 	}
+
 	return result
 }
 
@@ -135,6 +147,7 @@ func InterfacesToInt64s(slice []interface{}) []int64 {
 	for _, i := range slice {
 		result = append(result, convert.ToInt64(i))
 	}
+
 	return result
 }
 
@@ -149,5 +162,6 @@ func InterfacesToFloat64s(slice []interface{}) []float64 {
 	for _, i := range slice {
 		result = append(result, convert.ToFloat64(i))
 	}
+
 	return result
 }

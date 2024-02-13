@@ -4,20 +4,15 @@ import (
 	"log"
 	"strings"
 
-	uuid "github.com/sliveryou/go-tool/id-generator/uuid/satori"
+	"github.com/google/uuid"
 )
 
 // NextV1 generates v1 uuid.
 func NextV1() string {
-	defer func() {
-		if r := recover(); r != nil {
-			log.Printf("uuid: NextV1 panic: %v", r)
-		}
-	}()
-
-	u, err := uuid.NewV1()
+	u, err := uuid.NewUUID()
 	if err != nil {
-		panic(err)
+		log.Printf("uuid: NextV1 err: %v", err)
+		return ""
 	}
 
 	return strings.ReplaceAll(u.String(), "-", "")
@@ -25,15 +20,10 @@ func NextV1() string {
 
 // NextV4 generates v4 uuid.
 func NextV4() string {
-	defer func() {
-		if r := recover(); r != nil {
-			log.Printf("uuid: NextV4 panic: %v", r)
-		}
-	}()
-
-	u, err := uuid.NewV4()
+	u, err := uuid.NewRandom()
 	if err != nil {
-		panic(err)
+		log.Printf("uuid: NextV4 err: %v", err)
+		return ""
 	}
 
 	return strings.ReplaceAll(u.String(), "-", "")
@@ -41,5 +31,5 @@ func NextV4() string {
 
 // Parse parses uuid.
 func Parse(input string) (uuid.UUID, error) {
-	return uuid.FromString(input)
+	return uuid.Parse(input)
 }

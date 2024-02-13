@@ -1,10 +1,8 @@
 run:
-  go: '1.16'
+  go: '1.13'
   concurrency: 4
   timeout: 5m
   tests: true
-  skip-dirs:
-    - id-generator/uuid/satori
 
 linters-settings:
   errcheck:
@@ -58,7 +56,7 @@ linters-settings:
       - name: get-return
       - name: modifies-parameter
       - name: confusing-results
-      # - name: deep-exit
+      - name: deep-exit
       - name: unused-parameter
       - name: unreachable-code
       # - name: add-constant
@@ -130,7 +128,7 @@ linters:
     - goconst
     - gocritic
     - gocyclo
-    # - godot
+    - godot
     - godox
     - gofmt
     - gofumpt

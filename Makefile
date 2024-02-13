@@ -5,7 +5,7 @@ proxy:
 	@go env -w GOPROXY="https://goproxy.cn,direct"
 
 tidy:
-	@go mod tidy -e -v
+	@go mod tidy
 
 fmt:
 	@find . -name '*.go' -not -path "./vendor/*" | xargs gofumpt -w -extra

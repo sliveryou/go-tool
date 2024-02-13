@@ -14,31 +14,32 @@ import (
 )
 
 func TestMain(m *testing.M) {
-	err := os.MkdirAll("./testdata", 0o755)
-	if err != nil {
+	if err := setup(); err != nil {
 		log.Fatalln(err)
 	}
+	code := m.Run()
+	_ = teardown()
+	os.Exit(code)
+}
 
-	err = ioutil.WriteFile("./testdata/test.txt",
+func setup() error {
+	if err := os.MkdirAll("./testdata", 0o755); err != nil {
+		return err
+	}
+
+	if err := ioutil.WriteFile("./testdata/test.txt",
 		[]byte("Hello world!\n"),
-		0o644)
-	if err != nil {
-		log.Fatalln(err)
+		0o644); err != nil {
+		return err
 	}
 
-	err = ioutil.WriteFile("./testdata/test.md",
+	return ioutil.WriteFile("./testdata/test.md",
 		[]byte("# Hello world!\n"),
 		0o644)
-	if err != nil {
-		log.Fatalln(err)
-	}
+}
 
-	m.Run()
-
-	err = os.RemoveAll("./testdata")
-	if err != nil {
-		log.Fatalln(err)
-	}
+func teardown() error {
+	return os.RemoveAll("./testdata")
 }
 
 func TestExt(t *testing.T) {

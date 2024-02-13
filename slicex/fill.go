@@ -7,10 +7,12 @@ func Fill(value interface{}, num int) []interface{} {
 	if num < 0 {
 		panic("slicex: num cannot be less than 0")
 	}
+
 	result := make([]interface{}, num)
 	for i := 0; i < num; i++ {
 		result[i] = value
 	}
+
 	return result
 }
 
@@ -21,10 +23,12 @@ func FillString(value string, num int) []string {
 	if num < 0 {
 		panic("slicex: num cannot be less than 0")
 	}
+
 	result := make([]string, num)
 	for i := 0; i < num; i++ {
 		result[i] = value
 	}
+
 	return result
 }
 
@@ -35,10 +39,12 @@ func FillBool(value bool, num int) []bool {
 	if num < 0 {
 		panic("slicex: num cannot be less than 0")
 	}
+
 	result := make([]bool, num)
 	for i := 0; i < num; i++ {
 		result[i] = value
 	}
+
 	return result
 }
 
@@ -49,10 +55,12 @@ func FillInt(value, num int) []int {
 	if num < 0 {
 		panic("slicex: num cannot be less than 0")
 	}
+
 	result := make([]int, num)
 	for i := 0; i < num; i++ {
 		result[i] = value
 	}
+
 	return result
 }
 
@@ -63,10 +71,12 @@ func FillInt64(value int64, num int) []int64 {
 	if num < 0 {
 		panic("slicex: num cannot be less than 0")
 	}
+
 	result := make([]int64, num)
 	for i := 0; i < num; i++ {
 		result[i] = value
 	}
+
 	return result
 }
 
@@ -77,10 +87,12 @@ func FillInt32(value int32, num int) []int32 {
 	if num < 0 {
 		panic("slicex: num cannot be less than 0")
 	}
+
 	result := make([]int32, num)
 	for i := 0; i < num; i++ {
 		result[i] = value
 	}
+
 	return result
 }
 
@@ -98,10 +110,12 @@ func FillFloat64(value float64, num int) []float64 {
 	if num < 0 {
 		panic("slicex: num cannot be less than 0")
 	}
+
 	result := make([]float64, num)
 	for i := 0; i < num; i++ {
 		result[i] = value
 	}
+
 	return result
 }
 
@@ -112,9 +126,11 @@ func FillFloat32(value float32, num int) []float32 {
 	if num < 0 {
 		panic("slicex: num cannot be less than 0")
 	}
+
 	result := make([]float32, num)
 	for i := 0; i < num; i++ {
 		result[i] = value
 	}
+
 	return result
 }

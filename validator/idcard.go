@@ -13,9 +13,9 @@ import (
 // verification rules: http://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=080D6FBF2BB468F9007657F26D60013E
 // online preview: https://zh.wikisource.org/wiki/GB_11643-1999_%E5%85%AC%E6%B0%91%E8%BA%AB%E4%BB%BD%E5%8F%B7%E7%A0%81
 
-// index - weight map
-// key represents the index of id card number and value represents the weight corresponding to the index
-// value = 2 ** （key） % 11
+// index - weight map,
+// key represents the index of id card number and value represents the weight corresponding to the index,
+// value = 2 ** （key） % 11.
 var idCardIndexWeightMap = map[int]int{
 	0:  7,
 	1:  9,
@@ -36,8 +36,8 @@ var idCardIndexWeightMap = map[int]int{
 	16: 2,
 }
 
-// sum - code map
-// key represents the modulus of 11 after weighted summation, and value represents the check code
+// sum - code map,
+// key represents the modulus of 11 after weighted summation, and value represents the check code.
 var modCheckCodeMap = map[int]uint8{
 	0:  '1',
 	1:  '0',
@@ -81,7 +81,6 @@ func (ic IdCard) IsValid() bool {
 		sum += a * w
 	}
 
-	// fmt.Println(string(modCheckCodeMap[sum%11]), string(checkCode))
 	return modCheckCodeMap[sum%11] == checkCode
 }
 

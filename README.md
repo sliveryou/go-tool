@@ -1,6 +1,6 @@
 # go-tool
 
-[![Github License](https://img.shields.io/github/license/sliveryou/go-tool.svg?style=flat)](https://github.com/sliveryou/go-tool/blob/master/LICENSE)
+[![Github License](https://img.shields.io/github/license/sliveryou/go-tool.svg?style=flat)](https://github.com/sliveryou/go-tool/blob/main/LICENSE)
 [![Go Doc](https://godoc.org/github.com/sliveryou/go-tool?status.svg)](https://pkg.go.dev/github.com/sliveryou/go-tool)
 [![Go Report](https://goreportcard.com/badge/github.com/sliveryou/go-tool)](https://goreportcard.com/report/github.com/sliveryou/go-tool)
 [![Github Latest Release](https://img.shields.io/github/release/sliveryou/go-tool.svg?style=flat)](https://github.com/sliveryou/go-tool/releases/latest)
@@ -9,21 +9,31 @@
 
 go 常用工具函数集合
 
+## 安装
+
+安装 go-tool v1 版本：
+
+```bash
+$ go get github.com/sliveryou/go-tool
+```
+
 ## 简介
 
-- `cipher` 常用的加解密，目前支持 aescbc，计划支持 aesecb，rsa 等
-- `convert` 基本类型转换，进制转换等
-- `filex` 文件哈希、文件增删读写、路径判断和文件元数据获取等
-- `id-generator` 雪花算法 id 生成、uuid 生成、int64 类型的 base58 和 base62 编解码等
-- `mathx` 浮点数计算比较、奇偶判断、序列生成、最值和平均值计算等
-- `randx` 并发安全真随机 A-Za-z0-9 字符串生成（可指定字符串生成源）
-- `slicex` 切片相关操作，如值包含判断、切片转换、切片打乱和切片去重等
-- `timex` 时间相关操作，如时区加载、时间戳计算和时间格式化等
-- `validator` 通用中文语义结构体参数校验器，并包含银行卡号、身份证号、企业对公账户和统一社会信用代码校验器
+- [**cipher**](#cipher) 常用的加解密，目前支持 aescbc，计划支持 aesecb，rsa 等
+- [**convert**](#convert) 基本类型转换，进制转换等
+- [**filex**](#filex) 文件哈希、文件增删读写、路径判断和文件元数据获取等
+- [**id-generator**](#id-generator) 雪花算法 id 生成、uuid 生成、int64 类型的 base58 和 base62 编解码等
+- [**mathx**](#mathx) 浮点数计算比较、奇偶判断、序列生成、最值和平均值计算等
+- [**randx**](#randx) 并发安全真随机 A-Za-z0-9 字符串生成（可指定字符串生成源）
+- [**slicex**](#slicex) 切片相关操作，如值包含判断、切片转换、切片打乱和切片去重等
+- [**timex**](#timex) 时间相关操作，如时区加载、时间戳计算和时间格式化等
+- [**validator**](#validator) 通用中文语义结构体参数校验器，并包含银行卡号、身份证号、企业对公账户和统一社会信用代码校验器
 
 ## 接口
 
 ### cipher
+
+[返回简介](#简介)
 
 ```go
 import (
@@ -68,6 +78,8 @@ func PKCS7Trimming(encrypt []byte) ([]byte, error)
 
 ### convert
 
+[返回简介](#简介)
+
 ```go
 import (
     "github.com/sliveryou/go-tool/convert"
@@ -107,6 +119,8 @@ func Uint64ToBytes(i uint64) []byte
 
 ### filex
 
+[返回简介](#简介)
+
 ```go
 import (
     "github.com/sliveryou/go-tool/filex"
@@ -137,6 +151,8 @@ func Write(fileName string, data []byte, perm ...os.FileMode) error
 ```
 
 ### id-generator
+
+[返回简介](#简介)
 
 ```go
 // encoding/base58
@@ -185,6 +201,8 @@ func Parse(input string) (uuid.UUID, error)
 ```
 
 ### mathx
+
+[返回简介](#简介)
 
 ```go
 import (
@@ -248,6 +266,8 @@ func SumInt64(nums ...int64) int64
 
 ### randx
 
+[返回简介](#简介)
+
 ```go
 import (
     "github.com/sliveryou/go-tool/randx"
@@ -261,6 +281,8 @@ func StdSource() string
 ```
 
 ### slicex
+
+[返回简介](#简介)
 
 ```go
 import (
@@ -397,6 +419,8 @@ func UniqueStrings(slice []string) []string
 
 ### timex
 
+[返回简介](#简介)
+
 ```go
 import (
     "github.com/sliveryou/go-tool/timex"
@@ -449,6 +473,8 @@ func UnixTodayRange(location ...*time.Location) (start, end int64)
 ```
 
 ### validator
+
+[返回简介](#简介)
 
 ```go
 import (

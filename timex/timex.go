@@ -21,6 +21,7 @@ func Location(name string) *time.Location {
 	if err != nil {
 		loc = time.Local
 	}
+
 	return loc
 }
 
@@ -300,6 +301,7 @@ func DoCycleTask(ctx context.Context, f func(), d time.Duration) {
 		}()
 
 		f()
+
 		for {
 			select {
 			case <-ctx.Done():

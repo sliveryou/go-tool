@@ -65,6 +65,7 @@ func Sign(f float64) int {
 		}
 		return -1
 	}
+
 	return 0
 }
 
@@ -123,6 +124,7 @@ func Compare(f1, f2 float64, places ...int) int {
 	if len(places) != 0 && places[0] >= 1 {
 		pla = places[0]
 	}
+
 	isEqual := math.Abs(f1-f2) <= math.Pow10(-pla)
 	if !isEqual {
 		if f1 > f2 {
@@ -130,6 +132,7 @@ func Compare(f1, f2 float64, places ...int) int {
 		}
 		return -1
 	}
+
 	return 0
 }
 
@@ -176,6 +179,7 @@ func IsEven(num int64) bool {
 func RangeInt(start, stop int, step ...int) []int {
 	var result []int
 	var s int
+
 	if start < stop {
 		s = 1
 		if len(step) != 0 && step[0] > 1 {
@@ -201,6 +205,7 @@ func RangeInt(start, stop int, step ...int) []int {
 			}
 		}
 	}
+
 	return result
 }
 
@@ -210,6 +215,7 @@ func RangeInt(start, stop int, step ...int) []int {
 func RangeInt64(start, stop int64, step ...int64) []int64 {
 	var result []int64
 	var s int64
+
 	if start < stop {
 		s = 1
 		if len(step) != 0 && step[0] > 1 {
@@ -235,6 +241,7 @@ func RangeInt64(start, stop int64, step ...int64) []int64 {
 			}
 		}
 	}
+
 	return result
 }
 
@@ -251,6 +258,7 @@ func RangeFloat(start, stop float64, step ...float64) []float64 {
 func RangeFloat64(start, stop float64, step ...float64) []float64 {
 	var result []float64
 	var s float64
+
 	if start < stop {
 		s = 1.0
 		if len(step) != 0 && step[0] > 0 {
@@ -276,6 +284,7 @@ func RangeFloat64(start, stop float64, step ...float64) []float64 {
 			}
 		}
 	}
+
 	return result
 }
 
@@ -284,9 +293,11 @@ func RandInt(min, max int) int {
 	if min > max {
 		panic("mathx: min cannot be greater than max")
 	}
+
 	if min == max {
 		return min
 	}
+
 	return rand.Intn(max-min) + min
 }
 
@@ -295,9 +306,11 @@ func RandInt64(min, max int64) int64 {
 	if min > max {
 		panic("mathx: min cannot be greater than max")
 	}
+
 	if min == max {
 		return min
 	}
+
 	return rand.Int63n(max-min) + min
 }
 
@@ -311,46 +324,55 @@ func RandFloat64(min, max float64) float64 {
 	if min > max {
 		panic("mathx: min cannot be greater than max")
 	}
+
 	return rand.Float64()*(max-min) + min
 }
 
 // Max returns the largest float64 number in nums.
 func Max(nums ...interface{}) float64 {
-	if len(nums) < 1 {
-		panic("mathx: nums length cannot be less than 1")
+	if len(nums) == 0 {
+		return 0
 	}
+
 	max := convert.ToFloat64(nums[0])
-	for _, num := range nums {
-		max = math.Max(max, convert.ToFloat64(num))
+	for i := 1; i < len(nums); i++ {
+		max = math.Max(max, convert.ToFloat64(nums[i]))
 	}
+
 	return max
 }
 
 // MaxInt returns the largest int number in int nums.
 func MaxInt(nums ...int) int {
-	if len(nums) < 1 {
-		panic("mathx: nums length cannot be less than 1")
+	if len(nums) == 0 {
+		return 0
 	}
+
 	max := nums[0]
-	for _, num := range nums {
+	for i := 1; i < len(nums); i++ {
+		num := nums[i]
 		if num > max {
 			max = num
 		}
 	}
+
 	return max
 }
 
 // MaxInt64 returns the largest int64 number in int64 nums.
 func MaxInt64(nums ...int64) int64 {
-	if len(nums) < 1 {
-		panic("mathx: nums length cannot be less than 1")
+	if len(nums) == 0 {
+		return 0
 	}
+
 	max := nums[0]
-	for _, num := range nums {
+	for i := 1; i < len(nums); i++ {
+		num := nums[i]
 		if num > max {
 			max = num
 		}
 	}
+
 	return max
 }
 
@@ -361,53 +383,66 @@ func MaxFloat(nums ...float64) float64 {
 
 // MaxFloat64 returns the largest float64 number in float64 nums.
 func MaxFloat64(nums ...float64) float64 {
-	if len(nums) < 1 {
-		panic("mathx: nums length cannot be less than 1")
+	if len(nums) == 0 {
+		return 0
 	}
+
 	max := nums[0]
-	for _, num := range nums {
-		max = math.Max(max, num)
+	for i := 1; i < len(nums); i++ {
+		num := nums[i]
+		if num > max {
+			max = num
+		}
 	}
+
 	return max
 }
 
 // Min returns the smallest float64 number in nums.
 func Min(nums ...interface{}) float64 {
-	if len(nums) < 1 {
-		panic("mathx: nums length cannot be less than 1")
+	if len(nums) == 0 {
+		return 0
 	}
+
 	min := convert.ToFloat64(nums[0])
-	for _, num := range nums {
-		min = math.Min(min, convert.ToFloat64(num))
+	for i := 1; i < len(nums); i++ {
+		min = math.Min(min, convert.ToFloat64(nums[i]))
 	}
+
 	return min
 }
 
 // MinInt returns the smallest int number in int nums.
 func MinInt(nums ...int) int {
-	if len(nums) < 1 {
-		panic("mathx: nums length cannot be less than 1")
+	if len(nums) == 0 {
+		return 0
 	}
+
 	min := nums[0]
-	for _, num := range nums {
+	for i := 1; i < len(nums); i++ {
+		num := nums[i]
 		if num < min {
 			min = num
 		}
 	}
+
 	return min
 }
 
 // MinInt64 returns the smallest int64 number in int64 nums.
 func MinInt64(nums ...int64) int64 {
-	if len(nums) < 1 {
-		panic("mathx: nums length cannot be less than 1")
+	if len(nums) == 0 {
+		return 0
 	}
+
 	min := nums[0]
-	for _, num := range nums {
+	for i := 1; i < len(nums); i++ {
+		num := nums[i]
 		if num < min {
 			min = num
 		}
 	}
+
 	return min
 }
 
@@ -418,13 +453,18 @@ func MinFloat(nums ...float64) float64 {
 
 // MinFloat64 returns the smallest float64 number in float64 nums.
 func MinFloat64(nums ...float64) float64 {
-	if len(nums) < 1 {
-		panic("mathx: nums length cannot be less than 1")
+	if len(nums) == 0 {
+		return 0
 	}
+
 	min := nums[0]
-	for _, v := range nums {
-		min = math.Min(min, v)
+	for i := 1; i < len(nums); i++ {
+		num := nums[i]
+		if num < min {
+			min = num
+		}
 	}
+
 	return min
 }
 
@@ -434,6 +474,7 @@ func Sum(nums ...interface{}) float64 {
 	for _, num := range nums {
 		sum += convert.ToFloat64(num)
 	}
+
 	return sum
 }
 
@@ -443,6 +484,7 @@ func SumInt(nums ...int) int {
 	for _, num := range nums {
 		sum += num
 	}
+
 	return sum
 }
 
@@ -452,6 +494,7 @@ func SumInt64(nums ...int64) int64 {
 	for _, num := range nums {
 		sum += num
 	}
+
 	return sum
 }
 
@@ -461,6 +504,7 @@ func SumFloat(nums ...float64) float64 {
 	for _, num := range nums {
 		sum += num
 	}
+
 	return sum
 }
 
@@ -470,6 +514,7 @@ func SumFloat64(nums ...float64) float64 {
 	for _, num := range nums {
 		sum += num
 	}
+
 	return sum
 }
 
@@ -480,6 +525,7 @@ func Average(nums ...interface{}) float64 {
 	if length > 0 {
 		average = Sum(nums...) / float64(length)
 	}
+
 	return average
 }
 
@@ -490,6 +536,7 @@ func AverageInt(nums ...int) float64 {
 	if length > 0 {
 		average = float64(SumInt(nums...)) / float64(length)
 	}
+
 	return average
 }
 
@@ -500,6 +547,7 @@ func AverageInt64(nums ...int64) float64 {
 	if length > 0 {
 		average = float64(SumInt64(nums...)) / float64(length)
 	}
+
 	return average
 }
 
@@ -515,6 +563,7 @@ func AverageFloat64(nums ...float64) float64 {
 	if length > 0 {
 		average = SumFloat64(nums...) / float64(length)
 	}
+
 	return average
 }
 
@@ -523,6 +572,7 @@ func AbsInt(num int) int {
 	if num < 0 {
 		return -num
 	}
+
 	return num
 }
 
@@ -548,7 +598,9 @@ func Percent(num, total interface{}) float64 {
 	if t == 0 {
 		return 0
 	}
+
 	n := convert.ToFloat64(num)
+
 	return (n / t) * 100
 }
 
@@ -558,6 +610,7 @@ func SizeFormat(size float64, places int, separator ...string) string {
 	if len(separator) != 0 {
 		sep = separator[0]
 	}
+
 	index := 0
 	for {
 		if size < 1024 {
@@ -566,9 +619,11 @@ func SizeFormat(size float64, places int, separator ...string) string {
 		size /= 1024
 		index++
 	}
+
 	if index >= len(sizeUnits) {
 		index = len(sizeUnits) - 1
 	}
+
 	return RoundToString(size, places) + sep + sizeUnits[index]
 }
 
@@ -579,6 +634,7 @@ func NumberFormat(num float64, places int, separator ...string) string {
 		num = -num
 		isNegative = true
 	}
+
 	roundStr := RoundToString(num, places)
 	var prefix, suffix string
 	if places > 0 {
@@ -588,10 +644,12 @@ func NumberFormat(num float64, places int, separator ...string) string {
 	} else {
 		prefix = roundStr
 	}
+
 	sep := []byte(floatSeparator)
 	if len(separator) != 0 {
 		sep = []byte(separator[0])
 	}
+
 	count, preLength, sepLength := 0, len(prefix), len(sep)
 	sepNum := (preLength - 1) / 3
 	prefixNew := make([]byte, sepLength*sepNum+preLength) // len(prefixNew) = len(prefix) + sepNum * len(sep)
@@ -605,6 +663,7 @@ func NumberFormat(num float64, places int, separator ...string) string {
 		}
 		prefixNew[prefixNewPos] = prefix[prefixPos]
 	}
+
 	result := string(prefixNew)
 	if places > 0 {
 		result += "." + suffix
@@ -612,5 +671,6 @@ func NumberFormat(num float64, places int, separator ...string) string {
 	if isNegative {
 		result = "-" + result
 	}
+
 	return result
 }

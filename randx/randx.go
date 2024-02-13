@@ -42,25 +42,31 @@ func NewWithSource(length int, source string) string {
 	if length == 0 {
 		return ""
 	}
+
 	sl := len(source)
 	if sl < 1 || sl > 256 {
 		panic("randx: wrong source length")
 	}
+
 	rbMax := 255 - (256 % sl)
 	b := make([]byte, length)
 	r := make([]byte, length+length/2) // storage for random bytes
 	i := 0
+
 	for {
 		if _, err := rand.Read(r); err != nil {
 			panic(err)
 		}
+
 		for _, rb := range r {
 			v := int(rb)
 			if v > rbMax { // skip to avoid modulo bias
 				continue
 			}
+
 			b[i] = source[v%sl]
 			i++
+
 			if i == length {
 				return string(b)
 			}

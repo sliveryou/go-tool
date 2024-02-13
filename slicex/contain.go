@@ -19,18 +19,19 @@ func Contain(slice, value interface{}) (index int) {
 	if slice == nil {
 		return
 	}
+
 	switch reflect.TypeOf(slice).Kind() {
 	case reflect.Slice, reflect.Array:
 		v := reflect.ValueOf(slice)
 		for i := 0; i < v.Len(); i++ {
 			if reflect.DeepEqual(value, v.Index(i).Interface()) {
-				index = i
-				return
+				return i
 			}
 		}
 	default:
 		panic("slicex: invalid slice type")
 	}
+
 	return
 }
 
@@ -40,10 +41,10 @@ func ContainString(slice []string, value string) (index int) {
 	index = ValueIsNotContained
 	for i := 0; i < len(slice); i++ {
 		if slice[i] == value {
-			index = i
-			return
+			return i
 		}
 	}
+
 	return
 }
 
@@ -53,10 +54,10 @@ func ContainRune(slice []rune, value rune) (index int) {
 	index = ValueIsNotContained
 	for i := 0; i < len(slice); i++ {
 		if slice[i] == value {
-			index = i
-			return
+			return i
 		}
 	}
+
 	return
 }
 
@@ -66,10 +67,10 @@ func ContainBool(slice []bool, value bool) (index int) {
 	index = ValueIsNotContained
 	for i := 0; i < len(slice); i++ {
 		if slice[i] == value {
-			index = i
-			return
+			return i
 		}
 	}
+
 	return
 }
 
@@ -79,10 +80,10 @@ func ContainInt(slice []int, value int) (index int) {
 	index = ValueIsNotContained
 	for i := 0; i < len(slice); i++ {
 		if slice[i] == value {
-			index = i
-			return
+			return i
 		}
 	}
+
 	return
 }
 
@@ -92,10 +93,10 @@ func ContainInt64(slice []int64, value int64) (index int) {
 	index = ValueIsNotContained
 	for i := 0; i < len(slice); i++ {
 		if slice[i] == value {
-			index = i
-			return
+			return i
 		}
 	}
+
 	return
 }
 
@@ -105,10 +106,10 @@ func ContainInt32(slice []int32, value int32) (index int) {
 	index = ValueIsNotContained
 	for i := 0; i < len(slice); i++ {
 		if slice[i] == value {
-			index = i
-			return
+			return i
 		}
 	}
+
 	return
 }
 
@@ -126,10 +127,10 @@ func ContainFloat64(slice []float64, value float64, places ...int) (index int) {
 	index = ValueIsNotContained
 	for i := 0; i < len(slice); i++ {
 		if mathx.Equal(slice[i], value, places...) {
-			index = i
-			return
+			return i
 		}
 	}
+
 	return
 }
 
@@ -140,9 +141,9 @@ func ContainFloat32(slice []float32, value float32, places ...int) (index int) {
 	index = ValueIsNotContained
 	for i := 0; i < len(slice); i++ {
 		if mathx.Equal(float64(slice[i]), float64(value), places...) {
-			index = i
-			return
+			return i
 		}
 	}
+
 	return
 }

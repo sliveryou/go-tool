@@ -47,23 +47,23 @@ var (
 		"httpmethod":  httpmethod,
 	}
 	defaultTags = []string{
-		"skip_unless",
-		"eq_ignore_case",
-		"ne_ignore_case",
+		"excluded_if",
+		"excluded_unless",
+		"excluded_with",
+		"excluded_with_all",
+		"excluded_without",
+		"excluded_without_all",
+		"isdefault",
 		"fieldcontains",
 		"fieldexcludes",
 		"boolean",
 		"e164",
-		"http_url",
 		"urn_rfc2141",
 		"file",
-		"filepath",
 		"base64url",
-		"base64rawurl",
 		"startsnotwith",
 		"endsnotwith",
 		"eth_addr",
-		"eth_addr_checksum",
 		"btc_addr",
 		"btc_addr_bech32",
 		"uuid_rfc4122",
@@ -88,7 +88,6 @@ var (
 		"html_encoded",
 		"url_encoded",
 		"dir",
-		"dirpath",
 		"jwt",
 		"hostname_port",
 		"timezone",
@@ -105,11 +104,6 @@ var (
 		"semver",
 		"dns_rfc1035_label",
 		"credit_card",
-		"cve",
-		"luhn_checksum",
-		"mongodb",
-		"cron",
-		"spicedb",
 	}
 )
 
@@ -200,11 +194,15 @@ func convertErr(err error) error {
 
 // getLabelTagName gets the label name.
 func getLabelTagName(sf reflect.StructField) string {
-	name := strings.SplitN(sf.Tag.Get("label"), ",", 2)[0]
-	if name == "-" {
-		return ""
-	} else if name == "" {
-		return sf.Name
+	name := sf.Name
+	if labelTag := strings.SplitN(sf.Tag.Get("label"), ",", 2)[0]; labelTag != "" {
+		if name = labelTag; name == "-" {
+			name = ""
+		}
+	} else if jsonTag := strings.SplitN(sf.Tag.Get("json"), ",", 2)[0]; jsonTag != "" {
+		if name = jsonTag; name == "-" {
+			name = ""
+		}
 	}
 
 	return name

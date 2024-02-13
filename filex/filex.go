@@ -23,6 +23,7 @@ func Ext(fileName string) string {
 	if ext != "" {
 		ext = strings.ToLower(ext[1:])
 	}
+
 	return ext
 }
 
@@ -33,6 +34,7 @@ func Size(fileName string) int64 {
 	if nil != err {
 		return -1
 	}
+
 	return f.Size()
 }
 
@@ -54,6 +56,7 @@ func DirSize(rootPath string) (fileNum, dirSize int64) {
 		fileNum++
 		dirSize += fileSize
 	}
+
 	return fileNum, dirSize
 }
 
@@ -91,6 +94,7 @@ func Hash(fileName string, h hash.Hash) (string, error) {
 	}
 
 	bytes := h.Sum(nil)
+
 	return hex.EncodeToString(bytes), nil
 }
 
@@ -118,6 +122,7 @@ func ReadToSlice(fileName string) ([]string, error) {
 			}
 			return nil, err
 		}
+
 		slice = append(slice, string(line))
 	}
 }
@@ -131,7 +136,9 @@ func Write(fileName string, data []byte, perm ...os.FileMode) error {
 			return err
 		}
 	}
+
 	pe := getPerm(0o666, perm...)
+
 	return ioutil.WriteFile(fileName, data, pe)
 }
 
@@ -144,6 +151,7 @@ func Append(fileName string, data []byte, perm ...os.FileMode) error {
 			return err
 		}
 	}
+
 	pe := getPerm(0o666, perm...)
 	f, err := os.OpenFile(fileName, os.O_WRONLY|os.O_CREATE|os.O_APPEND, pe)
 	if err != nil {
@@ -152,6 +160,7 @@ func Append(fileName string, data []byte, perm ...os.FileMode) error {
 	defer f.Close()
 
 	_, err = f.Write(data)
+
 	return err
 }
 
@@ -178,6 +187,7 @@ func Copy(srcName, destName string, perm ...os.FileMode) error {
 	defer df.Close()
 
 	_, err = io.Copy(df, sf)
+
 	return err
 }
 
@@ -187,6 +197,7 @@ func Rename(oldName, newName string) error {
 	if !IsExist(oldName) {
 		return nil
 	}
+
 	return os.Rename(oldName, newName)
 }
 
@@ -195,6 +206,7 @@ func Remove(fileName string) error {
 	if !IsExist(fileName) {
 		return nil
 	}
+
 	return os.Remove(fileName)
 }
 
@@ -235,6 +247,7 @@ func IsFile(filePath string) bool {
 	if err != nil {
 		return false
 	}
+
 	return !f.IsDir()
 }
 
@@ -244,6 +257,7 @@ func IsDir(filePath string) bool {
 	if err != nil {
 		return false
 	}
+
 	return f.IsDir()
 }
 
@@ -256,6 +270,7 @@ func entries(dirPath string) []os.FileInfo {
 	if err != nil {
 		return nil
 	}
+
 	return entries
 }
 
@@ -277,5 +292,6 @@ func getPerm(defaultPerm os.FileMode, perm ...os.FileMode) os.FileMode {
 	if len(perm) > 0 {
 		pe = perm[0]
 	}
+
 	return pe
 }
