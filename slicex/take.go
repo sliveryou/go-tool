@@ -10,6 +10,7 @@ func Take(slice interface{}) interface{} {
 	if slice == nil {
 		return nil
 	}
+
 	value := reflect.ValueOf(slice)
 	switch value.Kind() {
 	case reflect.Slice, reflect.Array:
@@ -17,6 +18,7 @@ func Take(slice interface{}) interface{} {
 		if length == 0 {
 			return nil
 		}
+
 		return Extract(slice, 1)[0]
 	default:
 		panic("slicex: invalid slice type")
@@ -30,6 +32,7 @@ func TakeString(slice []string) string {
 	if length == 0 {
 		return ""
 	}
+
 	return ExtractStrings(slice, 1)[0]
 }
 
@@ -40,6 +43,7 @@ func TakeBool(slice []bool) bool {
 	if length == 0 {
 		return false
 	}
+
 	return ExtractBools(slice, 1)[0]
 }
 
@@ -50,6 +54,7 @@ func TakeInt(slice []int) int {
 	if length == 0 {
 		return 0
 	}
+
 	return ExtractInts(slice, 1)[0]
 }
 
@@ -60,6 +65,7 @@ func TakeInt64(slice []int64) int64 {
 	if length == 0 {
 		return 0
 	}
+
 	return ExtractInt64s(slice, 1)[0]
 }
 
@@ -70,6 +76,7 @@ func TakeInt32(slice []int32) int32 {
 	if length == 0 {
 		return 0
 	}
+
 	return ExtractInt32s(slice, 1)[0]
 }
 
@@ -86,6 +93,7 @@ func TakeFloat64(slice []float64) float64 {
 	if length == 0 {
 		return 0
 	}
+
 	return ExtractFloat64s(slice, 1)[0]
 }
 
@@ -96,5 +104,6 @@ func TakeFloat32(slice []float32) float32 {
 	if length == 0 {
 		return 0
 	}
+
 	return ExtractFloat32s(slice, 1)[0]
 }

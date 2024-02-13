@@ -280,6 +280,7 @@ func BytesToUint64(bytes []byte) uint64 {
 func Uint64ToBytes(i uint64) []byte {
 	bytes := make([]byte, 8)
 	binary.BigEndian.PutUint64(bytes, i)
+
 	return bytes
 }
 
@@ -294,6 +295,7 @@ func Float64ToBytes(f float64) []byte {
 	bits := math.Float64bits(f)
 	bytes := make([]byte, 8)
 	binary.BigEndian.PutUint64(bytes, bits)
+
 	return bytes
 }
 
@@ -305,6 +307,7 @@ func BytesToRunes(bytes []byte) []rune {
 		r, c := utf8.DecodeRune(bytes[count:])
 		runes[i], count = r, count+c
 	}
+
 	return runes
 }
 
@@ -314,11 +317,13 @@ func RunesToBytes(runes []rune) []byte {
 	for _, r := range runes {
 		size += utf8.RuneLen(r)
 	}
+
 	bytes := make([]byte, size)
 	count := 0
 	for _, r := range runes {
 		count += utf8.EncodeRune(bytes[count:], r)
 	}
+
 	return bytes
 }
 
@@ -337,6 +342,7 @@ func HexDecodeBytes(h string) []byte {
 func BytesEncodeHexs(bytes []byte) []byte {
 	hexs := make([]byte, hex.EncodedLen(len(bytes)))
 	n := hex.Encode(hexs, bytes)
+
 	return hexs[:n]
 }
 
@@ -347,6 +353,7 @@ func HexsDecodeBytes(hs []byte) []byte {
 	if err != nil {
 		return nil
 	}
+
 	return bytes[:n]
 }
 
@@ -356,6 +363,7 @@ func ToBase(src string, fromBase, toBase int) string {
 	if err != nil {
 		return ""
 	}
+
 	return strconv.FormatInt(i, toBase)
 }
 

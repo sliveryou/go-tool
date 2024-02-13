@@ -200,11 +200,15 @@ func convertErr(err error) error {
 
 // getLabelTagName gets the label name.
 func getLabelTagName(sf reflect.StructField) string {
-	name := strings.SplitN(sf.Tag.Get("label"), ",", 2)[0]
-	if name == "-" {
-		return ""
-	} else if name == "" {
-		return sf.Name
+	name := sf.Name
+	if labelTag := strings.SplitN(sf.Tag.Get("label"), ",", 2)[0]; labelTag != "" {
+		if name = labelTag; name == "-" {
+			name = ""
+		}
+	} else if jsonTag := strings.SplitN(sf.Tag.Get("json"), ",", 2)[0]; jsonTag != "" {
+		if name = jsonTag; name == "-" {
+			name = ""
+		}
 	}
 
 	return name

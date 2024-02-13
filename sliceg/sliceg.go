@@ -5,7 +5,8 @@ import (
 	"time"
 
 	"golang.org/x/exp/constraints"
-	"golang.org/x/exp/slices"
+
+	"github.com/sliveryou/go-tool/v2/sliceg/internal/slices"
 )
 
 func init() {

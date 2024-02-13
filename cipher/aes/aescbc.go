@@ -10,20 +10,20 @@ import (
 	"github.com/sliveryou/go-tool/v2/cipher/pkcs"
 )
 
-// There aescbc add pkcs7Padding to be same as php's aescbc
+// There aescbc add pkcs7Padding to be same as php's aescbc.
 
 const (
-	// Cbc128KeyLen key len: 16
+	// Cbc128KeyLen key len: 16.
 	Cbc128KeyLen = 16
-	// Cbc192KeyLen key len: 24
+	// Cbc192KeyLen key len: 24.
 	Cbc192KeyLen = 24
-	// Cbc256KeyLen key len: 32
+	// Cbc256KeyLen key len: 32.
 	Cbc256KeyLen = 32
-	// IvLen iv len: 16
+	// IvLen iv len: 16.
 	IvLen = 16
 )
 
-// Cbc the base aes cbc structure
+// Cbc the base aes cbc structure.
 type Cbc struct {
 	key   []byte
 	iv    []byte
@@ -36,9 +36,9 @@ type Cbc struct {
 	// decrypter cipher.BlockMode
 }
 
-// NewCbc new aes cbc cipher
-// aescbc support key len 16 24 32 match aescbc-128 aescbc-192 aescbc-256
-// iv len must be 16
+// NewCbc new aes cbc cipher.
+// aescbc support key len 16 24 32 match aescbc-128 aescbc-192 aescbc-256,
+// iv len must be 16.
 func NewCbc(key, iv []byte) (*Cbc, error) {
 	k := len(key)
 	switch k {
@@ -63,7 +63,7 @@ func NewCbc(key, iv []byte) (*Cbc, error) {
 	}, nil
 }
 
-// Encrypt the aes cbc encrypt method
+// Encrypt the aes cbc encrypt method.
 func (c *Cbc) Encrypt(src []byte) ([]byte, error) {
 	paddingText := pkcs.PKCS7Padding(src, aes.BlockSize)
 
@@ -74,7 +74,7 @@ func (c *Cbc) Encrypt(src []byte) ([]byte, error) {
 	return cipherText, nil
 }
 
-// Decrypt the aes cbc decrypt method
+// Decrypt the aes cbc decrypt method.
 func (c *Cbc) Decrypt(src []byte) ([]byte, error) {
 	decrypter := cipher.NewCBCDecrypter(c.block, c.iv)
 
@@ -87,7 +87,7 @@ func (c *Cbc) Decrypt(src []byte) ([]byte, error) {
 // The follow functions are used for easy to call test
 // or different key to cipher
 
-// CbcEncrypt the aes cbc encrypt method
+// CbcEncrypt the aes cbc encrypt method.
 func CbcEncrypt(key, iv, src []byte) ([]byte, error) {
 	a, err := NewCbc(key, iv)
 	if err != nil {
@@ -97,7 +97,7 @@ func CbcEncrypt(key, iv, src []byte) ([]byte, error) {
 	return a.Encrypt(src)
 }
 
-// CbcDecrypt the ase cbc decrypt method
+// CbcDecrypt the ase cbc decrypt method.
 func CbcDecrypt(key, iv, src []byte) ([]byte, error) {
 	a, err := NewCbc(key, iv)
 	if err != nil {
@@ -107,12 +107,13 @@ func CbcDecrypt(key, iv, src []byte) ([]byte, error) {
 	return a.Decrypt(src)
 }
 
-// CbcEncryptHex return hex result
+// CbcEncryptHex return hex result.
 func CbcEncryptHex(key, iv, src []byte) (string, error) {
 	a, err := NewCbc(key, iv)
 	if err != nil {
 		return "", err
 	}
+
 	dst, err := a.Encrypt(src)
 	if err != nil {
 		return "", err
@@ -121,7 +122,7 @@ func CbcEncryptHex(key, iv, src []byte) (string, error) {
 	return hex.EncodeToString(dst), nil
 }
 
-// CbcDecryptHex decrypt hex msg
+// CbcDecryptHex decrypt hex msg.
 func CbcDecryptHex(key, iv []byte, msg string) ([]byte, error) {
 	a, err := NewCbc(key, iv)
 	if err != nil {
@@ -136,12 +137,13 @@ func CbcDecryptHex(key, iv []byte, msg string) ([]byte, error) {
 	return a.Decrypt(data)
 }
 
-// CbcEncryptBase64 return base64 result
+// CbcEncryptBase64 return base64 result.
 func CbcEncryptBase64(key, iv, src []byte) (string, error) {
 	a, err := NewCbc(key, iv)
 	if err != nil {
 		return "", err
 	}
+
 	dst, err := a.Encrypt(src)
 	if err != nil {
 		return "", err
@@ -150,12 +152,13 @@ func CbcEncryptBase64(key, iv, src []byte) (string, error) {
 	return base64.StdEncoding.EncodeToString(dst), nil
 }
 
-// CbcDecryptBase64 decrypt base64 msg
+// CbcDecryptBase64 decrypt base64 msg.
 func CbcDecryptBase64(key, iv []byte, msg string) ([]byte, error) {
 	a, err := NewCbc(key, iv)
 	if err != nil {
 		return nil, err
 	}
+
 	data, err := base64.StdEncoding.DecodeString(msg)
 	if err != nil {
 		return nil, err

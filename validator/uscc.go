@@ -8,8 +8,8 @@ import (
 // verification rules: http://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=24691C25985C1073D3A7C85629378AC0
 // online preview: https://zh.wikisource.org/wiki/GB_32100-2015_%E6%B3%95%E4%BA%BA%E5%92%8C%E5%85%B6%E4%BB%96%E7%BB%84%E7%BB%87%E7%BB%9F%E4%B8%80%E7%A4%BE%E4%BC%9A%E4%BF%A1%E7%94%A8%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A0%81%E8%A7%84%E5%88%99
 
-// char - num map
-// key represents the code character of uscc, and value represents the corresponding value of the code character
+// char - num map,
+// key represents the code character of uscc, and value represents the corresponding value of the code character.
 var charValueMap = map[uint8]int{
 	'0': 0,
 	'1': 1,
@@ -44,9 +44,9 @@ var charValueMap = map[uint8]int{
 	'Y': 30,
 }
 
-// index - weight map
-// key represents the index of uscc and value represents the weight corresponding to the index
-// value = 3 ** （key） % 31
+// index - weight map,
+// key represents the index of uscc and value represents the weight corresponding to the index,
+// value = 3 ** （key） % 31.
 var usccIndexWeightMap = map[int]int{
 	0:  1,
 	1:  3,
@@ -104,6 +104,5 @@ func (uscc USCC) IsValid() bool {
 		}
 	}
 
-	// fmt.Println(string(cChar), string(checkCode))
 	return cChar == checkCode
 }

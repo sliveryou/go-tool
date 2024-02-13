@@ -17,8 +17,9 @@ const (
 // It panics if slice is invalid.
 func Join(slice interface{}, sep ...string) (result string) {
 	if slice == nil {
-		return ""
+		return
 	}
+
 	value := reflect.ValueOf(slice)
 	switch value.Kind() {
 	case reflect.Slice, reflect.Array:
@@ -26,10 +27,12 @@ func Join(slice interface{}, sep ...string) (result string) {
 		if length == 0 {
 			return
 		}
+
 		separator := joinSeparator
 		if len(sep) != 0 {
 			separator = sep[0]
 		}
+
 		var builder strings.Builder
 		for i := 0; i < value.Len(); i++ {
 			builder.WriteString(convert.ToString(value.Index(i).Interface()))
@@ -37,8 +40,8 @@ func Join(slice interface{}, sep ...string) (result string) {
 				builder.WriteString(separator)
 			}
 		}
-		result = builder.String()
-		return
+
+		return builder.String()
 	default:
 		panic("slicex: invalid slice type")
 	}
@@ -51,10 +54,12 @@ func JoinStrings(slice []string, sep ...string) (result string) {
 	if length == 0 {
 		return
 	}
+
 	separator := joinSeparator
 	if len(sep) != 0 {
 		separator = sep[0]
 	}
+
 	var builder strings.Builder
 	for _, value := range slice {
 		builder.WriteString(value)
@@ -62,8 +67,8 @@ func JoinStrings(slice []string, sep ...string) (result string) {
 			builder.WriteString(separator)
 		}
 	}
-	result = builder.String()
-	return
+
+	return builder.String()
 }
 
 // JoinBools returns string result of bool slice connected with string sep,
@@ -73,10 +78,12 @@ func JoinBools(slice []bool, sep ...string) (result string) {
 	if length == 0 {
 		return
 	}
+
 	separator := joinSeparator
 	if len(sep) != 0 {
 		separator = sep[0]
 	}
+
 	var builder strings.Builder
 	for _, value := range slice {
 		builder.WriteString(strconv.FormatBool(value))
@@ -84,8 +91,8 @@ func JoinBools(slice []bool, sep ...string) (result string) {
 			builder.WriteString(separator)
 		}
 	}
-	result = builder.String()
-	return
+
+	return builder.String()
 }
 
 // JoinInts returns string result of int slice connected with string sep,
@@ -95,10 +102,12 @@ func JoinInts(slice []int, sep ...string) (result string) {
 	if length == 0 {
 		return
 	}
+
 	separator := joinSeparator
 	if len(sep) != 0 {
 		separator = sep[0]
 	}
+
 	var builder strings.Builder
 	for _, value := range slice {
 		builder.WriteString(strconv.Itoa(value))
@@ -106,8 +115,8 @@ func JoinInts(slice []int, sep ...string) (result string) {
 			builder.WriteString(separator)
 		}
 	}
-	result = builder.String()
-	return
+
+	return builder.String()
 }
 
 // JoinInt64s returns string result of int64 slice connected with string sep,
@@ -117,10 +126,12 @@ func JoinInt64s(slice []int64, sep ...string) (result string) {
 	if length == 0 {
 		return
 	}
+
 	separator := joinSeparator
 	if len(sep) != 0 {
 		separator = sep[0]
 	}
+
 	var builder strings.Builder
 	for _, value := range slice {
 		builder.WriteString(strconv.FormatInt(value, 10))
@@ -128,8 +139,8 @@ func JoinInt64s(slice []int64, sep ...string) (result string) {
 			builder.WriteString(separator)
 		}
 	}
-	result = builder.String()
-	return
+
+	return builder.String()
 }
 
 // JoinInt32s returns string result of int32 slice connected with string sep,
@@ -139,10 +150,12 @@ func JoinInt32s(slice []int32, sep ...string) (result string) {
 	if length == 0 {
 		return
 	}
+
 	separator := joinSeparator
 	if len(sep) != 0 {
 		separator = sep[0]
 	}
+
 	var builder strings.Builder
 	for _, value := range slice {
 		builder.WriteString(strconv.FormatInt(int64(value), 10))
@@ -150,8 +163,8 @@ func JoinInt32s(slice []int32, sep ...string) (result string) {
 			builder.WriteString(separator)
 		}
 	}
-	result = builder.String()
-	return
+
+	return builder.String()
 }
 
 // JoinFloats returns string result of float64 slice connected with string sep,
@@ -167,10 +180,12 @@ func JoinFloat64s(slice []float64, sep ...string) (result string) {
 	if length == 0 {
 		return
 	}
+
 	separator := joinSeparator
 	if len(sep) != 0 {
 		separator = sep[0]
 	}
+
 	var builder strings.Builder
 	for _, value := range slice {
 		builder.WriteString(strconv.FormatFloat(value, 'f', -1, 64))
@@ -178,8 +193,8 @@ func JoinFloat64s(slice []float64, sep ...string) (result string) {
 			builder.WriteString(separator)
 		}
 	}
-	result = builder.String()
-	return
+
+	return builder.String()
 }
 
 // JoinFloat32s returns string result of float32 slice connected with string sep,
@@ -189,10 +204,12 @@ func JoinFloat32s(slice []float32, sep ...string) (result string) {
 	if length == 0 {
 		return
 	}
+
 	separator := joinSeparator
 	if len(sep) != 0 {
 		separator = sep[0]
 	}
+
 	var builder strings.Builder
 	for _, value := range slice {
 		builder.WriteString(strconv.FormatFloat(float64(value), 'f', -1, 32))
@@ -200,6 +217,6 @@ func JoinFloat32s(slice []float32, sep ...string) (result string) {
 			builder.WriteString(separator)
 		}
 	}
-	result = builder.String()
-	return
+
+	return builder.String()
 }

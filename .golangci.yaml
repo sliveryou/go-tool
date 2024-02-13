@@ -4,7 +4,7 @@ run:
   timeout: 5m
   tests: true
   skip-dirs:
-    - id-generator/uuid/satori
+    - sliceg/internal
 
 linters-settings:
   errcheck:
@@ -58,8 +58,8 @@ linters-settings:
       - name: get-return
       - name: modifies-parameter
       - name: confusing-results
-      # - name: deep-exit
-      - name: unused-parameter
+      - name: deep-exit
+      # - name: unused-parameter
       - name: unreachable-code
       # - name: add-constant
       - name: unnecessary-stmt
@@ -133,7 +133,7 @@ linters:
     - goconst
     - gocritic
     - gocyclo
-    # - godot
+    - godot
     - godox
     - gofmt
     - gofumpt

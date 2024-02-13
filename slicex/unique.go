@@ -8,17 +8,19 @@ import (
 // It panics if slice is invalid.
 func Unique(slice interface{}) []interface{} {
 	if slice == nil {
-		return nil
+		return []interface{}{}
 	}
+
 	value := reflect.ValueOf(slice)
 	switch value.Kind() {
 	case reflect.Slice, reflect.Array:
-		var result []interface{}
+		result := make([]interface{}, 0, value.Len())
 		kinds := []reflect.Kind{
 			reflect.Interface, reflect.Slice, reflect.Array,
 			reflect.Map, reflect.Struct, reflect.Func,
 		}
 		uniqueSlice, uniqueMap := make([]interface{}, 0), make(map[interface{}]struct{})
+
 		for i := 0; i < value.Len(); i++ {
 			item := value.Index(i).Interface()
 			kind := reflect.ValueOf(item).Kind()
@@ -34,6 +36,7 @@ func Unique(slice interface{}) []interface{} {
 				}
 			}
 		}
+
 		return result
 	default:
 		panic("slicex: invalid slice type")
@@ -42,66 +45,76 @@ func Unique(slice interface{}) []interface{} {
 
 // UniqueStrings returns the unique string slice.
 func UniqueStrings(slice []string) []string {
-	var result []string
+	result := make([]string, 0, len(slice))
 	uniqueMap := make(map[string]struct{}, len(slice))
+
 	for _, value := range slice {
 		if _, ok := uniqueMap[value]; !ok {
 			uniqueMap[value] = struct{}{}
 			result = append(result, value)
 		}
 	}
+
 	return result
 }
 
 // UniqueBools returns the unique bool slice.
 func UniqueBools(slice []bool) []bool {
-	var result []bool
+	result := make([]bool, 0, len(slice))
 	uniqueMap := make(map[bool]struct{}, len(slice))
+
 	for _, value := range slice {
 		if _, ok := uniqueMap[value]; !ok {
 			uniqueMap[value] = struct{}{}
 			result = append(result, value)
 		}
 	}
+
 	return result
 }
 
 // UniqueInts returns the unique int slice.
 func UniqueInts(slice []int) []int {
-	var result []int
+	result := make([]int, 0, len(slice))
 	uniqueMap := make(map[int]struct{}, len(slice))
+
 	for _, value := range slice {
 		if _, ok := uniqueMap[value]; !ok {
 			uniqueMap[value] = struct{}{}
 			result = append(result, value)
 		}
 	}
+
 	return result
 }
 
 // UniqueInt64s returns the unique int64 slice.
 func UniqueInt64s(slice []int64) []int64 {
-	var result []int64
+	result := make([]int64, 0, len(slice))
 	uniqueMap := make(map[int64]struct{}, len(slice))
+
 	for _, value := range slice {
 		if _, ok := uniqueMap[value]; !ok {
 			uniqueMap[value] = struct{}{}
 			result = append(result, value)
 		}
 	}
+
 	return result
 }
 
 // UniqueInt32s returns the unique int32 slice.
 func UniqueInt32s(slice []int32) []int32 {
-	var result []int32
+	result := make([]int32, 0, len(slice))
 	uniqueMap := make(map[int32]struct{}, len(slice))
+
 	for _, value := range slice {
 		if _, ok := uniqueMap[value]; !ok {
 			uniqueMap[value] = struct{}{}
 			result = append(result, value)
 		}
 	}
+
 	return result
 }
 
@@ -112,26 +125,30 @@ func UniqueFloats(slice []float64) []float64 {
 
 // UniqueFloat64s returns the unique float64 slice.
 func UniqueFloat64s(slice []float64) []float64 {
-	var result []float64
+	result := make([]float64, 0, len(slice))
 	uniqueMap := make(map[float64]struct{}, len(slice))
+
 	for _, value := range slice {
 		if _, ok := uniqueMap[value]; !ok {
 			uniqueMap[value] = struct{}{}
 			result = append(result, value)
 		}
 	}
+
 	return result
 }
 
 // UniqueFloat32s returns the unique float32 slice.
 func UniqueFloat32s(slice []float32) []float32 {
-	var result []float32
+	result := make([]float32, 0, len(slice))
 	uniqueMap := make(map[float32]struct{}, len(slice))
+
 	for _, value := range slice {
 		if _, ok := uniqueMap[value]; !ok {
 			uniqueMap[value] = struct{}{}
 			result = append(result, value)
 		}
 	}
+
 	return result
 }

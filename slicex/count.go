@@ -7,8 +7,9 @@ import (
 // Count returns value count map by slice.
 func Count(slice interface{}) map[interface{}]int {
 	if slice == nil {
-		return nil
+		return map[interface{}]int{}
 	}
+
 	value := reflect.ValueOf(slice)
 	switch value.Kind() {
 	case reflect.Slice, reflect.Array:
@@ -16,6 +17,7 @@ func Count(slice interface{}) map[interface{}]int {
 			reflect.Interface, reflect.Slice, reflect.Array,
 			reflect.Map, reflect.Struct, reflect.Func,
 		}
+
 		countMap := make(map[interface{}]int, value.Len())
 		for i := 0; i < value.Len(); i++ {
 			item := value.Index(i).Interface()
@@ -24,6 +26,7 @@ func Count(slice interface{}) map[interface{}]int {
 				countMap[item]++
 			}
 		}
+
 		return countMap
 	default:
 		panic("slicex: invalid slice type")
@@ -36,6 +39,7 @@ func CountString(slice []string) map[string]int {
 	for _, v := range slice {
 		result[v]++
 	}
+
 	return result
 }
 
@@ -45,6 +49,7 @@ func CountBool(slice []bool) map[bool]int {
 	for _, v := range slice {
 		result[v]++
 	}
+
 	return result
 }
 
@@ -54,6 +59,7 @@ func CountInt(slice []int) map[int]int {
 	for _, v := range slice {
 		result[v]++
 	}
+
 	return result
 }
 
@@ -63,6 +69,7 @@ func CountInt64(slice []int64) map[int64]int {
 	for _, v := range slice {
 		result[v]++
 	}
+
 	return result
 }
 
@@ -72,6 +79,7 @@ func CountInt32(slice []int32) map[int32]int {
 	for _, v := range slice {
 		result[v]++
 	}
+
 	return result
 }
 
@@ -86,6 +94,7 @@ func CountFloat64(slice []float64) map[float64]int {
 	for _, v := range slice {
 		result[v]++
 	}
+
 	return result
 }
 
@@ -95,5 +104,6 @@ func CountFloat32(slice []float32) map[float32]int {
 	for _, v := range slice {
 		result[v]++
 	}
+
 	return result
 }

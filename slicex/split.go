@@ -15,12 +15,14 @@ const (
 // default sep is ",".
 func SplitStrings(str string, sep ...string) []string {
 	if str == "" {
-		return nil
+		return []string{}
 	}
+
 	separator := splitSeparator
 	if len(sep) > 0 {
 		separator = sep[0]
 	}
+
 	return strings.Split(str, separator)
 }
 
@@ -29,17 +31,20 @@ func SplitStrings(str string, sep ...string) []string {
 // default sep is ",".
 func SplitBools(str string, sep ...string) []bool {
 	if str == "" {
-		return nil
+		return []bool{}
 	}
+
 	separator := splitSeparator
 	if len(sep) > 0 {
 		separator = sep[0]
 	}
+
 	s := strings.Split(str, separator)
 	result := make([]bool, 0, len(s))
 	for _, v := range s {
 		result = append(result, convert.ToBool(v))
 	}
+
 	return result
 }
 
@@ -48,17 +53,20 @@ func SplitBools(str string, sep ...string) []bool {
 // default sep is ",".
 func SplitInts(str string, sep ...string) []int {
 	if str == "" {
-		return nil
+		return []int{}
 	}
+
 	separator := splitSeparator
 	if len(sep) > 0 {
 		separator = sep[0]
 	}
+
 	s := strings.Split(str, separator)
 	result := make([]int, 0, len(s))
 	for _, v := range s {
 		result = append(result, convert.ToInt(v))
 	}
+
 	return result
 }
 
@@ -67,17 +75,20 @@ func SplitInts(str string, sep ...string) []int {
 // default sep is ",".
 func SplitInt64s(str string, sep ...string) []int64 {
 	if str == "" {
-		return nil
+		return []int64{}
 	}
+
 	separator := splitSeparator
 	if len(sep) > 0 {
 		separator = sep[0]
 	}
+
 	s := strings.Split(str, separator)
 	result := make([]int64, 0, len(s))
 	for _, v := range s {
 		result = append(result, convert.ToInt64(v))
 	}
+
 	return result
 }
 
@@ -86,17 +97,20 @@ func SplitInt64s(str string, sep ...string) []int64 {
 // default sep is ",".
 func SplitInt32s(str string, sep ...string) []int32 {
 	if str == "" {
-		return nil
+		return []int32{}
 	}
+
 	separator := splitSeparator
 	if len(sep) > 0 {
 		separator = sep[0]
 	}
+
 	s := strings.Split(str, separator)
 	result := make([]int32, 0, len(s))
 	for _, v := range s {
 		result = append(result, convert.ToInt32(v))
 	}
+
 	return result
 }
 
@@ -112,17 +126,20 @@ func SplitFloats(str string, sep ...string) []float64 {
 // default sep is ",".
 func SplitFloat64s(str string, sep ...string) []float64 {
 	if str == "" {
-		return nil
+		return []float64{}
 	}
+
 	separator := splitSeparator
 	if len(sep) > 0 {
 		separator = sep[0]
 	}
+
 	s := strings.Split(str, separator)
 	result := make([]float64, 0, len(s))
 	for _, v := range s {
 		result = append(result, convert.ToFloat64(v))
 	}
+
 	return result
 }
 
@@ -131,16 +148,19 @@ func SplitFloat64s(str string, sep ...string) []float64 {
 // default sep is ",".
 func SplitFloat32s(str string, sep ...string) []float32 {
 	if str == "" {
-		return nil
+		return []float32{}
 	}
+
 	separator := splitSeparator
 	if len(sep) > 0 {
 		separator = sep[0]
 	}
+
 	s := strings.Split(str, separator)
 	result := make([]float32, 0, len(s))
 	for _, v := range s {
 		result = append(result, convert.ToFloat32(v))
 	}
+
 	return result
 }

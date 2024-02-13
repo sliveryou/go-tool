@@ -30,6 +30,7 @@ func MustNewEncoder(source string) *Encoder {
 	if err != nil {
 		panic(err)
 	}
+
 	return enc
 }
 
@@ -40,7 +41,6 @@ func NewEncoder(source string) (*Encoder, error) {
 	}
 
 	enc := new(Encoder)
-
 	for i := range enc.decodeMap {
 		enc.decodeMap[i] = -1
 	}

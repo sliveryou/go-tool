@@ -12,12 +12,14 @@ func Equal(arr1, arr2 interface{}) bool {
 	if arr1 == nil || arr2 == nil {
 		return arr1 == arr2
 	}
+
 	kind1, kind2 := reflect.TypeOf(arr1).Kind(), reflect.TypeOf(arr2).Kind()
 	if kind1 == reflect.Slice && kind2 == reflect.Slice {
 		return reflect.DeepEqual(arr1, arr2)
 	} else if kind1 == reflect.Array && kind2 == reflect.Array {
 		return arr1 == arr2
 	}
+
 	panic("slicex: invalid arr1 or arr2 type")
 }
 
@@ -26,14 +28,17 @@ func EqualStrings(arr1, arr2 []string) bool {
 	if len(arr1) != len(arr2) {
 		return false
 	}
+
 	if (arr1 == nil) != (arr2 == nil) {
 		return false
 	}
+
 	for i, v := range arr1 {
 		if v != arr2[i] {
 			return false
 		}
 	}
+
 	return true
 }
 
@@ -42,14 +47,17 @@ func EqualBools(arr1, arr2 []bool) bool {
 	if len(arr1) != len(arr2) {
 		return false
 	}
+
 	if (arr1 == nil) != (arr2 == nil) {
 		return false
 	}
+
 	for i, v := range arr1 {
 		if v != arr2[i] {
 			return false
 		}
 	}
+
 	return true
 }
 
@@ -58,14 +66,17 @@ func EqualInts(arr1, arr2 []int) bool {
 	if len(arr1) != len(arr2) {
 		return false
 	}
+
 	if (arr1 == nil) != (arr2 == nil) {
 		return false
 	}
+
 	for i, v := range arr1 {
 		if v != arr2[i] {
 			return false
 		}
 	}
+
 	return true
 }
 
@@ -74,14 +85,17 @@ func EqualInt64s(arr1, arr2 []int64) bool {
 	if len(arr1) != len(arr2) {
 		return false
 	}
+
 	if (arr1 == nil) != (arr2 == nil) {
 		return false
 	}
+
 	for i, v := range arr1 {
 		if v != arr2[i] {
 			return false
 		}
 	}
+
 	return true
 }
 
@@ -90,14 +104,17 @@ func EqualInt32s(arr1, arr2 []int32) bool {
 	if len(arr1) != len(arr2) {
 		return false
 	}
+
 	if (arr1 == nil) != (arr2 == nil) {
 		return false
 	}
+
 	for i, v := range arr1 {
 		if v != arr2[i] {
 			return false
 		}
 	}
+
 	return true
 }
 
@@ -113,14 +130,17 @@ func EqualFloat64s(arr1, arr2 []float64, places ...int) bool {
 	if len(arr1) != len(arr2) {
 		return false
 	}
+
 	if (arr1 == nil) != (arr2 == nil) {
 		return false
 	}
+
 	for i, v := range arr1 {
 		if !mathx.Equal(v, arr2[i], places...) {
 			return false
 		}
 	}
+
 	return true
 }
 
@@ -130,13 +150,16 @@ func EqualFloat32s(arr1, arr2 []float32, places ...int) bool {
 	if len(arr1) != len(arr2) {
 		return false
 	}
+
 	if (arr1 == nil) != (arr2 == nil) {
 		return false
 	}
+
 	for i, v := range arr1 {
 		if !mathx.Equal(float64(v), float64(arr2[i]), places...) {
 			return false
 		}
 	}
+
 	return true
 }

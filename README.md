@@ -1,6 +1,6 @@
 # go-tool
 
-[![Github License](https://img.shields.io/github/license/sliveryou/go-tool.svg?style=flat)](https://github.com/sliveryou/go-tool/blob/master/LICENSE)
+[![Github License](https://img.shields.io/github/license/sliveryou/go-tool.svg?style=flat)](https://github.com/sliveryou/go-tool/blob/main/LICENSE)
 [![Go Doc](https://godoc.org/github.com/sliveryou/go-tool/v2?status.svg)](https://pkg.go.dev/github.com/sliveryou/go-tool/v2)
 [![Go Report](https://goreportcard.com/badge/github.com/sliveryou/go-tool/v2)](https://goreportcard.com/report/github.com/sliveryou/go-tool/v2)
 [![Github Latest Release](https://img.shields.io/github/release/sliveryou/go-tool.svg?style=flat)](https://github.com/sliveryou/go-tool/releases/latest)
@@ -11,13 +11,13 @@ go 常用工具函数集合
 
 ## 安装
 
-1. 使用 go 1.18 及以上版本的，建议安装 go-tool v2 版本
+1. 使用 go 1.18 及以上版本的，建议安装 go-tool v2 版本：
 
 ```bash
 $ go get github.com/sliveryou/go-tool/v2
 ```
 
-2. 使用 go 1.18 以下版本的，必须安装 go-tool v1 版本
+2. 使用 go 1.18 以下版本的，必须安装 go-tool v1 版本：
 
 ```bash
 $ go get github.com/sliveryou/go-tool
@@ -25,23 +25,25 @@ $ go get github.com/sliveryou/go-tool
 
 ## 简介
 
-- `cipher` 常用的加解密，目前支持 aescbc，计划支持 aesecb，rsa 等
-- `condition` 条件判断常见操作，如获取传入参数的 bool 类型值和三目运算等 
-- `convert` 基本类型转换，进制转换等
-- `filex` 文件哈希、文件增删读写、路径判断和文件元数据获取等
-- `id-generator` 雪花算法 id 生成、uuid 生成、int64 类型的 base58 和 base62 编解码等
-- `mathx` 浮点数计算比较、奇偶判断、序列生成、最值和平均值计算等
-- `mathg` mathx 的泛型版实现
-- `pointer` 指针常见操作，如获取传入参数的指针、获取传入指针指向的值和提取传入 interface 的底层值等
-- `randx` 并发安全真随机 A-Za-z0-9 字符串生成（可指定字符串生成源）
-- `slicex` 切片相关操作，如值包含判断、切片转换、切片打乱和切片去重等
-- `sliceg` slicex 的泛型版实现
-- `timex` 时间相关操作，如时区加载、时间戳计算和时间格式化等
-- `validator` 通用中文语义结构体参数校验器，并包含银行卡号、身份证号、企业对公账户和统一社会信用代码校验器
+- [**cipher**](#cipher) 常用的加解密，目前支持 aescbc，计划支持 aesecb，rsa 等
+- [**condition**](#condition) 条件判断常见操作，如获取传入参数的 bool 类型值和三目运算等
+- [**convert**](#convert) 基本类型转换，进制转换等
+- [**filex**](#filex) 文件哈希、文件增删读写、路径判断和文件元数据获取等
+- [**id-generator**](#id-generator) 雪花算法 id 生成、uuid 生成、int64 类型的 base58 和 base62 编解码等
+- [**mathx**](#mathx) 浮点数计算比较、奇偶判断、序列生成、最值和平均值计算等
+- [**mathg**](#mathg) mathx 的泛型版实现
+- [**pointer**](#pointer) 指针常见操作，如获取传入参数的指针、获取传入指针指向的值和提取传入 interface 的底层值等
+- [**randx**](#randx) 并发安全真随机 A-Za-z0-9 字符串生成（可指定字符串生成源）
+- [**slicex**](#slicex) 切片相关操作，如值包含判断、切片转换、切片打乱和切片去重等
+- [**sliceg**](#sliceg) slicex 的泛型版实现
+- [**timex**](#timex) 时间相关操作，如时区加载、时间戳计算和时间格式化等
+- [**validator**](#validator) 通用中文语义结构体参数校验器，并包含银行卡号、身份证号、企业对公账户和统一社会信用代码校验器
 
 ## 接口
 
 ### cipher
+
+[返回简介](#简介)
 
 ```go
 import (
@@ -97,6 +99,8 @@ func TernaryOperator[T, U any](isTrue T, ifValue, elseValue U) U
 
 ### convert
 
+[返回简介](#简介)
+
 ```go
 import (
     "github.com/sliveryou/go-tool/v2/convert"
@@ -136,6 +140,8 @@ func Uint64ToBytes(i uint64) []byte
 
 ### filex
 
+[返回简介](#简介)
+
 ```go
 import (
     "github.com/sliveryou/go-tool/v2/filex"
@@ -166,6 +172,8 @@ func Write(fileName string, data []byte, perm ...os.FileMode) error
 ```
 
 ### id-generator
+
+[返回简介](#简介)
 
 ```go
 // encoding/base58
@@ -214,6 +222,8 @@ func Parse(input string) (uuid.UUID, error)
 ```
 
 ### mathx
+
+[返回简介](#简介)
 
 ```go
 import (
@@ -277,6 +287,8 @@ func SumInt64(nums ...int64) int64
 
 ### mathg
 
+[返回简介](#简介)
+
 ```go
 import (
     "github.com/sliveryou/go-tool/v2/mathg"
@@ -308,6 +320,8 @@ func Sum[T constraints.Ordered](nums ...T) T
 
 ### pointer
 
+[返回简介](#简介)
+
 ```go
 import (
     "github.com/sliveryou/go-tool/v2/pointer"
@@ -322,6 +336,8 @@ func UnwrapOrDefault[T any](p *T) T
 
 ### randx
 
+[返回简介](#简介)
+
 ```go
 import (
     "github.com/sliveryou/go-tool/v2/randx"
@@ -335,6 +351,8 @@ func StdSource() string
 ```
 
 ### slicex
+
+[返回简介](#简介)
 
 ```go
 import (
@@ -471,6 +489,8 @@ func UniqueStrings(slice []string) []string
 
 ### sliceg
 
+[返回简介](#简介)
+
 ```go
 import (
     "github.com/sliveryou/go-tool/v2/sliceg"
@@ -511,6 +531,8 @@ func UniqueFunc[T any, U comparable](s []T, f func(v T) U) []T
 ```
 
 ### timex
+
+[返回简介](#简介)
 
 ```go
 import (
@@ -564,6 +586,8 @@ func UnixTodayRange(location ...*time.Location) (start, end int64)
 ```
 
 ### validator
+
+[返回简介](#简介)
 
 ```go
 import (

@@ -16,19 +16,22 @@ func Extract(slice interface{}, num int) []interface{} {
 	if num < 0 {
 		panic("slicex: num cannot be less than 0")
 	}
+
 	if slice == nil {
-		return nil
+		return []interface{}{}
 	}
+
 	value := reflect.ValueOf(slice)
 	switch value.Kind() {
 	case reflect.Slice, reflect.Array:
 		length := value.Len()
 		if length == 0 {
-			return nil
+			return []interface{}{}
 		}
 		if num > length {
 			num = length
 		}
+
 		result := make([]interface{}, num)
 		for i, v := range rand.Perm(length) {
 			if i >= num {
@@ -36,6 +39,7 @@ func Extract(slice interface{}, num int) []interface{} {
 			}
 			result[i] = value.Index(v).Interface()
 		}
+
 		return result
 	default:
 		panic("slicex: invalid slice type")
@@ -48,13 +52,15 @@ func ExtractStrings(slice []string, num int) []string {
 	if num < 0 {
 		panic("slicex: num cannot be less than 0")
 	}
+
 	length := len(slice)
 	if length == 0 {
-		return nil
+		return []string{}
 	}
 	if num > length {
 		num = length
 	}
+
 	result := make([]string, num)
 	for i, v := range rand.Perm(length) {
 		if i >= num {
@@ -62,6 +68,7 @@ func ExtractStrings(slice []string, num int) []string {
 		}
 		result[i] = slice[v]
 	}
+
 	return result
 }
 
@@ -71,13 +78,15 @@ func ExtractBools(slice []bool, num int) []bool {
 	if num < 0 {
 		panic("slicex: num cannot be less than 0")
 	}
+
 	length := len(slice)
 	if length == 0 {
-		return nil
+		return []bool{}
 	}
 	if num > length {
 		num = length
 	}
+
 	result := make([]bool, num)
 	for i, v := range rand.Perm(length) {
 		if i >= num {
@@ -85,6 +94,7 @@ func ExtractBools(slice []bool, num int) []bool {
 		}
 		result[i] = slice[v]
 	}
+
 	return result
 }
 
@@ -94,13 +104,15 @@ func ExtractInts(slice []int, num int) []int {
 	if num < 0 {
 		panic("slicex: num cannot be less than 0")
 	}
+
 	length := len(slice)
 	if length == 0 {
-		return nil
+		return []int{}
 	}
 	if num > length {
 		num = length
 	}
+
 	result := make([]int, num)
 	for i, v := range rand.Perm(length) {
 		if i >= num {
@@ -108,6 +120,7 @@ func ExtractInts(slice []int, num int) []int {
 		}
 		result[i] = slice[v]
 	}
+
 	return result
 }
 
@@ -117,13 +130,15 @@ func ExtractInt64s(slice []int64, num int) []int64 {
 	if num < 0 {
 		panic("slicex: num cannot be less than 0")
 	}
+
 	length := len(slice)
 	if length == 0 {
-		return nil
+		return []int64{}
 	}
 	if num > length {
 		num = length
 	}
+
 	result := make([]int64, num)
 	for i, v := range rand.Perm(length) {
 		if i >= num {
@@ -131,6 +146,7 @@ func ExtractInt64s(slice []int64, num int) []int64 {
 		}
 		result[i] = slice[v]
 	}
+
 	return result
 }
 
@@ -140,13 +156,15 @@ func ExtractInt32s(slice []int32, num int) []int32 {
 	if num < 0 {
 		panic("slicex: num cannot be less than 0")
 	}
+
 	length := len(slice)
 	if length == 0 {
-		return nil
+		return []int32{}
 	}
 	if num > length {
 		num = length
 	}
+
 	result := make([]int32, num)
 	for i, v := range rand.Perm(length) {
 		if i >= num {
@@ -154,6 +172,7 @@ func ExtractInt32s(slice []int32, num int) []int32 {
 		}
 		result[i] = slice[v]
 	}
+
 	return result
 }
 
@@ -169,13 +188,15 @@ func ExtractFloat64s(slice []float64, num int) []float64 {
 	if num < 0 {
 		panic("slicex: num cannot be less than 0")
 	}
+
 	length := len(slice)
 	if length == 0 {
-		return nil
+		return []float64{}
 	}
 	if num > length {
 		num = length
 	}
+
 	result := make([]float64, num)
 	for i, v := range rand.Perm(length) {
 		if i >= num {
@@ -183,6 +204,7 @@ func ExtractFloat64s(slice []float64, num int) []float64 {
 		}
 		result[i] = slice[v]
 	}
+
 	return result
 }
 
@@ -192,13 +214,15 @@ func ExtractFloat32s(slice []float32, num int) []float32 {
 	if num < 0 {
 		panic("slicex: num cannot be less than 0")
 	}
+
 	length := len(slice)
 	if length == 0 {
-		return nil
+		return []float32{}
 	}
 	if num > length {
 		num = length
 	}
+
 	result := make([]float32, num)
 	for i, v := range rand.Perm(length) {
 		if i >= num {
@@ -206,5 +230,6 @@ func ExtractFloat32s(slice []float32, num int) []float32 {
 		}
 		result[i] = slice[v]
 	}
+
 	return result
 }
