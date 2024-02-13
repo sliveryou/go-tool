@@ -58,7 +58,9 @@ func TestSnowflake_NextId(t *testing.T) {
 		go func() {
 			defer wg.Done()
 			id, err := snowflake.NextId()
-			require.NoError(t, err)
+			if err != nil {
+				panic(err)
+			}
 			c <- id
 		}()
 	}
@@ -141,7 +143,9 @@ func TestParse(t *testing.T) {
 		go func() {
 			defer wg.Done()
 			id, err := snowflake.NextId()
-			require.NoError(t, err)
+			if err != nil {
+				panic(err)
+			}
 			t.Logf("id:%v parse:%v base58:%v base62:%v",
 				id, Parse(id),
 				base58.StdEncoding.Encode(id),

@@ -1,8 +1,6 @@
 package slicex
 
-import (
-	"reflect"
-)
+import "reflect"
 
 // Shuffle returns shuffled slice,
 // it is equivalent to Extract(slice, len(slice)).

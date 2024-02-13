@@ -1,8 +1,6 @@
 package validator
 
-import (
-	"strings"
-)
+import "strings"
 
 // the coding rule of the unified social credit identifier for legal entities and other organizations, GB 32100-2015
 // verification rules: http://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=24691C25985C1073D3A7C85629378AC0

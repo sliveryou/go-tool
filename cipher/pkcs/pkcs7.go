@@ -2,7 +2,7 @@ package pkcs
 
 import (
 	"bytes"
-	"fmt"
+	"errors"
 )
 
 // Reference:
@@ -22,7 +22,7 @@ func PKCS7Trimming(encrypt []byte) ([]byte, error) {
 	padding := encrypt[len(encrypt)-1]
 	end := len(encrypt) - int(padding)
 	if end <= 0 {
-		return nil, fmt.Errorf("PKCS7Trimming err, err encrypt data")
+		return nil, errors.New("PKCS7Trimming err, err encrypt data")
 	}
 
 	return encrypt[:end], nil

@@ -1,8 +1,6 @@
 package slicex
 
-import (
-	"reflect"
-)
+import "reflect"
 
 // Take returns the randomly taken element from slice,
 // it is equivalent to Extract(slice, 1)[0].

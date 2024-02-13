@@ -57,7 +57,7 @@ linters-settings:
       - name: modifies-parameter
       - name: confusing-results
       - name: deep-exit
-      - name: unused-parameter
+      # - name: unused-parameter
       - name: unreachable-code
       # - name: add-constant
       - name: unnecessary-stmt

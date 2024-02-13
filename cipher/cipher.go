@@ -3,9 +3,7 @@ package cipher
 // The interface is used for usual cipher.
 // Now it support aescbc.
 // Plan to support aesecb rsa.
-import (
-	"github.com/sliveryou/go-tool/cipher/aes"
-)
+import "github.com/sliveryou/go-tool/cipher/aes"
 
 var _ Cipher = (*aes.Cbc)(nil)
 

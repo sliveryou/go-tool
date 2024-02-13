@@ -1,8 +1,6 @@
 package randx
 
-import (
-	"crypto/rand"
-)
+import "crypto/rand"
 
 var (
 	// stdSource standard source string.
