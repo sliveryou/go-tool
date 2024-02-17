@@ -15,7 +15,7 @@ on:
 env:
   # https://github.com/npm/node-semver#tilde-ranges-123-12-1
   lint_go_version: '~1.21'
-  test_go_version: '~1.13'
+  test_go_version: '~1.18'
 
 jobs:
   lint:
