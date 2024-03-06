@@ -2,6 +2,9 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=go,jetbrains+all,macos,windows
 
 ### Go ###
+# If you prefer the allow list template instead of the deny list, see community template:
+# https://github.com/github/gitignore/blob/main/community/Golang/Go.AllowList.gitignore
+#
 # Binaries for programs and plugins
 *.exe
 *.exe~
@@ -18,9 +21,8 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
-### Go Patch ###
-/vendor/
-/Godeps/
+# Go workspace file
+go.work
 
 ### JetBrains+all ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
@@ -32,6 +34,9 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+
+# AWS User-specific
+.idea/**/aws.xml
 
 # Generated files
 .idea/**/contentModel.xml
@@ -83,6 +88,9 @@ atlassian-ide-plugin.xml
 # Cursive Clojure plugin
 .idea/replstate.xml
 
+# SonarLint plugin
+.idea/sonarlint/
+
 # Crashlytics plugin (for Android Studio and IntelliJ)
 com_crashlytics_export_strings.xml
 crashlytics.properties
@@ -96,20 +104,9 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 ### JetBrains+all Patch ###
-# Ignores the whole .idea folder and all .iml files
-# See https://github.com/joeblau/gitignore.io/issues/186 and https://github.com/joeblau/gitignore.io/issues/360
+# Ignore everything
 
-.idea/
-
-# Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-249601023
-
-*.iml
-modules.xml
-.idea/misc.xml
-*.ipr
-
-# Sonarlint plugin
-.idea/sonarlint
+.idea/*
 
 ### macOS ###
 # General
@@ -139,6 +136,10 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+### macOS Patch ###
+# iCloud generated files
+*.icloud
 
 ### Windows ###
 # Windows thumbnail cache files

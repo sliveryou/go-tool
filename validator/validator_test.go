@@ -81,4 +81,18 @@ func TestVerify(t *testing.T) {
 	err = Verify(r)
 	require.Error(t, err)
 	t.Log(err, ParseErr(err))
+
+	type UpdatePhoneEmailReq struct {
+		Phone       *string `json:"phone,optional" validate:"omitempty,eq=|len=11,eq=|number" label:"联系电话"` // 联系电话
+		Email       *string `json:"email,optional" validate:"omitempty,eq=|email" label:"邮箱"`               // 邮箱
+		Description *string `json:"description,optional"`                                                   // 备注
+	}
+
+	upe := &UpdatePhoneEmailReq{
+		Phone:       new(string),
+		Email:       new(string),
+		Description: new(string),
+	}
+	err = Verify(upe)
+	require.NoError(t, err)
 }
