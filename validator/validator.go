@@ -2,6 +2,7 @@ package validator
 
 import (
 	"errors"
+	"net/http"
 	"reflect"
 	"regexp"
 	"strings"
@@ -12,6 +13,9 @@ import (
 	zht "github.com/go-playground/validator/v10/translations/zh"
 )
 
+// ErrUnexpected unexpected error.
+var ErrUnexpected = errors.New("参数校验出错")
+
 const (
 	bankcardRegexString    = "^[0-9]{15,19}$"
 	corpaccountRegexString = "^[0-9]{9,25}$"
@@ -20,11 +24,7 @@ const (
 )
 
 var (
-	// ErrUnexpected unexpected error.
-	ErrUnexpected = errors.New("参数校验出错")
-
-	ti ut.Translator
-	vi *validator.Validate
+	v = MustNewValidator()
 
 	bankcardRegex    = regexp.MustCompile(bankcardRegexString)
 	corpaccountRegex = regexp.MustCompile(corpaccountRegexString)
@@ -39,6 +39,7 @@ var (
 		"PATCH":   {},
 		"OPTIONS": {},
 	}
+
 	validatorFuncMap = map[string]validator.Func{
 		"idcard":      idcard,
 		"bankcard":    bankcard,
@@ -46,6 +47,7 @@ var (
 		"corpaccount": corpaccount,
 		"httpmethod":  httpmethod,
 	}
+
 	defaultTags = []string{
 		"skip_unless",
 		"eq_ignore_case",
@@ -113,6 +115,107 @@ var (
 	}
 )
 
+// Validator represents the validator structure.
+type Validator struct {
+	V *validator.Validate
+	T ut.Translator
+}
+
+// NewValidator new a validator.
+func NewValidator() (*Validator, error) {
+	vi := validator.New()
+	vi.SetTagName("validate")
+	vi.RegisterTagNameFunc(getLabelTagName)
+
+	zhi := zh.New()
+	uti := ut.New(zhi)
+	ti, _ := uti.GetTranslator("zh")
+
+	if err := zht.RegisterDefaultTranslations(vi, ti); err != nil {
+		return nil, err
+	}
+
+	for tag, fn := range validatorFuncMap {
+		if err := vi.RegisterValidation(tag, fn); err != nil {
+			return nil, err
+		}
+		if err := registerTranslation(tag, vi, ti, true); err != nil {
+			return nil, err
+		}
+	}
+
+	for _, defaultTag := range defaultTags {
+		if err := registerTranslation(defaultTag, vi, ti, false); err != nil {
+			return nil, err
+		}
+	}
+
+	return &Validator{
+		V: vi,
+		T: ti,
+	}, nil
+}
+
+// MustNewValidator must new a validator.
+func MustNewValidator() *Validator {
+	v, err := NewValidator()
+	if err != nil {
+		panic(err)
+	}
+
+	return v
+}
+
+// Validate validates the request and parsed data.
+func (v *Validator) Validate(r *http.Request, data any) error {
+	return v.Translate(v.V.Struct(data))
+}
+
+// Translate translates the validation errors.
+func (v *Validator) Translate(err error) error {
+	if err != nil {
+		var (
+			es  validateErrors
+			ves validator.ValidationErrors
+		)
+
+		if errors.As(err, &ves) {
+			for _, ve := range ves {
+				es = append(es, ve.Translate(v.T))
+			}
+		}
+
+		return es
+	}
+
+	return nil
+}
+
+// TranslateAll translates all validation errors.
+func (v *Validator) TranslateAll(err error) error {
+	if err != nil {
+		var (
+			es  []string
+			ves validator.ValidationErrors
+		)
+
+		if errors.As(err, &ves) {
+			for _, ve := range ves {
+				es = append(es, ve.Translate(v.T))
+			}
+		}
+
+		if len(es) == 0 {
+			return ErrUnexpected
+		}
+
+		return errors.New(strings.Join(es, ","))
+	}
+
+	return nil
+}
+
+// validateErrors represents the validation error strings.
 type validateErrors []string
 
 // Error returns the validation error string and implement the error interface,
@@ -127,6 +230,10 @@ func (ves validateErrors) Error() string {
 
 // ParseErr parses the content of validation error.
 func ParseErr(err error) string {
+	if err == nil {
+		return ""
+	}
+
 	var ves validateErrors
 	ok := errors.As(err, &ves)
 	if ok && len(ves) > 0 {
@@ -136,66 +243,19 @@ func ParseErr(err error) string {
 	return err.Error()
 }
 
-func init() {
-	var err error
-	vi = validator.New()
-	vi.SetTagName("validate")
-	vi.RegisterTagNameFunc(getLabelTagName)
-
-	zhi := zh.New()
-	uti := ut.New(zhi)
-	ti, _ = uti.GetTranslator("zh")
-
-	err = zht.RegisterDefaultTranslations(vi, ti)
-	checkErr(err)
-
-	for tag, fn := range validatorFuncMap {
-		err = vi.RegisterValidation(tag, fn)
-		checkErr(err)
-		err = registerTranslation(tag, vi, ti, true)
-		checkErr(err)
-	}
-	for _, defaultTag := range defaultTags {
-		_ = registerTranslation(defaultTag, vi, ti, false)
-	}
-}
-
 // Verify checks the data validity of the exportable field of the structure according to the validate tag.
 func Verify(obj interface{}) error {
-	return convertErr(vi.Struct(obj))
+	return v.Translate(v.V.Struct(obj))
 }
 
 // VerifyVar checks the data validity of the field according to the validate tag.
 func VerifyVar(field interface{}, tag string) error {
-	return convertErr(vi.Var(field, tag))
+	return v.Translate(v.V.Var(field, tag))
 }
 
 // VerifyVarWithValue checks the data validity of the field against another field according to the validate tag.
 func VerifyVarWithValue(field, other interface{}, tag string) error {
-	return convertErr(vi.VarWithValue(field, other, tag))
-}
-
-// convertErr converts err to validation error.
-func convertErr(err error) error {
-	if err != nil {
-		var (
-			ves validateErrors
-			ive *validator.InvalidValidationError
-			ve  validator.ValidationErrors
-		)
-		if errors.As(err, &ive) {
-			return ves
-		}
-		if errors.As(err, &ve) {
-			for _, err := range ve {
-				ves = append(ves, err.Translate(ti))
-			}
-		}
-
-		return ves
-	}
-
-	return nil
+	return v.Translate(v.V.VarWithValue(field, other, tag))
 }
 
 // getLabelTagName gets the label name.
@@ -258,11 +318,4 @@ func corpaccount(fl validator.FieldLevel) bool {
 func httpmethod(fl validator.FieldLevel) bool {
 	_, ok := httpMethodMap[strings.ToUpper(fl.Field().String())]
 	return ok
-}
-
-// checkErr checks the err.
-func checkErr(err error) {
-	if err != nil {
-		panic(err)
-	}
 }

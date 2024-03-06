@@ -166,7 +166,7 @@ func Extract[T any](s []T, n int) []T {
 	return es
 }
 
-// Fill returns slice filled with v,
+// Fill returns the slice filled with v,
 // where n is the number of v should be filled.
 func Fill[T any](v T, n int) []T {
 	if n < 0 {
@@ -280,6 +280,33 @@ func SubsetFunc[T any](slice, subset []T, cmp func(a, b T) int) bool {
 	}
 
 	return true
+}
+
+// Compact returns the slice that all zero values removed.
+func Compact[T comparable](s []T) []T {
+	var zero T
+	cs := make([]T, 0, len(s))
+
+	for _, v := range s {
+		if v != zero {
+			cs = append(cs, v)
+		}
+	}
+
+	return cs
+}
+
+// CompactFunc returns the slice that all satisfies f(v) values removed.
+func CompactFunc[T any](s []T, f func(v T) bool) []T {
+	cs := make([]T, 0, len(s))
+
+	for _, v := range s {
+		if !f(v) {
+			cs = append(cs, v)
+		}
+	}
+
+	return cs
 }
 
 // Clone returns a copy of the slice.

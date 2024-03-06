@@ -752,6 +752,34 @@ func TestSubsetFunc(t *testing.T) {
 	assert.False(t, SubsetFunc(s2, []string{"y", "o", "u"}, strings.Compare))
 }
 
+func TestCompact(t *testing.T) {
+	s1 := []int64{3, 0, 6, 0, 9, 0}
+	assert.Equal(t, []int64{3, 6, 9}, Compact(s1))
+
+	s2 := []string{"a", "", "", "b", "", "c"}
+	assert.Equal(t, []string{"a", "b", "c"}, Compact(s2))
+
+	s3 := []string{"", "", "", "a"}
+	assert.Equal(t, []string{"a"}, Compact(s3))
+}
+
+func TestCompactFunc(t *testing.T) {
+	s1 := []int64{3, 0, 6, 0, 9, 0}
+	assert.Equal(t, []int64{3, 6, 9}, CompactFunc(s1, func(v int64) bool {
+		return v == 0
+	}))
+
+	s2 := []string{"a", "", "", "b", "", "c"}
+	assert.Equal(t, []string{"a", "b", "c"}, CompactFunc(s2, func(v string) bool {
+		return v == ""
+	}))
+
+	s3 := []string{"", "", "", "a"}
+	assert.Equal(t, []string{"a"}, CompactFunc(s3, func(v string) bool {
+		return v == ""
+	}))
+}
+
 func TestClone(t *testing.T) {
 	s1 := []int{1, 2, 3}
 	s2 := Clone(s1)

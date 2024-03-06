@@ -500,6 +500,8 @@ func BinarySearch[T constraints.Ordered](x []T, target T) (int, bool)
 func BinarySearchFunc[E, T any](x []E, target T, cmp func(a E, b T) int) (int, bool)
 func Clip[T any](s []T) []T
 func Clone[T any](s []T, needInit ...bool) []T
+func Compact[T comparable](s []T) []T
+func CompactFunc[T any](s []T, f func(v T) bool) []T
 func Contain[T comparable](s []T, v T) bool
 func ContainFunc[T any](s []T, f func(v T) bool) bool
 func Count[T comparable](s []T) map[T]int
@@ -614,4 +616,10 @@ type IdCard
 type USCC
     func NewUSCC(uscc string) USCC
     func (uscc USCC) IsValid() bool
+type Validator
+    func MustNewValidator() *Validator
+    func NewValidator() (*Validator, error)
+    func (v *Validator) Translate(err error) error
+    func (v *Validator) TranslateAll(err error) error
+    func (v *Validator) Validate(r *http.Request, data any) error
 ```
